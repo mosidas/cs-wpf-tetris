@@ -8,15 +8,43 @@ namespace TetrisLogic
     {
         public BlockType BlockType { get; private set; }
 
+        public Point Location { get { return _location; } }
+
         // 現在ブロック
         private int[,] _block;
         private Point _location;
 
-        public Block(int[,] block, BlockType bt)
+        public Block(BlockType bt)
         {
             BlockType = bt;
-            _block = block;
-            _location = new Point(3, 0);
+            switch(bt)
+            {
+                case BlockType.O:
+                    _block = CreateBlockO();
+                    break;
+                case BlockType.I:
+                    _block = CreateBlockI();
+                    break;
+                case BlockType.T:
+                    _block = CreateBlockT();
+                    break;
+                case BlockType.J:
+                    _block = CreateBlockJ();
+                    break;
+                case BlockType.L:
+                    _block = CreateBlockL();
+                    break;
+                case BlockType.Z:
+                    _block = CreateBlockZ();
+                    break;
+                case BlockType.S:
+                    _block = CreateBlockS();
+                    break;
+                default:
+                    _block = new int[SystemProperty.BlockWidth, SystemProperty.BlockHeight];
+                    break;
+            }
+            _location = BlockType == BlockType.I ? new Point(3, 0) : new Point(3, -1);
         }
 
         public void ResetLocation()
@@ -62,7 +90,7 @@ namespace TetrisLogic
                     if (_block[x, y] == 1)
                     {
                         points.Add(new Point(x + _location.X, y + _location.Y));
-                        continue;
+                        break;
                     }
                 }
             }
@@ -132,6 +160,125 @@ namespace TetrisLogic
             }
 
             return new Point(-1, -1);
+        }
+
+        /// <summary>
+        /// □□□□
+        /// □■■□ 
+        /// □■■□ 
+        /// □□□□ 
+        /// </summary>
+        /// <returns></returns>
+        private int[,] CreateBlockO()
+        {
+            var rect = new int[SystemProperty.BlockWidth, SystemProperty.BlockHeight];
+            rect[1, 1] = 1;
+            rect[1, 2] = 1;
+            rect[2, 1] = 1;
+            rect[2, 2] = 1;
+            return rect;
+        }
+
+        /// <summary>
+        /// □■□□
+        /// □■□□
+        /// □■□□ 
+        /// □■□□
+        /// </summary>
+        /// <returns></returns>
+        private int[,] CreateBlockI()
+        {
+            var rect = new int[SystemProperty.BlockWidth, SystemProperty.BlockHeight];
+            rect[1, 0] = 1;
+            rect[1, 1] = 1;
+            rect[1, 2] = 1;
+            rect[1, 3] = 1;
+            return rect;
+        }
+
+        /// <summary>
+        ///□□□□
+        ///□■□□
+        ///□■■□
+        ///□■□□
+        /// </summary>
+        /// <returns></returns>
+        private int[,] CreateBlockT()
+        {
+            var rect = new int[SystemProperty.BlockWidth, SystemProperty.BlockHeight];
+            rect[1, 1] = 1;
+            rect[1, 2] = 1;
+            rect[2, 2] = 1;
+            rect[1, 3] = 1;
+            return rect;
+        }
+
+        /// <summary>
+        ///□□□□ 
+        ///□■■□ 
+        ///□■□□ 
+        ///□■□□ 
+        /// </summary>
+        /// <returns></returns>
+        private int[,] CreateBlockJ()
+        {
+            var rect = new int[SystemProperty.BlockWidth, SystemProperty.BlockHeight];
+            rect[1, 1] = 1;
+            rect[2, 1] = 1;
+            rect[1, 2] = 1;
+            rect[1, 3] = 1;
+            return rect;
+        }
+
+        /// <summary>
+        ///□□□□ 
+        ///□■■□ 
+        ///□□■□ 
+        ///□□■□ 
+        /// </summary>
+        /// <returns></returns>
+        private int[,] CreateBlockL()
+        {
+            var rect = new int[SystemProperty.BlockWidth, SystemProperty.BlockHeight];
+            rect[1, 1] = 1;
+            rect[2, 1] = 1;
+            rect[2, 2] = 1;
+            rect[2, 3] = 1;
+            return rect;
+        }
+
+        /// <summary>
+        ///□□□□ 
+        ///□□■□ 
+        ///□■■□ 
+        ///□■□□ 
+        /// </summary>
+        /// <returns></returns>
+        private int[,] CreateBlockZ()
+        {
+            var rect = new int[SystemProperty.BlockWidth, SystemProperty.BlockHeight];
+            rect[1, 2] = 1;
+            rect[2, 1] = 1;
+            rect[2, 2] = 1;
+            rect[1, 3] = 1;
+            return rect;
+        }
+
+        /// <summary>
+        ///□□□□ 
+        ///□■□□ 
+        ///□■■□ 
+        ///□□■□ 
+        /// </summary>
+        /// <returns></returns>
+        private int[,] CreateBlockS()
+        {
+            var rect = new int[SystemProperty.BlockWidth, SystemProperty.BlockHeight];
+            rect[1, 1] = 1;
+            rect[1, 2] = 1;
+            rect[2, 2] = 1;
+            rect[2, 3] = 1;
+            return rect;
         }
     }
 }

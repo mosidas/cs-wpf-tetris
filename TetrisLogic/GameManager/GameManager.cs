@@ -9,7 +9,6 @@ namespace TetrisLogic
     public class GameManager
     {
         public bool IsGameOver { get; set; }
-
         public bool IsSpawn { get; set; }
         public double FrameRate { get { return 1000 / SystemProperty.FPS; } }
         public double GameLevel { get; private set; }
@@ -26,24 +25,27 @@ namespace TetrisLogic
         private Field _field;
         private Block _currentBlock;
         private Block _holdBlock;
-        private readonly BlocksPoolManager _blocksPoolManager;
+        private readonly IBlocksPoolManager _blocksPoolManager;
 
-        public GameManager()
+        public GameManager(Field field, IBlocksPoolManager bpm)
         {
-            _field = new Field();
-            _blocksPoolManager = new BlocksPoolManager();
+            _field = field;
+            _blocksPoolManager = bpm;
             IsGameOver = true;
         }
 
-        public void Start()
+        public void Start(int gamelevel = 5)
         {
-            GameLevel = 5;
+            GameLevel = gamelevel;
             IsGameOver = false;
             _field.InitFieldState();
             _blocksPoolManager.Reset();
-            _currentBlock = _blocksPoolManager.GetNextBlock();
+            _currentBlock = _blocksPoolManager.TakeNextBlock();
             _holdBlock = null;
         }
+
+        private ActionType _beforeAction = ActionType.nothing;
+        private int _actionCount = 0;
 
         public void Update(ActionType userAction, bool doTimerAction)
         {
@@ -59,8 +61,41 @@ namespace TetrisLogic
                 UpdateState(ActionType.moveDown, canTimerAction);
             }
 
-            var canUserAction = Act(userAction);
-            UpdateState(userAction, canUserAction);
+            if(DoContinueSameAction(userAction))
+            {
+                var canUserAction = Act(userAction);
+                UpdateState(userAction, canUserAction);
+            }
+        }
+
+        private bool DoContinueSameAction(ActionType userAction)
+        {
+            var bAct = _beforeAction;
+            _beforeAction = userAction;
+
+            if (userAction == ActionType.nothing)
+            {
+                _actionCount = 0;
+                return false;
+            }
+
+            if (bAct == userAction)
+            {
+                _actionCount++;
+                if (_actionCount % 10 == 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                _actionCount = 0;
+                return true;
+            }
         }
 
         private void GameOver()
@@ -99,7 +134,7 @@ namespace TetrisLogic
             {
                 if (CanSpawn())
                 {
-                    _currentBlock = _blocksPoolManager.GetNextBlock();
+                    _currentBlock = _blocksPoolManager.TakeNextBlock();
                 }
                 else
                 {

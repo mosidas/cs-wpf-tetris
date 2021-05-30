@@ -6,156 +6,62 @@ using System.Threading.Tasks;
 
 namespace TetrisLogic
 {
-    public class BlocksPoolManager
+    public class BlocksPoolManager : IBlocksPoolManager
     {
-        private List<int[,]> BlocksPool { get; set; }
-        private List<SystemProperty.BlockType> BlockTypesPool { get; set; }
+        private List<Block> BlocksPool { get; set; }
 
+        /// <summary>
+        /// 初期化
+        /// </summary>
         public BlocksPoolManager()
         {
-            BlocksPool = new List<int[,]>();
-            BlockTypesPool = new List<SystemProperty.BlockType>();
+            BlocksPool = new List<Block>();
             Reset();
+        }
+
+        /// <summary>
+        /// プールの初期化
+        /// </summary>
+        public void Reset()
+        {
+            BlocksPool = new List<Block>();
+        }
+
+        /// <summary>
+        /// プールから次のブロックを取り出す。さらにプールを補充する。
+        /// </summary>
+        /// <returns></returns>
+        public Block TakeNextBlock()
+        {
+            CreateBlocksPool();
+            var nextBlock = BlocksPool[0];
+            BlocksPool.RemoveAt(0);
+            return nextBlock;
+        }
+
+        public List<Block> GetNextBlocksPool(int count)
+        {
+            var pool = BlocksPool.Take(Math.Min(count, BlocksPool.Count)).ToList();
+            return pool;
         }
 
         private void CreateBlocksPool()
         {
-            if (BlocksPool.Count > 3)
+            if (BlocksPool.Count > 6)
             {
                 return;
             }
 
-            //□□□□
-            //□■■□ 
-            //□■■□ 
-            //□□□□ 
-            var blockO = new int[SystemProperty.BlockWidth, SystemProperty.BlockHeight];
-            blockO[1, 1] = 1;
-            blockO[1, 2] = 1;
-            blockO[2, 1] = 1;
-            blockO[2, 2] = 1;
+            var list = new List<Block>();
+            list.Add(new Block(SystemProperty.BlockType.O));
+            list.Add(new Block(SystemProperty.BlockType.I));
+            list.Add(new Block(SystemProperty.BlockType.T));
+            list.Add(new Block(SystemProperty.BlockType.J));
+            list.Add(new Block(SystemProperty.BlockType.L));
+            list.Add(new Block(SystemProperty.BlockType.Z));
+            list.Add(new Block(SystemProperty.BlockType.S));
 
-            //□■□□
-            //□■□□
-            //□■□□
-            //□■□□
-            var blockI = new int[SystemProperty.BlockWidth, SystemProperty.BlockHeight];
-            blockI[1, 0] = 1;
-            blockI[1, 1] = 1;
-            blockI[1, 2] = 1;
-            blockI[1, 3] = 1;
-
-            //□□□□
-            //□■□□
-            //□■■□
-            //□■□□
-            var blockT = new int[SystemProperty.BlockWidth, SystemProperty.BlockHeight];
-            blockT[1, 1] = 1;
-            blockT[1, 2] = 1;
-            blockT[2, 2] = 1;
-            blockT[1, 3] = 1;
-
-            //□□□□ 
-            //□■■□ 
-            //□■□□ 
-            //□■□□ 
-            var blockJ = new int[SystemProperty.BlockWidth, SystemProperty.BlockHeight];
-            blockJ[1, 1] = 1;
-            blockJ[2, 1] = 1;
-            blockJ[1, 2] = 1;
-            blockJ[1, 3] = 1;
-
-            //□□□□ 
-            //□■■□ 
-            //□□■□ 
-            //□□■□ 
-            var blockL = new int[SystemProperty.BlockWidth, SystemProperty.BlockHeight];
-            blockL[1, 1] = 1;
-            blockL[2, 1] = 1;
-            blockL[2, 2] = 1;
-            blockL[2, 3] = 1;
-
-            //□□□□ 
-            //□□■□ 
-            //□■■□ 
-            //□■□□ 
-            var blockZ = new int[SystemProperty.BlockWidth, SystemProperty.BlockHeight];
-            blockZ[1, 2] = 1;
-            blockZ[2, 1] = 1;
-            blockZ[2, 2] = 1;
-            blockZ[1, 3] = 1;
-
-            //□□□□ 
-            //□■□□ 
-            //□■■□ 
-            //□□■□ 
-            var blockS = new int[SystemProperty.BlockWidth, SystemProperty.BlockHeight];
-            blockS[1, 1] = 1;
-            blockS[2, 1] = 1;
-            blockS[2, 2] = 1;
-            blockS[2, 3] = 1;
-
-            var list = new List<SystemProperty.BlockType>();
-
-            list.Add(SystemProperty.BlockType.O);
-            list.Add(SystemProperty.BlockType.I);
-            list.Add(SystemProperty.BlockType.T);
-            list.Add(SystemProperty.BlockType.J);
-            list.Add(SystemProperty.BlockType.L);
-            list.Add(SystemProperty.BlockType.Z);
-            list.Add(SystemProperty.BlockType.S);
-
-            list = list.OrderBy(a => Guid.NewGuid()).ToList();
-
-            foreach(var type in list)
-            {
-                if(type == SystemProperty.BlockType.O)
-                {
-                    BlocksPool.Add(blockO);
-                }
-                else if (type == SystemProperty.BlockType.I)
-                {
-                    BlocksPool.Add(blockI);
-                }
-                else if (type == SystemProperty.BlockType.T)
-                {
-                    BlocksPool.Add(blockT);
-                }
-                else if (type == SystemProperty.BlockType.J)
-                {
-                    BlocksPool.Add(blockJ);
-                }
-                else if (type == SystemProperty.BlockType.L)
-                {
-                    BlocksPool.Add(blockL);
-                }
-                else if (type == SystemProperty.BlockType.Z)
-                {
-                    BlocksPool.Add(blockZ);
-                }
-                else if (type == SystemProperty.BlockType.S)
-                {
-                    BlocksPool.Add(blockS);
-                }
-
-                BlockTypesPool.Add(type);
-            }
-        }
-
-        public void Reset()
-        {
-            BlocksPool = new List<int[,]>();
-        }
-
-        public Block GetNextBlock()
-        {
-            CreateBlocksPool();
-            var tmp = BlocksPool[0];
-            var tmp2 = BlockTypesPool[0];
-            var nextBlock = new Block(tmp, tmp2);
-            BlocksPool.RemoveAt(0);
-            BlockTypesPool.RemoveAt(0);
-            return nextBlock;
+            BlocksPool.AddRange(list.OrderBy(a => Guid.NewGuid()).ToList());
         }
     }
 }

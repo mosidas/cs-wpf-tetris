@@ -72,12 +72,12 @@ namespace TetrisLogic
 
         public int GetFieldState(int w, int h)
         {
-            if(_width <= w)
+            if(_width <= w || w < 0)
             {
                 return SystemProperty.OutOfField;
             }
 
-            if (_height <= h)
+            if (_height <= h || h < 0)
             {
                 return SystemProperty.OutOfField;
             }

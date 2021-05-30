@@ -10,12 +10,18 @@ namespace TetrisLogic.UserAction
     {
         public void Action(ref Field field, ref Block currentBlock, ref Block holdBlock)
         {
-            throw new NotImplementedException();
+            currentBlock.MoveLocation(1, 0);
         }
 
         public bool CanAction(Field field, Block block)
         {
-            throw new NotImplementedException();
+            var p = block.GetLocation_BlockRight();
+            if (field.GetFieldState(p.X + 1, p.Y) != SystemProperty.Empty)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

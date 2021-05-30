@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TetrisWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="600">
+        Title="MainWindow" Height="600" Width="600" KeyDown="MainGrid_KeyDown" KeyUp="MainGrid_KeyUp">
     <Grid>
-        <Border x:Name="MainField" BorderBrush="Black" Height="500" Width="300" Margin="0,20,0,0" VerticalAlignment="Top"  HorizontalAlignment ="Center" Background="LightGray" >
-            <Grid x:Name="MainGrid">
+        <Border x:Name="MainField" BorderBrush="Black" Height="500" Width="300" Margin="0,0,0,0" VerticalAlignment="Top"  HorizontalAlignment ="Center" Background="LightGray" >
+            <Grid x:Name="MainGrid" Margin="26,0,26,0" >
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
@@ -43,11 +43,264 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <!--<local:FixedBlock Margin="0,0,0,0" Grid.Row="1" Grid.Column="1"/> -->
+                <local:BlockRectangle x:Name="Cell_0_0" Margin="0,0,0,0" Grid.Row="0" Grid.Column="0"/>
+                <local:BlockRectangle x:Name="Cell_1_0" Margin="0,0,0,0" Grid.Row="1" Grid.Column="0"/>
+                <local:BlockRectangle x:Name="Cell_2_0" Margin="0,0,0,0" Grid.Row="2" Grid.Column="0"/>
+                <local:BlockRectangle x:Name="Cell_3_0" Margin="0,0,0,0" Grid.Row="3" Grid.Column="0"/>
+                <local:BlockRectangle x:Name="Cell_4_0" Margin="0,0,0,0" Grid.Row="4" Grid.Column="0"/>
+                <local:BlockRectangle x:Name="Cell_5_0" Margin="0,0,0,0" Grid.Row="5" Grid.Column="0"/>
+                <local:BlockRectangle x:Name="Cell_6_0" Margin="0,0,0,0" Grid.Row="6" Grid.Column="0"/>
+                <local:BlockRectangle x:Name="Cell_7_0" Margin="0,0,0,0" Grid.Row="7" Grid.Column="0"/>
+                <local:BlockRectangle x:Name="Cell_8_0" Margin="0,0,0,0" Grid.Row="8" Grid.Column="0"/>
+                <local:BlockRectangle x:Name="Cell_9_0" Margin="0,0,0,0" Grid.Row="9" Grid.Column="0"/>
+                <local:BlockRectangle x:Name="Cell_10_0" Margin="0,0,0,0" Grid.Row="10" Grid.Column="0"/>
+                <local:BlockRectangle x:Name="Cell_11_0" Margin="0,0,0,0" Grid.Row="11" Grid.Column="0"/>
+                <local:BlockRectangle x:Name="Cell_12_0" Margin="0,0,0,0" Grid.Row="12" Grid.Column="0"/>
+                <local:BlockRectangle x:Name="Cell_13_0" Margin="0,0,0,0" Grid.Row="13" Grid.Column="0"/>
+                <local:BlockRectangle x:Name="Cell_14_0" Margin="0,0,0,0" Grid.Row="14" Grid.Column="0"/>
+                <local:BlockRectangle x:Name="Cell_15_0" Margin="0,0,0,0" Grid.Row="15" Grid.Column="0"/>
+                <local:BlockRectangle x:Name="Cell_16_0" Margin="0,0,0,0" Grid.Row="16" Grid.Column="0"/>
+                <local:BlockRectangle x:Name="Cell_17_0" Margin="0,0,0,0" Grid.Row="17" Grid.Column="0"/>
+                <local:BlockRectangle x:Name="Cell_18_0" Margin="0,0,0,0" Grid.Row="18" Grid.Column="0"/>
+                <local:BlockRectangle x:Name="Cell_19_0" Margin="0,0,0,0" Grid.Row="19" Grid.Column="0"/>
+                <local:BlockRectangle x:Name="Cell_0_1" Margin="0,0,0,0" Grid.Row="0" Grid.Column="1"/>
+                <local:BlockRectangle x:Name="Cell_1_1" Margin="0,0,0,0" Grid.Row="1" Grid.Column="1"/>
+                <local:BlockRectangle x:Name="Cell_2_1" Margin="0,0,0,0" Grid.Row="2" Grid.Column="1"/>
+                <local:BlockRectangle x:Name="Cell_3_1" Margin="0,0,0,0" Grid.Row="3" Grid.Column="1"/>
+                <local:BlockRectangle x:Name="Cell_4_1" Margin="0,0,0,0" Grid.Row="4" Grid.Column="1"/>
+                <local:BlockRectangle x:Name="Cell_5_1" Margin="0,0,0,0" Grid.Row="5" Grid.Column="1"/>
+                <local:BlockRectangle x:Name="Cell_6_1" Margin="0,0,0,0" Grid.Row="6" Grid.Column="1"/>
+                <local:BlockRectangle x:Name="Cell_7_1" Margin="0,0,0,0" Grid.Row="7" Grid.Column="1"/>
+                <local:BlockRectangle x:Name="Cell_8_1" Margin="0,0,0,0" Grid.Row="8" Grid.Column="1"/>
+                <local:BlockRectangle x:Name="Cell_9_1" Margin="0,0,0,0" Grid.Row="9" Grid.Column="1"/>
+                <local:BlockRectangle x:Name="Cell_10_1" Margin="0,0,0,0" Grid.Row="10" Grid.Column="1"/>
+                <local:BlockRectangle x:Name="Cell_11_1" Margin="0,0,0,0" Grid.Row="11" Grid.Column="1"/>
+                <local:BlockRectangle x:Name="Cell_12_1" Margin="0,0,0,0" Grid.Row="12" Grid.Column="1"/>
+                <local:BlockRectangle x:Name="Cell_13_1" Margin="0,0,0,0" Grid.Row="13" Grid.Column="1"/>
+                <local:BlockRectangle x:Name="Cell_14_1" Margin="0,0,0,0" Grid.Row="14" Grid.Column="1"/>
+                <local:BlockRectangle x:Name="Cell_15_1" Margin="0,0,0,0" Grid.Row="15" Grid.Column="1"/>
+                <local:BlockRectangle x:Name="Cell_16_1" Margin="0,0,0,0" Grid.Row="16" Grid.Column="1"/>
+                <local:BlockRectangle x:Name="Cell_17_1" Margin="0,0,0,0" Grid.Row="17" Grid.Column="1"/>
+                <local:BlockRectangle x:Name="Cell_18_1" Margin="0,0,0,0" Grid.Row="18" Grid.Column="1"/>
+                <local:BlockRectangle x:Name="Cell_19_1" Margin="0,0,0,0" Grid.Row="19" Grid.Column="1"/>
+                <local:BlockRectangle x:Name="Cell_0_2" Margin="0,0,0,0" Grid.Row="0" Grid.Column="2"/>
+                <local:BlockRectangle x:Name="Cell_1_2" Margin="0,0,0,0" Grid.Row="1" Grid.Column="2"/>
+                <local:BlockRectangle x:Name="Cell_2_2" Margin="0,0,0,0" Grid.Row="2" Grid.Column="2"/>
+                <local:BlockRectangle x:Name="Cell_3_2" Margin="0,0,0,0" Grid.Row="3" Grid.Column="2"/>
+                <local:BlockRectangle x:Name="Cell_4_2" Margin="0,0,0,0" Grid.Row="4" Grid.Column="2"/>
+                <local:BlockRectangle x:Name="Cell_5_2" Margin="0,0,0,0" Grid.Row="5" Grid.Column="2"/>
+                <local:BlockRectangle x:Name="Cell_6_2" Margin="0,0,0,0" Grid.Row="6" Grid.Column="2"/>
+                <local:BlockRectangle x:Name="Cell_7_2" Margin="0,0,0,0" Grid.Row="7" Grid.Column="2"/>
+                <local:BlockRectangle x:Name="Cell_8_2" Margin="0,0,0,0" Grid.Row="8" Grid.Column="2"/>
+                <local:BlockRectangle x:Name="Cell_9_2" Margin="0,0,0,0" Grid.Row="9" Grid.Column="2"/>
+                <local:BlockRectangle x:Name="Cell_10_2" Margin="0,0,0,0" Grid.Row="10" Grid.Column="2"/>
+                <local:BlockRectangle x:Name="Cell_11_2" Margin="0,0,0,0" Grid.Row="11" Grid.Column="2"/>
+                <local:BlockRectangle x:Name="Cell_12_2" Margin="0,0,0,0" Grid.Row="12" Grid.Column="2"/>
+                <local:BlockRectangle x:Name="Cell_13_2" Margin="0,0,0,0" Grid.Row="13" Grid.Column="2"/>
+                <local:BlockRectangle x:Name="Cell_14_2" Margin="0,0,0,0" Grid.Row="14" Grid.Column="2"/>
+                <local:BlockRectangle x:Name="Cell_15_2" Margin="0,0,0,0" Grid.Row="15" Grid.Column="2"/>
+                <local:BlockRectangle x:Name="Cell_16_2" Margin="0,0,0,0" Grid.Row="16" Grid.Column="2"/>
+                <local:BlockRectangle x:Name="Cell_17_2" Margin="0,0,0,0" Grid.Row="17" Grid.Column="2"/>
+                <local:BlockRectangle x:Name="Cell_18_2" Margin="0,0,0,0" Grid.Row="18" Grid.Column="2"/>
+                <local:BlockRectangle x:Name="Cell_19_2" Margin="0,0,0,0" Grid.Row="19" Grid.Column="2"/>
+                <local:BlockRectangle x:Name="Cell_0_3" Margin="0,0,0,0" Grid.Row="0" Grid.Column="3"/>
+                <local:BlockRectangle x:Name="Cell_1_3" Margin="0,0,0,0" Grid.Row="1" Grid.Column="3"/>
+                <local:BlockRectangle x:Name="Cell_2_3" Margin="0,0,0,0" Grid.Row="2" Grid.Column="3"/>
+                <local:BlockRectangle x:Name="Cell_3_3" Margin="0,0,0,0" Grid.Row="3" Grid.Column="3"/>
+                <local:BlockRectangle x:Name="Cell_4_3" Margin="0,0,0,0" Grid.Row="4" Grid.Column="3"/>
+                <local:BlockRectangle x:Name="Cell_5_3" Margin="0,0,0,0" Grid.Row="5" Grid.Column="3"/>
+                <local:BlockRectangle x:Name="Cell_6_3" Margin="0,0,0,0" Grid.Row="6" Grid.Column="3"/>
+                <local:BlockRectangle x:Name="Cell_7_3" Margin="0,0,0,0" Grid.Row="7" Grid.Column="3"/>
+                <local:BlockRectangle x:Name="Cell_8_3" Margin="0,0,0,0" Grid.Row="8" Grid.Column="3"/>
+                <local:BlockRectangle x:Name="Cell_9_3" Margin="0,0,0,0" Grid.Row="9" Grid.Column="3"/>
+                <local:BlockRectangle x:Name="Cell_10_3" Margin="0,0,0,0" Grid.Row="10" Grid.Column="3"/>
+                <local:BlockRectangle x:Name="Cell_11_3" Margin="0,0,0,0" Grid.Row="11" Grid.Column="3"/>
+                <local:BlockRectangle x:Name="Cell_12_3" Margin="0,0,0,0" Grid.Row="12" Grid.Column="3"/>
+                <local:BlockRectangle x:Name="Cell_13_3" Margin="0,0,0,0" Grid.Row="13" Grid.Column="3"/>
+                <local:BlockRectangle x:Name="Cell_14_3" Margin="0,0,0,0" Grid.Row="14" Grid.Column="3"/>
+                <local:BlockRectangle x:Name="Cell_15_3" Margin="0,0,0,0" Grid.Row="15" Grid.Column="3"/>
+                <local:BlockRectangle x:Name="Cell_16_3" Margin="0,0,0,0" Grid.Row="16" Grid.Column="3"/>
+                <local:BlockRectangle x:Name="Cell_17_3" Margin="0,0,0,0" Grid.Row="17" Grid.Column="3"/>
+                <local:BlockRectangle x:Name="Cell_18_3" Margin="0,0,0,0" Grid.Row="18" Grid.Column="3"/>
+                <local:BlockRectangle x:Name="Cell_19_3" Margin="0,0,0,0" Grid.Row="19" Grid.Column="3"/>
+                <local:BlockRectangle x:Name="Cell_0_4" Margin="0,0,0,0" Grid.Row="0" Grid.Column="4"/>
+                <local:BlockRectangle x:Name="Cell_1_4" Margin="0,0,0,0" Grid.Row="1" Grid.Column="4"/>
+                <local:BlockRectangle x:Name="Cell_2_4" Margin="0,0,0,0" Grid.Row="2" Grid.Column="4"/>
+                <local:BlockRectangle x:Name="Cell_3_4" Margin="0,0,0,0" Grid.Row="3" Grid.Column="4"/>
+                <local:BlockRectangle x:Name="Cell_4_4" Margin="0,0,0,0" Grid.Row="4" Grid.Column="4"/>
+                <local:BlockRectangle x:Name="Cell_5_4" Margin="0,0,0,0" Grid.Row="5" Grid.Column="4"/>
+                <local:BlockRectangle x:Name="Cell_6_4" Margin="0,0,0,0" Grid.Row="6" Grid.Column="4"/>
+                <local:BlockRectangle x:Name="Cell_7_4" Margin="0,0,0,0" Grid.Row="7" Grid.Column="4"/>
+                <local:BlockRectangle x:Name="Cell_8_4" Margin="0,0,0,0" Grid.Row="8" Grid.Column="4"/>
+                <local:BlockRectangle x:Name="Cell_9_4" Margin="0,0,0,0" Grid.Row="9" Grid.Column="4"/>
+                <local:BlockRectangle x:Name="Cell_10_4" Margin="0,0,0,0" Grid.Row="10" Grid.Column="4"/>
+                <local:BlockRectangle x:Name="Cell_11_4" Margin="0,0,0,0" Grid.Row="11" Grid.Column="4"/>
+                <local:BlockRectangle x:Name="Cell_12_4" Margin="0,0,0,0" Grid.Row="12" Grid.Column="4"/>
+                <local:BlockRectangle x:Name="Cell_13_4" Margin="0,0,0,0" Grid.Row="13" Grid.Column="4"/>
+                <local:BlockRectangle x:Name="Cell_14_4" Margin="0,0,0,0" Grid.Row="14" Grid.Column="4"/>
+                <local:BlockRectangle x:Name="Cell_15_4" Margin="0,0,0,0" Grid.Row="15" Grid.Column="4"/>
+                <local:BlockRectangle x:Name="Cell_16_4" Margin="0,0,0,0" Grid.Row="16" Grid.Column="4"/>
+                <local:BlockRectangle x:Name="Cell_17_4" Margin="0,0,0,0" Grid.Row="17" Grid.Column="4"/>
+                <local:BlockRectangle x:Name="Cell_18_4" Margin="0,0,0,0" Grid.Row="18" Grid.Column="4"/>
+                <local:BlockRectangle x:Name="Cell_19_4" Margin="0,0,0,0" Grid.Row="19" Grid.Column="4"/>
+                <local:BlockRectangle x:Name="Cell_0_5" Margin="0,0,0,0" Grid.Row="0" Grid.Column="5"/>
+                <local:BlockRectangle x:Name="Cell_1_5" Margin="0,0,0,0" Grid.Row="1" Grid.Column="5"/>
+                <local:BlockRectangle x:Name="Cell_2_5" Margin="0,0,0,0" Grid.Row="2" Grid.Column="5"/>
+                <local:BlockRectangle x:Name="Cell_3_5" Margin="0,0,0,0" Grid.Row="3" Grid.Column="5"/>
+                <local:BlockRectangle x:Name="Cell_4_5" Margin="0,0,0,0" Grid.Row="4" Grid.Column="5"/>
+                <local:BlockRectangle x:Name="Cell_5_5" Margin="0,0,0,0" Grid.Row="5" Grid.Column="5"/>
+                <local:BlockRectangle x:Name="Cell_6_5" Margin="0,0,0,0" Grid.Row="6" Grid.Column="5"/>
+                <local:BlockRectangle x:Name="Cell_7_5" Margin="0,0,0,0" Grid.Row="7" Grid.Column="5"/>
+                <local:BlockRectangle x:Name="Cell_8_5" Margin="0,0,0,0" Grid.Row="8" Grid.Column="5"/>
+                <local:BlockRectangle x:Name="Cell_9_5" Margin="0,0,0,0" Grid.Row="9" Grid.Column="5"/>
+                <local:BlockRectangle x:Name="Cell_10_5" Margin="0,0,0,0" Grid.Row="10" Grid.Column="5"/>
+                <local:BlockRectangle x:Name="Cell_11_5" Margin="0,0,0,0" Grid.Row="11" Grid.Column="5"/>
+                <local:BlockRectangle x:Name="Cell_12_5" Margin="0,0,0,0" Grid.Row="12" Grid.Column="5"/>
+                <local:BlockRectangle x:Name="Cell_13_5" Margin="0,0,0,0" Grid.Row="13" Grid.Column="5"/>
+                <local:BlockRectangle x:Name="Cell_14_5" Margin="0,0,0,0" Grid.Row="14" Grid.Column="5"/>
+                <local:BlockRectangle x:Name="Cell_15_5" Margin="0,0,0,0" Grid.Row="15" Grid.Column="5"/>
+                <local:BlockRectangle x:Name="Cell_16_5" Margin="0,0,0,0" Grid.Row="16" Grid.Column="5"/>
+                <local:BlockRectangle x:Name="Cell_17_5" Margin="0,0,0,0" Grid.Row="17" Grid.Column="5"/>
+                <local:BlockRectangle x:Name="Cell_18_5" Margin="0,0,0,0" Grid.Row="18" Grid.Column="5"/>
+                <local:BlockRectangle x:Name="Cell_19_5" Margin="0,0,0,0" Grid.Row="19" Grid.Column="5"/>
+                <local:BlockRectangle x:Name="Cell_0_6" Margin="0,0,0,0" Grid.Row="0" Grid.Column="6"/>
+                <local:BlockRectangle x:Name="Cell_1_6" Margin="0,0,0,0" Grid.Row="1" Grid.Column="6"/>
+                <local:BlockRectangle x:Name="Cell_2_6" Margin="0,0,0,0" Grid.Row="2" Grid.Column="6"/>
+                <local:BlockRectangle x:Name="Cell_3_6" Margin="0,0,0,0" Grid.Row="3" Grid.Column="6"/>
+                <local:BlockRectangle x:Name="Cell_4_6" Margin="0,0,0,0" Grid.Row="4" Grid.Column="6"/>
+                <local:BlockRectangle x:Name="Cell_5_6" Margin="0,0,0,0" Grid.Row="5" Grid.Column="6"/>
+                <local:BlockRectangle x:Name="Cell_6_6" Margin="0,0,0,0" Grid.Row="6" Grid.Column="6"/>
+                <local:BlockRectangle x:Name="Cell_7_6" Margin="0,0,0,0" Grid.Row="7" Grid.Column="6"/>
+                <local:BlockRectangle x:Name="Cell_8_6" Margin="0,0,0,0" Grid.Row="8" Grid.Column="6"/>
+                <local:BlockRectangle x:Name="Cell_9_6" Margin="0,0,0,0" Grid.Row="9" Grid.Column="6"/>
+                <local:BlockRectangle x:Name="Cell_10_6" Margin="0,0,0,0" Grid.Row="10" Grid.Column="6"/>
+                <local:BlockRectangle x:Name="Cell_11_6" Margin="0,0,0,0" Grid.Row="11" Grid.Column="6"/>
+                <local:BlockRectangle x:Name="Cell_12_6" Margin="0,0,0,0" Grid.Row="12" Grid.Column="6"/>
+                <local:BlockRectangle x:Name="Cell_13_6" Margin="0,0,0,0" Grid.Row="13" Grid.Column="6"/>
+                <local:BlockRectangle x:Name="Cell_14_6" Margin="0,0,0,0" Grid.Row="14" Grid.Column="6"/>
+                <local:BlockRectangle x:Name="Cell_15_6" Margin="0,0,0,0" Grid.Row="15" Grid.Column="6"/>
+                <local:BlockRectangle x:Name="Cell_16_6" Margin="0,0,0,0" Grid.Row="16" Grid.Column="6"/>
+                <local:BlockRectangle x:Name="Cell_17_6" Margin="0,0,0,0" Grid.Row="17" Grid.Column="6"/>
+                <local:BlockRectangle x:Name="Cell_18_6" Margin="0,0,0,0" Grid.Row="18" Grid.Column="6"/>
+                <local:BlockRectangle x:Name="Cell_19_6" Margin="0,0,0,0" Grid.Row="19" Grid.Column="6"/>
+                <local:BlockRectangle x:Name="Cell_0_7" Margin="0,0,0,0" Grid.Row="0" Grid.Column="7"/>
+                <local:BlockRectangle x:Name="Cell_1_7" Margin="0,0,0,0" Grid.Row="1" Grid.Column="7"/>
+                <local:BlockRectangle x:Name="Cell_2_7" Margin="0,0,0,0" Grid.Row="2" Grid.Column="7"/>
+                <local:BlockRectangle x:Name="Cell_3_7" Margin="0,0,0,0" Grid.Row="3" Grid.Column="7"/>
+                <local:BlockRectangle x:Name="Cell_4_7" Margin="0,0,0,0" Grid.Row="4" Grid.Column="7"/>
+                <local:BlockRectangle x:Name="Cell_5_7" Margin="0,0,0,0" Grid.Row="5" Grid.Column="7"/>
+                <local:BlockRectangle x:Name="Cell_6_7" Margin="0,0,0,0" Grid.Row="6" Grid.Column="7"/>
+                <local:BlockRectangle x:Name="Cell_7_7" Margin="0,0,0,0" Grid.Row="7" Grid.Column="7"/>
+                <local:BlockRectangle x:Name="Cell_8_7" Margin="0,0,0,0" Grid.Row="8" Grid.Column="7"/>
+                <local:BlockRectangle x:Name="Cell_9_7" Margin="0,0,0,0" Grid.Row="9" Grid.Column="7"/>
+                <local:BlockRectangle x:Name="Cell_10_7" Margin="0,0,0,0" Grid.Row="10" Grid.Column="7"/>
+                <local:BlockRectangle x:Name="Cell_11_7" Margin="0,0,0,0" Grid.Row="11" Grid.Column="7"/>
+                <local:BlockRectangle x:Name="Cell_12_7" Margin="0,0,0,0" Grid.Row="12" Grid.Column="7"/>
+                <local:BlockRectangle x:Name="Cell_13_7" Margin="0,0,0,0" Grid.Row="13" Grid.Column="7"/>
+                <local:BlockRectangle x:Name="Cell_14_7" Margin="0,0,0,0" Grid.Row="14" Grid.Column="7"/>
+                <local:BlockRectangle x:Name="Cell_15_7" Margin="0,0,0,0" Grid.Row="15" Grid.Column="7"/>
+                <local:BlockRectangle x:Name="Cell_16_7" Margin="0,0,0,0" Grid.Row="16" Grid.Column="7"/>
+                <local:BlockRectangle x:Name="Cell_17_7" Margin="0,0,0,0" Grid.Row="17" Grid.Column="7"/>
+                <local:BlockRectangle x:Name="Cell_18_7" Margin="0,0,0,0" Grid.Row="18" Grid.Column="7"/>
+                <local:BlockRectangle x:Name="Cell_19_7" Margin="0,0,0,0" Grid.Row="19" Grid.Column="7"/>
+                <local:BlockRectangle x:Name="Cell_0_8" Margin="0,0,0,0" Grid.Row="0" Grid.Column="8"/>
+                <local:BlockRectangle x:Name="Cell_1_8" Margin="0,0,0,0" Grid.Row="1" Grid.Column="8"/>
+                <local:BlockRectangle x:Name="Cell_2_8" Margin="0,0,0,0" Grid.Row="2" Grid.Column="8"/>
+                <local:BlockRectangle x:Name="Cell_3_8" Margin="0,0,0,0" Grid.Row="3" Grid.Column="8"/>
+                <local:BlockRectangle x:Name="Cell_4_8" Margin="0,0,0,0" Grid.Row="4" Grid.Column="8"/>
+                <local:BlockRectangle x:Name="Cell_5_8" Margin="0,0,0,0" Grid.Row="5" Grid.Column="8"/>
+                <local:BlockRectangle x:Name="Cell_6_8" Margin="0,0,0,0" Grid.Row="6" Grid.Column="8"/>
+                <local:BlockRectangle x:Name="Cell_7_8" Margin="0,0,0,0" Grid.Row="7" Grid.Column="8"/>
+                <local:BlockRectangle x:Name="Cell_8_8" Margin="0,0,0,0" Grid.Row="8" Grid.Column="8"/>
+                <local:BlockRectangle x:Name="Cell_9_8" Margin="0,0,0,0" Grid.Row="9" Grid.Column="8"/>
+                <local:BlockRectangle x:Name="Cell_10_8" Margin="0,0,0,0" Grid.Row="10" Grid.Column="8"/>
+                <local:BlockRectangle x:Name="Cell_11_8" Margin="0,0,0,0" Grid.Row="11" Grid.Column="8"/>
+                <local:BlockRectangle x:Name="Cell_12_8" Margin="0,0,0,0" Grid.Row="12" Grid.Column="8"/>
+                <local:BlockRectangle x:Name="Cell_13_8" Margin="0,0,0,0" Grid.Row="13" Grid.Column="8"/>
+                <local:BlockRectangle x:Name="Cell_14_8" Margin="0,0,0,0" Grid.Row="14" Grid.Column="8"/>
+                <local:BlockRectangle x:Name="Cell_15_8" Margin="0,0,0,0" Grid.Row="15" Grid.Column="8"/>
+                <local:BlockRectangle x:Name="Cell_16_8" Margin="0,0,0,0" Grid.Row="16" Grid.Column="8"/>
+                <local:BlockRectangle x:Name="Cell_17_8" Margin="0,0,0,0" Grid.Row="17" Grid.Column="8"/>
+                <local:BlockRectangle x:Name="Cell_18_8" Margin="0,0,0,0" Grid.Row="18" Grid.Column="8"/>
+                <local:BlockRectangle x:Name="Cell_19_8" Margin="0,0,0,0" Grid.Row="19" Grid.Column="8"/>
+                <local:BlockRectangle x:Name="Cell_0_9" Margin="0,0,0,0" Grid.Row="0" Grid.Column="9"/>
+                <local:BlockRectangle x:Name="Cell_1_9" Margin="0,0,0,0" Grid.Row="1" Grid.Column="9"/>
+                <local:BlockRectangle x:Name="Cell_2_9" Margin="0,0,0,0" Grid.Row="2" Grid.Column="9"/>
+                <local:BlockRectangle x:Name="Cell_3_9" Margin="0,0,0,0" Grid.Row="3" Grid.Column="9"/>
+                <local:BlockRectangle x:Name="Cell_4_9" Margin="0,0,0,0" Grid.Row="4" Grid.Column="9"/>
+                <local:BlockRectangle x:Name="Cell_5_9" Margin="0,0,0,0" Grid.Row="5" Grid.Column="9"/>
+                <local:BlockRectangle x:Name="Cell_6_9" Margin="0,0,0,0" Grid.Row="6" Grid.Column="9"/>
+                <local:BlockRectangle x:Name="Cell_7_9" Margin="0,0,0,0" Grid.Row="7" Grid.Column="9"/>
+                <local:BlockRectangle x:Name="Cell_8_9" Margin="0,0,0,0" Grid.Row="8" Grid.Column="9"/>
+                <local:BlockRectangle x:Name="Cell_9_9" Margin="0,0,0,0" Grid.Row="9" Grid.Column="9"/>
+                <local:BlockRectangle x:Name="Cell_10_9" Margin="0,0,0,0" Grid.Row="10" Grid.Column="9"/>
+                <local:BlockRectangle x:Name="Cell_11_9" Margin="0,0,0,0" Grid.Row="11" Grid.Column="9"/>
+                <local:BlockRectangle x:Name="Cell_12_9" Margin="0,0,0,0" Grid.Row="12" Grid.Column="9"/>
+                <local:BlockRectangle x:Name="Cell_13_9" Margin="0,0,0,0" Grid.Row="13" Grid.Column="9"/>
+                <local:BlockRectangle x:Name="Cell_14_9" Margin="0,0,0,0" Grid.Row="14" Grid.Column="9"/>
+                <local:BlockRectangle x:Name="Cell_15_9" Margin="0,0,0,0" Grid.Row="15" Grid.Column="9"/>
+                <local:BlockRectangle x:Name="Cell_16_9" Margin="0,0,0,0" Grid.Row="16" Grid.Column="9"/>
+                <local:BlockRectangle x:Name="Cell_17_9" Margin="0,0,0,0" Grid.Row="17" Grid.Column="9"/>
+                <local:BlockRectangle x:Name="Cell_18_9" Margin="0,0,0,0" Grid.Row="18" Grid.Column="9"/>
+                <local:BlockRectangle x:Name="Cell_19_9" Margin="0,0,0,0" Grid.Row="19" Grid.Column="9"/>
             </Grid>
         </Border>
-        <Border x:Name="Hold" BorderThickness="1" BorderBrush="Black" Height="100" Width="100" Margin="20,20,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  />
-        <Border x:Name="Next" BorderThickness="1" BorderBrush="Black" Height="300" Width="100" Margin="0,20,20,0" VerticalAlignment="Top" HorizontalAlignment="Right"  />
+        <Border x:Name="Hold" BorderThickness="1" BorderBrush="Black" Height="108" Width="108" Margin="20,20,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Background="LightGray" >
+            <Grid x:Name="HoldBlockGrid" Margin="3,3,3,3">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <local:BlockRectangle x:Name="HoldCell_0_0" Margin="0,0,0,0" Grid.Row="0" Grid.Column="0"/>
+                <local:BlockRectangle x:Name="HoldCell_1_0" Margin="0,0,0,0" Grid.Row="1" Grid.Column="0"/>
+                <local:BlockRectangle x:Name="HoldCell_2_0" Margin="0,0,0,0" Grid.Row="2" Grid.Column="0"/>
+                <local:BlockRectangle x:Name="HoldCell_3_0" Margin="0,0,0,0" Grid.Row="3" Grid.Column="0"/>
+                <local:BlockRectangle x:Name="HoldCell_0_1" Margin="0,0,0,0" Grid.Row="0" Grid.Column="1"/>
+                <local:BlockRectangle x:Name="HoldCell_1_1" Margin="0,0,0,0" Grid.Row="1" Grid.Column="1"/>
+                <local:BlockRectangle x:Name="HoldCell_2_1" Margin="0,0,0,0" Grid.Row="2" Grid.Column="1"/>
+                <local:BlockRectangle x:Name="HoldCell_3_1" Margin="0,0,0,0" Grid.Row="3" Grid.Column="1"/>
+                <local:BlockRectangle x:Name="HoldCell_0_2" Margin="0,0,0,0" Grid.Row="0" Grid.Column="2"/>
+                <local:BlockRectangle x:Name="HoldCell_1_2" Margin="0,0,0,0" Grid.Row="1" Grid.Column="2"/>
+                <local:BlockRectangle x:Name="HoldCell_2_2" Margin="0,0,0,0" Grid.Row="2" Grid.Column="2"/>
+                <local:BlockRectangle x:Name="HoldCell_3_2" Margin="0,0,0,0" Grid.Row="3" Grid.Column="2"/>
+                <local:BlockRectangle x:Name="HoldCell_0_3" Margin="0,0,0,0" Grid.Row="0" Grid.Column="3"/>
+                <local:BlockRectangle x:Name="HoldCell_1_3" Margin="0,0,0,0" Grid.Row="1" Grid.Column="3"/>
+                <local:BlockRectangle x:Name="HoldCell_2_3" Margin="0,0,0,0" Grid.Row="2" Grid.Column="3"/>
+                <local:BlockRectangle x:Name="HoldCell_3_3" Margin="0,0,0,0" Grid.Row="3" Grid.Column="3"/>
+            </Grid>
+        </Border>
+        <Border x:Name="Next" BorderThickness="1" BorderBrush="Black" Height="300" Width="100" Margin="0,20,20,0" VerticalAlignment="Top" HorizontalAlignment="Right">
+            <Grid x:Name="NextBlockGrid" Margin="10,0,10,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+            </Grid>
+        </Border>
         <Border x:Name="Score" BorderThickness="1" BorderBrush="Black" Height="50" Width="100" Margin="0,325,20,0" VerticalAlignment="Top" HorizontalAlignment="Right"  />
         <Button x:Name="button" Content="START" HorizontalAlignment="Left" Height="34" Margin="480,390,0,0" VerticalAlignment="Top" Width="100" Click="button_Click"/>
         <Button x:Name="button1" Content="STOP" HorizontalAlignment="Left" Margin="480,439,0,0" VerticalAlignment="Top" Height="32" Width="100" Click="button1_Click"/>
