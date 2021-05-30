@@ -11,16 +11,13 @@ namespace TetrisLogic
     {
         public int Width { get { return _width; } }
         public int Height { get { return _height; } }
+        public Point SpawnPoint { get { return _spawnPoint; } }
 
         private static readonly int _width = SystemProperty.FieldWidth;
         private static readonly int _height = SystemProperty.FieldHeight;
-
-
-
-        private int[,] FieldState = new int[_width, _height];
-        private SystemProperty.BlockType[,] FieldTypeState = new SystemProperty.BlockType[_width, _height];
-
-        private static readonly Point SpawnPoint = new Point(3, 0);
+        private int[,] _fieldState = new int[_width, _height];
+        private SystemProperty.BlockType[,] _fieldTypeState = new SystemProperty.BlockType[_width, _height];
+        private static readonly Point _spawnPoint = new Point(3, 0);
 
         public void InitFieldState()
         {
@@ -28,8 +25,8 @@ namespace TetrisLogic
             {
                 for (var h = 0; h < _height; h++)
                 {
-                    FieldState[w, h] = SystemProperty.Empty;
-                    FieldTypeState[w, h] = SystemProperty.BlockType.nothing;
+                    _fieldState[w, h] = SystemProperty.Empty;
+                    _fieldTypeState[w, h] = SystemProperty.BlockType.nothing;
                 }
             }
         }
@@ -42,7 +39,7 @@ namespace TetrisLogic
             {
                 for (var h = 0; h < _height; h++)
                 {
-                    if(FieldState[w, h] == SystemProperty.FixedBlock)
+                    if(_fieldState[w, h] == SystemProperty.FixedBlock)
                     {
                         points.Add(new Point(w,h));
                     }
@@ -60,9 +57,9 @@ namespace TetrisLogic
             {
                 for (var h = 0; h < _height; h++)
                 {
-                    if (FieldState[w, h] == SystemProperty.FixedBlock)
+                    if (_fieldState[w, h] == SystemProperty.FixedBlock)
                     {
-                        types.Add(FieldTypeState[w, h]);
+                        types.Add(_fieldTypeState[w, h]);
                     }
                 }
             }
@@ -72,17 +69,12 @@ namespace TetrisLogic
 
         public int GetFieldState(int w, int h)
         {
-            if(_width <= w || w < 0)
+            if(_width <= w || w < 0 || _height <= h || h < 0)
             {
                 return SystemProperty.OutOfField;
             }
 
-            if (_height <= h || h < 0)
-            {
-                return SystemProperty.OutOfField;
-            }
-
-            return FieldState[w, h];
+            return _fieldState[w, h];
         }
 
         public bool CanSpawn()
@@ -94,12 +86,12 @@ namespace TetrisLogic
         {
             UpdateCurerntBlock(cb, isFixedBlock);
 
-            //UpdateLine();
+            UpdateLine();
         }
 
         private void UpdateLine()
         {
-            throw new NotImplementedException();
+            // TODO:
         }
 
         private void UpdateCurerntBlock(Block cb, bool isFixedBlock)
@@ -108,9 +100,9 @@ namespace TetrisLogic
             {
                 for (var y = 0; y < _height; y++)
                 {
-                    if (FieldState[x, y] == SystemProperty.Block)
+                    if (_fieldState[x, y] == SystemProperty.Block)
                     {
-                        FieldState[x, y] = SystemProperty.Empty;
+                        _fieldState[x, y] = SystemProperty.Empty;
                     }
                 }
             }
@@ -121,25 +113,21 @@ namespace TetrisLogic
                 {
                     if (GetFieldState(point.X, point.Y) != SystemProperty.OutOfField)
                     {
-                        FieldState[point.X, point.Y] = SystemProperty.FixedBlock;
-                        FieldTypeState[point.X, point.Y] = cb.BlockType;
+                        _fieldState[point.X, point.Y] = SystemProperty.FixedBlock;
+                        _fieldTypeState[point.X, point.Y] = cb.BlockType;
                     }
-
                 }
             }
             else
             {
                 foreach (var point in cb.GetBlockPoints())
                 {
-
                     if (GetFieldState(point.X, point.Y) != SystemProperty.OutOfField)
                     {
-                        FieldState[point.X, point.Y] = SystemProperty.Block;
+                        _fieldState[point.X, point.Y] = SystemProperty.Block;
                     }
                 }
             }
         }
-
-
     }
 }

@@ -25,6 +25,7 @@ namespace TetrisLogic
         public void Reset()
         {
             BlocksPool = new List<Block>();
+            CreateBlocksPool();
         }
 
         /// <summary>

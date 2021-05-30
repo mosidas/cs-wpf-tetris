@@ -16,7 +16,7 @@ namespace TetrisWindow
     public partial class MainWindow : Window
     {
         private GameManager Manager { get; set; }
-        private System.Timers.Timer TimersTimer;
+        private Timer TimersTimer;
         private double _time = 0.0;
         private ActionType _userAction;
 
@@ -112,54 +112,6 @@ namespace TetrisWindow
             }
 
             _beforeCurrnetBlockPoints = blockPoints.ToList();
-
-            //for (var i = 0; i < blockPoints.Count; i++)
-            //{
-            //    var block = (BlockRectangle)MainField.FindName("currentBlock" + i);
-            //    if(block == null)
-            //    {
-            //        block = new BlockRectangle();
-            //        block.Name = "currentBlock" + i;
-            //        MainGrid.Children.Add(block);
-            //        MainGrid.RegisterName("currentBlock" + i, block);
-            //    }
-
-            //    block.SetValue(Grid.RowProperty, blockPoints[i].Y);
-            //    block.SetValue(Grid.ColumnProperty, blockPoints[i].X);
-
-            //    if (blockType == BlockType.I)
-            //    {
-            //        block.Rect.Fill = Brushes.LightBlue;
-            //    }
-            //    else if (blockType == BlockType.O)
-            //    {
-            //        block.Rect.Fill = Brushes.Yellow;
-            //    }
-            //    else if (blockType == BlockType.S)
-            //    {
-            //        block.Rect.Fill = Brushes.Green;
-            //    }
-            //    else if (blockType == BlockType.Z)
-            //    {
-            //        block.Rect.Fill = Brushes.Red;
-            //    }
-            //    else if (blockType == BlockType.J)
-            //    {
-            //        block.Rect.Fill = Brushes.Blue;
-            //    }
-            //    else if (blockType == BlockType.L)
-            //    {
-            //        block.Rect.Fill = Brushes.Orange;
-            //    }
-            //    else if (blockType == BlockType.T)
-            //    {
-            //        block.Rect.Fill = Brushes.Purple;
-            //    }
-            //    else
-            //    {
-            //        block.Rect.Fill = Brushes.DarkGray;
-            //    }
-            //}
         }
 
         List<System.Drawing.Point> _beforeFixedPoints = new List<System.Drawing.Point>();
@@ -211,61 +163,6 @@ namespace TetrisWindow
             }
 
             _beforeFixedPoints = fixedPoints.ToList();
-
-            //for (var i = 0; i < _beforeFixedBlockCount; i++)
-            //{
-            //    //var block = (BlockRectangle)MainField.FindName("fixedBlock" + i);
-            //    var block = (BlockRectangle)MainGrid.Children.OfType<FrameworkElement>().FirstOrDefault(x => x.Name == "fixedBlock" + i);
-            //    MainGrid.Children.Remove(block);
-            //}
-
-            //for (var i = 0; i < fixedPoints.Count; i++)
-            //{
-            //    var block = new BlockRectangle
-            //    {
-            //        Name = "fixedBlock" + i
-            //    };
-            //    block.SetValue(Grid.ColumnProperty, fixedPoints[i].X);
-            //    block.SetValue(Grid.RowProperty, fixedPoints[i].Y);
-
-            //    if (blockTypes[i] == BlockType.I)
-            //    {
-            //        block.Rect.Fill = Brushes.LightBlue;
-            //    }
-            //    else if (blockTypes[i] == BlockType.O)
-            //    {
-            //        block.Rect.Fill = Brushes.Yellow;
-            //    }
-            //    else if (blockTypes[i] == BlockType.S)
-            //    {
-            //        block.Rect.Fill = Brushes.Green;
-            //    }
-            //    else if (blockTypes[i] == BlockType.Z)
-            //    {
-            //        block.Rect.Fill = Brushes.Red;
-            //    }
-            //    else if (blockTypes[i] == BlockType.J)
-            //    {
-            //        block.Rect.Fill = Brushes.Blue;
-            //    }
-            //    else if (blockTypes[i] == BlockType.L)
-            //    {
-            //        block.Rect.Fill = Brushes.Orange;
-            //    }
-            //    else if (blockTypes[i] == BlockType.T)
-            //    {
-            //        block.Rect.Fill = Brushes.Purple;
-            //    }
-            //    else
-            //    {
-            //        block.Rect.Fill = Brushes.DarkGray;
-            //    }
-
-            //    MainGrid.Children.Add(block);
-            //    //MainGrid.RegisterName(block.Name + "Z", block);
-            //}
-
-            //_beforeFixedBlockCount = fixedPoints.Count();
         }
 
         private void button_Click(object sender, RoutedEventArgs e)

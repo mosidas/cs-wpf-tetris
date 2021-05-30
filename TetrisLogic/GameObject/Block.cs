@@ -7,13 +7,9 @@ namespace TetrisLogic
     public class Block
     {
         public BlockType BlockType { get; private set; }
-
         public Point Location { get { return _location; } }
-
-        // 現在ブロック
         private int[,] _block;
         private Point _location;
-
         public Block(BlockType bt)
         {
             BlockType = bt;
@@ -60,7 +56,7 @@ namespace TetrisLogic
         public void Rotate(int rad)
         {
             var a = rad;
-            _block = new int[_block.GetLength(0), _block.GetLength(1)];
+            _block = new int[SystemProperty.BlockWidth, SystemProperty.BlockHeight];
         }
 
         public List<Point> GetBlockPoints()

@@ -100,7 +100,7 @@ namespace TetrisLogic
 
         private void GameOver()
         {
-            throw new NotImplementedException();
+            
         }
 
         private bool CanSpawn()
