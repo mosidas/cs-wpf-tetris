@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31321.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tetris", "Tetris\Tetris.csproj", "{BA68C88B-E847-4267-B73E-FEB2AF488EE5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TetrisWindow", "TetrisWindow\TetrisWindow.csproj", "{639C4640-437D-4F83-A26E-7970CA34709A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TetrisLogic", "TetrisLogic\TetrisLogic.csproj", "{FEEB61B3-2FA1-4F38-A2BC-A080444303C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TetrisLogicTests", "TetrisLogicTests\TetrisLogicTests.csproj", "{6190B543-A914-4717-A533-068CE451D685}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BA68C88B-E847-4267-B73E-FEB2AF488EE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA68C88B-E847-4267-B73E-FEB2AF488EE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA68C88B-E847-4267-B73E-FEB2AF488EE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA68C88B-E847-4267-B73E-FEB2AF488EE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{639C4640-437D-4F83-A26E-7970CA34709A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{639C4640-437D-4F83-A26E-7970CA34709A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{639C4640-437D-4F83-A26E-7970CA34709A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{639C4640-437D-4F83-A26E-7970CA34709A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEEB61B3-2FA1-4F38-A2BC-A080444303C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEEB61B3-2FA1-4F38-A2BC-A080444303C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEEB61B3-2FA1-4F38-A2BC-A080444303C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEEB61B3-2FA1-4F38-A2BC-A080444303C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6190B543-A914-4717-A533-068CE451D685}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6190B543-A914-4717-A533-068CE451D685}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6190B543-A914-4717-A533-068CE451D685}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6190B543-A914-4717-A533-068CE451D685}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FD86DF6B-B896-4EA3-87D2-550FBA191AD4}
+	EndGlobalSection
+EndGlobal
