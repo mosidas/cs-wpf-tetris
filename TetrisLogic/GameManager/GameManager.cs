@@ -67,7 +67,7 @@ namespace TetrisLogic
         }
 
         private ActionTypes _beforeAction = ActionTypes.nothing;
-        private int _actionCount = 0;
+        private int _actionCount;
         private bool DoContinueSameAction(ActionTypes userAction)
         {
             var bAct = _beforeAction;
