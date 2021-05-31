@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Timers;
 using TetrisLogic.UserAction;
 using static TetrisLogic.SystemProperty;
 
@@ -26,6 +27,7 @@ namespace TetrisLogic
         private Block _currentBlock;
         private Block _holdBlock;
         private readonly IBlocksPoolManager _blocksPoolManager;
+        private Timer TimersTimer;
 
         public GameManager(Field field, IBlocksPoolManager bpm)
         {
@@ -105,7 +107,7 @@ namespace TetrisLogic
 
         private bool CanSpawn()
         {
-            return _field.CanSpawn();
+            return _field.CanSpawn(_currentBlock);
         }
 
         private bool Act(ActionType actType)
@@ -132,17 +134,21 @@ namespace TetrisLogic
             _field.UpdateFieldState(_currentBlock, isFixedBlock);
             if (isFixedBlock)
             {
-                if (CanSpawn())
-                {
-                    _currentBlock = _blocksPoolManager.TakeNextBlock();
-                }
-                else
+                _currentBlock = _blocksPoolManager.TakeNextBlock();
+                if (!CanSpawn())
                 {
                     IsGameOver = true;
                 }
             }
         }
 
+        /// <summary>
+        /// ブロックを固定するかを判定する。
+        /// 時間経過の落下ができない時、下移動操作ができない時、ハードドロップした時にブロックを固定する。
+        /// </summary>
+        /// <param name="actType">操作タイプ</param>
+        /// <param name="canAction">操作の実行可否</param>
+        /// <returns>判定結果</returns>
         private bool NeedBlockFixed(ActionType actType, bool canAction)
         {
             if ((actType == ActionType.moveDown && !canAction) || actType == ActionType.hardDrop)

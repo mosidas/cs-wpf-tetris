@@ -15,10 +15,12 @@ namespace TetrisLogic.UserAction
 
         public bool CanAction(Field field, Block block)
         {
-            var p = block.GetLocation_BlockRight();
-            if (field.GetFieldState(p.X + 1, p.Y) != SystemProperty.Empty)
+            foreach (var p in block.GetBlockRightPoints())
             {
-                return false;
+                if (field.GetFieldState(p.X + 1, p.Y) != Field.FieldState.empty)
+                {
+                    return false;
+                }
             }
 
             return true;

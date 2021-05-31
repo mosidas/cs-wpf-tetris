@@ -11,13 +11,18 @@ namespace TetrisLogic
     {
         public int Width { get { return _width; } }
         public int Height { get { return _height; } }
-        public Point SpawnPoint { get { return _spawnPoint; } }
+        public enum FieldState
+        {
+            empty,
+            block,
+            fixedBlock,
+            outOfField,
+        }
 
-        private static readonly int _width = SystemProperty.FieldWidth;
-        private static readonly int _height = SystemProperty.FieldHeight;
-        private int[,] _fieldState = new int[_width, _height];
+        private static readonly int _width = 10;
+        private static readonly int _height = 20;
+        private FieldState[,] _fieldState = new FieldState[_width, _height];
         private SystemProperty.BlockType[,] _fieldTypeState = new SystemProperty.BlockType[_width, _height];
-        private static readonly Point _spawnPoint = new Point(3, 0);
 
         public void InitFieldState()
         {
@@ -25,7 +30,7 @@ namespace TetrisLogic
             {
                 for (var h = 0; h < _height; h++)
                 {
-                    _fieldState[w, h] = SystemProperty.Empty;
+                    _fieldState[w, h] = FieldState.empty;
                     _fieldTypeState[w, h] = SystemProperty.BlockType.nothing;
                 }
             }
@@ -39,7 +44,7 @@ namespace TetrisLogic
             {
                 for (var h = 0; h < _height; h++)
                 {
-                    if(_fieldState[w, h] == SystemProperty.FixedBlock)
+                    if(_fieldState[w, h] == FieldState.fixedBlock)
                     {
                         points.Add(new Point(w,h));
                     }
@@ -57,7 +62,7 @@ namespace TetrisLogic
             {
                 for (var h = 0; h < _height; h++)
                 {
-                    if (_fieldState[w, h] == SystemProperty.FixedBlock)
+                    if (_fieldState[w, h] == FieldState.fixedBlock)
                     {
                         types.Add(_fieldTypeState[w, h]);
                     }
@@ -67,26 +72,37 @@ namespace TetrisLogic
             return types;
         }
 
-        public int GetFieldState(int w, int h)
+        public FieldState GetFieldState(int w, int h)
         {
             if(_width <= w || w < 0 || _height <= h || h < 0)
             {
-                return SystemProperty.OutOfField;
+                return FieldState.outOfField;
             }
 
             return _fieldState[w, h];
         }
 
-        public bool CanSpawn()
+        public bool CanSpawn(Block cb)
         {
+            foreach(var p in cb.GetBlockPoints())
+            {
+                if(GetFieldState(p.X, p.Y) != FieldState.empty)
+                {
+                    return false;
+                }
+            }
             return true;
         }
 
-        public void UpdateFieldState(Block cb, bool isFixedBlock)
+        public void UpdateFieldState(Block cb, bool fixedBlock)
         {
-            UpdateCurerntBlock(cb, isFixedBlock);
+            UpdateCurerntBlock(cb, fixedBlock);
 
-            UpdateLine();
+            if(fixedBlock)
+            {
+                UpdateLine();
+            }
+            
         }
 
         private void UpdateLine()
@@ -100,9 +116,9 @@ namespace TetrisLogic
             {
                 for (var y = 0; y < _height; y++)
                 {
-                    if (_fieldState[x, y] == SystemProperty.Block)
+                    if (_fieldState[x, y] == FieldState.block)
                     {
-                        _fieldState[x, y] = SystemProperty.Empty;
+                        _fieldState[x, y] = FieldState.empty;
                     }
                 }
             }
@@ -111,9 +127,9 @@ namespace TetrisLogic
             {
                 foreach (var point in cb.GetBlockPoints())
                 {
-                    if (GetFieldState(point.X, point.Y) != SystemProperty.OutOfField)
+                    if (GetFieldState(point.X, point.Y) != FieldState.outOfField)
                     {
-                        _fieldState[point.X, point.Y] = SystemProperty.FixedBlock;
+                        _fieldState[point.X, point.Y] = FieldState.fixedBlock;
                         _fieldTypeState[point.X, point.Y] = cb.BlockType;
                     }
                 }
@@ -122,9 +138,9 @@ namespace TetrisLogic
             {
                 foreach (var point in cb.GetBlockPoints())
                 {
-                    if (GetFieldState(point.X, point.Y) != SystemProperty.OutOfField)
+                    if (GetFieldState(point.X, point.Y) != FieldState.outOfField)
                     {
-                        _fieldState[point.X, point.Y] = SystemProperty.Block;
+                        _fieldState[point.X, point.Y] = FieldState.block;
                     }
                 }
             }

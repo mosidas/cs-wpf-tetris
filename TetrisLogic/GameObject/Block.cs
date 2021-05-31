@@ -9,6 +9,8 @@ namespace TetrisLogic
         public BlockType BlockType { get; private set; }
         public Point Location { get { return _location; } }
         private int[,] _block;
+        private static readonly int block_width = 4;
+        private static readonly int block_height = 4;
         private Point _location;
         public Block(BlockType bt)
         {
@@ -37,7 +39,7 @@ namespace TetrisLogic
                     _block = CreateBlockS();
                     break;
                 default:
-                    _block = new int[SystemProperty.BlockWidth, SystemProperty.BlockHeight];
+                    _block = new int[block_width, block_height];
                     break;
             }
             _location = BlockType == BlockType.I ? new Point(3, 0) : new Point(3, -1);
@@ -45,7 +47,7 @@ namespace TetrisLogic
 
         public void ResetLocation()
         {
-            _location = new Point(3, 0);
+            _location = BlockType == BlockType.I ? new Point(3, 0) : new Point(3, -1);
         }
 
         public void MoveLocation(int x,int y)
@@ -56,15 +58,15 @@ namespace TetrisLogic
         public void Rotate(int rad)
         {
             var a = rad;
-            _block = new int[SystemProperty.BlockWidth, SystemProperty.BlockHeight];
+            _block = new int[block_width, block_height];
         }
 
         public List<Point> GetBlockPoints()
         {
             var points = new List<Point>();
-            for (var y = 0; y < BlockHeight; y++)
+            for (var y = 0; y < block_height; y++)
             {
-                for (int x = 0; x < BlockWidth; x++)
+                for (int x = 0; x < block_width; x++)
                 {
                     if (_block[x, y] == 1)
                     {
@@ -79,9 +81,45 @@ namespace TetrisLogic
         public List<Point> GetBlockBottomPoints()
         {
             var points = new List<Point>();
-            for (int x = 0; x < BlockWidth; x++)
+            for (int x = 0; x < block_width; x++) 
             {
-                for (var y = BlockHeight - 1; y >= 0; y--)
+                for (var y = block_height - 1; y >= 0; y--)
+                {
+                    if (_block[x, y] == 1)
+                    {
+                        points.Add(new Point(x + _location.X, y + _location.Y));
+                        break;
+                    }
+                }
+            }
+
+            return points;
+        }
+
+        public List<Point> GetBlockLeftPoints()
+        {
+            var points = new List<Point>();
+            for (var y = 0; y < block_height; y++) 
+            {
+                for (int x = 0; x < block_width; x++)
+                {
+                    if (_block[x, y] == 1)
+                    {
+                        points.Add(new Point(x + _location.X, y + _location.Y));
+                        break;
+                    }
+                }
+            }
+
+            return points;
+        }
+
+        public List<Point> GetBlockRightPoints()
+        {
+            var points = new List<Point>();
+            for (var y = 0; y < block_height; y++) 
+            {
+                for (int x = block_width - 1; x >= 0; x--)
                 {
                     if (_block[x, y] == 1)
                     {
@@ -96,9 +134,9 @@ namespace TetrisLogic
 
         public Point GetLocation_BlockTop()
         {
-            for (var y = 0; y < SystemProperty.BlockHeight; y++)
+            for (var y = 0; y < block_height; y++) 
             {
-                for (int x = 0; x < SystemProperty.BlockWidth; x++)
+                for (int x = 0; x < block_width; x++)
                 {
                     if (_block[x, y] == 1)
                     {
@@ -112,9 +150,9 @@ namespace TetrisLogic
 
         public Point GetGetLocation_BlockBottom()
         {
-            for (var y = BlockHeight - 1; y >= 0; y--)
+            for (var y = block_height - 1; y >= 0; y--) 
             {
-                for (int x = 0; x < BlockWidth; x++)
+                for (int x = 0; x < block_width; x++)
                 {
                     if (_block[x, y] == 1)
                     {
@@ -128,9 +166,9 @@ namespace TetrisLogic
 
         public Point GetLocation_BlockLeft()
         {
-            for (int x = 0; x < SystemProperty.BlockWidth; x++)
+            for (int x = 0; x < block_width; x++) 
             {
-                for (var y = 0; y < SystemProperty.BlockHeight; y++)
+                for (var y = 0; y < block_height; y++)
                 {
                     if (_block[x, y] == 1)
                     {
@@ -144,9 +182,9 @@ namespace TetrisLogic
 
         public Point GetLocation_BlockRight()
         {
-            for (int x = SystemProperty.BlockWidth - 1; x >= 0; x--)
+            for (int x = block_width - 1; x >= 0; x--) 
             {
-                for (var y = 0; y < SystemProperty.BlockHeight; y++)
+                for (var y = 0; y < block_height; y++)
                 {
                     if (_block[x, y] == 1)
                     {
@@ -167,7 +205,7 @@ namespace TetrisLogic
         /// <returns></returns>
         private int[,] CreateBlockO()
         {
-            var rect = new int[SystemProperty.BlockWidth, SystemProperty.BlockHeight];
+            var rect = new int[block_width, block_height];
             rect[1, 1] = 1;
             rect[1, 2] = 1;
             rect[2, 1] = 1;
@@ -184,7 +222,7 @@ namespace TetrisLogic
         /// <returns></returns>
         private int[,] CreateBlockI()
         {
-            var rect = new int[SystemProperty.BlockWidth, SystemProperty.BlockHeight];
+            var rect = new int[block_width, block_height];
             rect[1, 0] = 1;
             rect[1, 1] = 1;
             rect[1, 2] = 1;
@@ -201,7 +239,7 @@ namespace TetrisLogic
         /// <returns></returns>
         private int[,] CreateBlockT()
         {
-            var rect = new int[SystemProperty.BlockWidth, SystemProperty.BlockHeight];
+            var rect = new int[block_width, block_height];
             rect[1, 1] = 1;
             rect[1, 2] = 1;
             rect[2, 2] = 1;
@@ -218,7 +256,7 @@ namespace TetrisLogic
         /// <returns></returns>
         private int[,] CreateBlockJ()
         {
-            var rect = new int[SystemProperty.BlockWidth, SystemProperty.BlockHeight];
+            var rect = new int[block_width, block_height];
             rect[1, 1] = 1;
             rect[2, 1] = 1;
             rect[1, 2] = 1;
@@ -235,7 +273,7 @@ namespace TetrisLogic
         /// <returns></returns>
         private int[,] CreateBlockL()
         {
-            var rect = new int[SystemProperty.BlockWidth, SystemProperty.BlockHeight];
+            var rect = new int[block_width, block_height];
             rect[1, 1] = 1;
             rect[2, 1] = 1;
             rect[2, 2] = 1;
@@ -252,7 +290,7 @@ namespace TetrisLogic
         /// <returns></returns>
         private int[,] CreateBlockZ()
         {
-            var rect = new int[SystemProperty.BlockWidth, SystemProperty.BlockHeight];
+            var rect = new int[block_width, block_height];
             rect[1, 2] = 1;
             rect[2, 1] = 1;
             rect[2, 2] = 1;
@@ -269,7 +307,7 @@ namespace TetrisLogic
         /// <returns></returns>
         private int[,] CreateBlockS()
         {
-            var rect = new int[SystemProperty.BlockWidth, SystemProperty.BlockHeight];
+            var rect = new int[block_width, block_height];
             rect[1, 1] = 1;
             rect[1, 2] = 1;
             rect[2, 2] = 1;

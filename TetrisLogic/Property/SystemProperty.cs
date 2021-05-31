@@ -5,19 +5,11 @@
         // FPS
         public static readonly int FPS = 60;
 
-        // フィールドサイズ
-        public static readonly int FieldWidth = 10;
-        public static readonly int FieldHeight = 20;
-
         // フィールド状態
         public static readonly int Empty = 0;
         public static readonly int Block = 1;
         public static readonly int FixedBlock = 2;
         public static readonly int OutOfField = -1;
-
-        // ブロックサイズ
-        public static readonly int BlockWidth = 4;
-        public static readonly int BlockHeight = 4;
 
         public enum ActionType
         {

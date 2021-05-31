@@ -36,6 +36,11 @@ namespace TetrisWindow
 
             if (Manager.IsGameOver)
             {
+                Dispatcher.Invoke(() =>
+                {
+                    UpdateViewGameOver(Manager.CurrentBlockPoints, Manager.CurrentBlockType, Manager.FixedBlockPoints, Manager.FixedBlockTypes);
+                });
+
                 TimersTimer.Stop();
             }
 
@@ -53,6 +58,43 @@ namespace TetrisWindow
                 UpdateView(Manager.CurrentBlockPoints, Manager.CurrentBlockType, Manager.FixedBlockPoints, Manager.FixedBlockTypes);
             });
         }
+
+        private void UpdateViewGameOver(List<System.Drawing.Point> currentBlockPoints, BlockType currentBlockType, List<System.Drawing.Point> fixedBlockPoints, List<BlockType> fixedBlockTypes)
+        {
+            UpdateCurrnetBlock_GameOver(currentBlockPoints, currentBlockType);
+            UpdateFixedBlock_GameOver(fixedBlockPoints, fixedBlockTypes);
+        }
+
+        private void UpdateFixedBlock_GameOver(List<System.Drawing.Point> fixedBlockPoints, List<BlockType> fixedBlockTypes)
+        {
+            for (var i = 0; i < _beforeFixedPoints.Count; i++)
+            {
+                var block = (BlockRectangle)MainField.FindName("Cell_" + _beforeFixedPoints[i].Y + "_" + _beforeFixedPoints[i].X);
+                block.Rect.Fill = Brushes.Black;
+            }
+
+            for (var i = 0; i < fixedBlockPoints.Count; i++)
+            {
+                var block = (BlockRectangle)MainField.FindName("Cell_" + _beforeFixedPoints[i].Y + "_" + _beforeFixedPoints[i].X);
+                block.Rect.Fill = Brushes.Black;
+            }
+        }
+
+        private void UpdateCurrnetBlock_GameOver(List<System.Drawing.Point> currentBlockPoints, BlockType currentBlockType)
+        {
+            for (var i = 0; i < _beforeCurrnetBlockPoints.Count; i++)
+            {
+                var block = (BlockRectangle)MainField.FindName("Cell_" + _beforeCurrnetBlockPoints[i].Y + "_" + _beforeCurrnetBlockPoints[i].X);
+                block.Rect.Fill = Brushes.Black;
+            }
+
+            for (var i = 0; i < currentBlockPoints.Count; i++)
+            {
+                var block = (BlockRectangle)MainField.FindName("Cell_" + _beforeCurrnetBlockPoints[i].Y + "_" + _beforeCurrnetBlockPoints[i].X);
+                block.Rect.Fill = Brushes.Black;
+            }
+        }
+
         private void UpdateView(List<System.Drawing.Point> blockPoints, BlockType blockType, List<System.Drawing.Point> fixedPoints, List<BlockType> fixedBlockTypes)
         {
             UpdateCurrnetBlock(blockPoints, blockType);
