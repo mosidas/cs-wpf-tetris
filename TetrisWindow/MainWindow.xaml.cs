@@ -36,12 +36,15 @@ namespace TetrisWindow
 
             if (Manager.IsGameOver)
             {
+                _userAction = ActionTypes.nothing;
+
                 Dispatcher.Invoke(() =>
                 {
                     UpdateViewGameOver(Manager.CurrentBlockPoints, Manager.CurrentBlockType, Manager.FixedBlockPoints, Manager.FixedBlockTypes);
                 });
 
                 TimersTimer.Stop();
+                return;
             }
 
             if (doTimerAction)
@@ -67,32 +70,32 @@ namespace TetrisWindow
 
         private void UpdateFixedBlock_GameOver(List<System.Drawing.Point> fixedBlockPoints, List<BlockTypes> fixedBlockTypes)
         {
-            for (var i = 0; i < _beforeFixedPoints.Count; i++)
+            _beforeFixedPoints.ForEach(p =>
             {
-                var block = (BlockRectangle)MainField.FindName("Cell_" + _beforeFixedPoints[i].Y + "_" + _beforeFixedPoints[i].X);
+                var block = (BlockRectangle)MainField.FindName("Cell_" + p.Y + "_" + p.X);
                 block.Rect.Fill = Brushes.Black;
-            }
+            });
 
-            for (var i = 0; i < fixedBlockPoints.Count; i++)
+            fixedBlockPoints.ForEach(p =>
             {
-                var block = (BlockRectangle)MainField.FindName("Cell_" + _beforeFixedPoints[i].Y + "_" + _beforeFixedPoints[i].X);
+                var block = (BlockRectangle)MainField.FindName("Cell_" + p.Y + "_" + p.X);
                 block.Rect.Fill = Brushes.Black;
-            }
+            });
         }
 
         private void UpdateCurrnetBlock_GameOver(List<System.Drawing.Point> currentBlockPoints, BlockTypes currentBlockType)
         {
-            for (var i = 0; i < _beforeCurrnetBlockPoints.Count; i++)
+            _beforeCurrnetBlockPoints.ForEach(p => 
             {
-                var block = (BlockRectangle)MainField.FindName("Cell_" + _beforeCurrnetBlockPoints[i].Y + "_" + _beforeCurrnetBlockPoints[i].X);
+                var block = (BlockRectangle)MainField.FindName("Cell_" + p.Y + "_" + p.X);
                 block.Rect.Fill = Brushes.Black;
-            }
+            });
 
-            for (var i = 0; i < currentBlockPoints.Count; i++)
+            currentBlockPoints.ForEach(p =>
             {
-                var block = (BlockRectangle)MainField.FindName("Cell_" + _beforeCurrnetBlockPoints[i].Y + "_" + _beforeCurrnetBlockPoints[i].X);
+                var block = (BlockRectangle)MainField.FindName("Cell_" + p.Y + "_" + p.X);
                 block.Rect.Fill = Brushes.Black;
-            }
+            });
         }
 
         private void UpdateView(List<System.Drawing.Point> blockPoints, BlockTypes blockType, List<System.Drawing.Point> fixedPoints, List<BlockTypes> fixedBlockTypes)
@@ -105,53 +108,17 @@ namespace TetrisWindow
 
         private void UpdateCurrnetBlock(List<System.Drawing.Point> blockPoints, BlockTypes blockType)
         {
-            for (var i = 0; i < _beforeCurrnetBlockPoints.Count; i++)
+            _beforeCurrnetBlockPoints.ForEach(p =>
             {
-                var block = (BlockRectangle)MainField.FindName("Cell_" + _beforeCurrnetBlockPoints[i].Y + "_" + _beforeCurrnetBlockPoints[i].X);
+                var block = (BlockRectangle)MainField.FindName("Cell_" + p.Y + "_" + p.X);
                 block.Rect.Fill = Brushes.DarkGray;
-            }
+            });
 
-            for (var i = 0; i < blockPoints.Count; i++)
+            blockPoints.ForEach(p => 
             {
-                var block = (BlockRectangle)MainField.FindName("Cell_" + blockPoints[i].Y + "_" + blockPoints[i].X);
-                if (block == null)
-                {
-                    continue;
-                }
-
-                if (blockType == BlockTypes.I)
-                {
-                    block.Rect.Fill = Brushes.LightBlue;
-                }
-                else if (blockType == BlockTypes.O)
-                {
-                    block.Rect.Fill = Brushes.Yellow;
-                }
-                else if (blockType == BlockTypes.S)
-                {
-                    block.Rect.Fill = Brushes.Green;
-                }
-                else if (blockType == BlockTypes.Z)
-                {
-                    block.Rect.Fill = Brushes.Red;
-                }
-                else if (blockType == BlockTypes.J)
-                {
-                    block.Rect.Fill = Brushes.Blue;
-                }
-                else if (blockType == BlockTypes.L)
-                {
-                    block.Rect.Fill = Brushes.Orange;
-                }
-                else if (blockType == BlockTypes.T)
-                {
-                    block.Rect.Fill = Brushes.Purple;
-                }
-                else
-                {
-                    block.Rect.Fill = Brushes.DarkGray;
-                }
-            }
+                var block = (BlockRectangle)MainField.FindName("Cell_" + p.Y + "_" + p.X);
+                block.Rect.Fill = GetBlockColor(blockType);
+            });
 
             _beforeCurrnetBlockPoints = blockPoints.ToList();
         }
@@ -160,51 +127,57 @@ namespace TetrisWindow
 
         private void UpdateFixedBlock(List<System.Drawing.Point> fixedPoints, List<BlockTypes> blockTypes)
         {
-            for (var i = 0; i < _beforeFixedPoints.Count; i++)
+            _beforeFixedPoints.ForEach(p =>
             {
-                var block = (BlockRectangle)MainField.FindName("Cell_" + _beforeFixedPoints[i].Y + "_" + _beforeFixedPoints[i].X);
+                var block = (BlockRectangle)MainField.FindName("Cell_" + p.Y + "_" + p.X);
                 block.Rect.Fill = Brushes.DarkGray;
-            }
+            });
 
-            for (var i = 0; i < fixedPoints.Count; i++)
+            var list = fixedPoints.Zip(blockTypes, (p, t) => new { point = p, type = t }).ToList();
+
+            list.ForEach(pair => 
             {
-                var block = (BlockRectangle)MainField.FindName("Cell_" + fixedPoints[i].Y + "_" + fixedPoints[i].X);
-
-                if (blockTypes[i] == BlockTypes.I)
-                {
-                    block.Rect.Fill = Brushes.LightBlue;
-                }
-                else if (blockTypes[i] == BlockTypes.O)
-                {
-                    block.Rect.Fill = Brushes.Yellow;
-                }
-                else if (blockTypes[i] == BlockTypes.S)
-                {
-                    block.Rect.Fill = Brushes.Green;
-                }
-                else if (blockTypes[i] == BlockTypes.Z)
-                {
-                    block.Rect.Fill = Brushes.Red;
-                }
-                else if (blockTypes[i] == BlockTypes.J)
-                {
-                    block.Rect.Fill = Brushes.Blue;
-                }
-                else if (blockTypes[i] == BlockTypes.L)
-                {
-                    block.Rect.Fill = Brushes.Orange;
-                }
-                else if (blockTypes[i] == BlockTypes.T)
-                {
-                    block.Rect.Fill = Brushes.Purple;
-                }
-                else
-                {
-                    block.Rect.Fill = Brushes.DarkGray;
-                }
-            }
+                var block = (BlockRectangle)MainField.FindName("Cell_" + pair.point.Y + "_" + pair.point.X);
+                block.Rect.Fill = GetBlockColor(pair.type);
+            });
 
             _beforeFixedPoints = fixedPoints.ToList();
+        }
+
+        private Brush GetBlockColor(BlockTypes type)
+        {
+            if (type == BlockTypes.I)
+            {
+                return Brushes.LightBlue;
+            }
+            else if (type == BlockTypes.O)
+            {
+                return Brushes.Yellow;
+            }
+            else if (type == BlockTypes.S)
+            {
+                return Brushes.Green;
+            }
+            else if (type == BlockTypes.Z)
+            {
+                return Brushes.Red;
+            }
+            else if (type == BlockTypes.J)
+            {
+                return Brushes.Blue;
+            }
+            else if (type == BlockTypes.L)
+            {
+                return Brushes.Orange;
+            }
+            else if (type == BlockTypes.T)
+            {
+                return Brushes.Purple;
+            }
+            else
+            {
+                return Brushes.DarkGray;
+            }
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
