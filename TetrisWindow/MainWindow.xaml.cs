@@ -39,7 +39,7 @@ namespace TetrisWindow
                 _userAction = ActionTypes.nothing;
                 Dispatcher.Invoke(() =>
                 {
-                    UpdateViewMod_GameOver();
+                    UpdateView_GameOver();
                 });
 
                 _timer.Stop();
@@ -57,30 +57,11 @@ namespace TetrisWindow
 
             Dispatcher.Invoke(() =>
             {
-                UpdateViewMod();
+                UpdateView_Update();
             });
         }
 
-        private void UpdateViewMod()
-        {
-            for (var x = 0; x < _gameManager.FieldWidth;x++)
-            {
-                for (var y = 0; y < _gameManager.FieldHeight; y++)
-                {
-                    var block = (BlockRectangle)MainField.FindName("Cell_" + y + "_" + x);
-                    block.Rect.Fill = Brushes.DarkGray;
-                }
-            }
-
-            var fieldPointAndTypePairs = _gameManager.FieldPointAndTypePairs;
-            fieldPointAndTypePairs.ForEach(pair =>
-            {
-                var block = (BlockRectangle)MainField.FindName("Cell_" + pair.Item1.Y + "_" + pair.Item1.X);
-                block.Rect.Fill = GetBlockColor(pair.Item2);
-            });
-        }
-
-        private void UpdateViewMod_GameOver()
+        private void UpdateView_Init()
         {
             for (var x = 0; x < _gameManager.FieldWidth; x++)
             {
@@ -90,28 +71,44 @@ namespace TetrisWindow
                     block.Rect.Fill = Brushes.DarkGray;
                 }
             }
+        }
 
-            var fieldBlockPoints = _gameManager.FieldBlockPoints;
-            //System.Threading.Tasks.Parallel.ForEach(fieldBlockPoints, p => 
-            //{
-            //    Delay();
-            //    Dispatcher.Invoke(() =>
-            //    {
-            //        var block = (BlockRectangle)MainField.FindName("Cell_" + p.Y + "_" + p.X);
-            //        block.Rect.Fill = Brushes.Black;
-            //    });
-            //});
-            fieldBlockPoints.ForEach(p =>
+        private void UpdateView_Update()
+        {
+            UpdateView_Init();
+
+            var fieldPointAndTypePairs = _gameManager.FieldPointAndTypePairs;
+            fieldPointAndTypePairs.ForEach(pair =>
             {
-                Delay();
-                var block = (BlockRectangle)MainField.FindName("Cell_" + p.Y + "_" + p.X);
-                block.Rect.Fill = Brushes.Black;
+                var block = (BlockRectangle)MainField.FindName("Cell_" + pair.Item1.Y + "_" + pair.Item1.X);
+                block.Rect.Fill = GetBlockColor(pair.Item2);
             });
         }
 
-        private async void Delay()
+        private async void UpdateView_GameOver()
         {
-            await System.Threading.Tasks.Task.Delay(new Random().Next(100, 1000));
+            UpdateView_Update();
+
+            await System.Threading.Tasks.Task.Delay(1500);
+
+            var fieldBlockPoints = _gameManager.FieldBlockPoints;
+
+            fieldBlockPoints.ForEach(p =>
+            {
+                System.Threading.Tasks.Task.Run(() => UpdateView_GameOver_FillBlack(p) );
+
+            });
+        }
+
+        private async void UpdateView_GameOver_FillBlack(System.Drawing.Point p)
+        {
+            await System.Threading.Tasks.Task.Delay(new Random().Next(100, 500));
+
+            Dispatcher.Invoke(() =>
+            {
+                var block = (BlockRectangle)MainField.FindName("Cell_" + p.Y + "_" + p.X);
+                block.Rect.Fill = Brushes.Black;
+            });
         }
 
         private Brush GetBlockColor(BlockTypes type)
