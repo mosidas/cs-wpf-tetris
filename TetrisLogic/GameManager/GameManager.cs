@@ -145,7 +145,7 @@ namespace TetrisLogic
 
         private bool NeedBlockFixed(ActionType actType, bool canAction)
         {
-            if (actType == ActionType.moveDown && !canAction)
+            if ((actType == ActionType.moveDown && !canAction) || actType == ActionType.hardDrop)
             {
                 return true;
             }

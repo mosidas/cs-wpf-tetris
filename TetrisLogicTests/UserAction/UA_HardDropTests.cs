@@ -12,15 +12,58 @@ namespace TetrisLogic.UserAction.Tests
     public class UA_HardDropTests
     {
         [TestMethod()]
-        public void ActionTest()
+        public void ActionTest_Normal()
         {
-            Assert.Fail();
+            // data
+            var block = new Block(SystemProperty.BlockType.O);
+            var holdBlock = new Block(SystemProperty.BlockType.nothing);
+            var field = new Field();
+
+            // target
+            var act = new UA_HardDrop();
+
+            // before
+            var before = block.Location;
+
+            // do
+            act.Action(ref field, ref block, ref holdBlock);
+
+            // after
+            var after = block.Location;
+
+            Assert.AreEqual(before.X, after.X);
+            Assert.AreEqual(before.Y + 18, after.Y);
         }
 
         [TestMethod()]
-        public void CanActionTest()
+        public void CanActionTest_CanDropInInitState()
         {
-            Assert.Fail();
+            // data
+            var block = new Block(SystemProperty.BlockType.O);
+            var field = new Field();
+
+            // target
+            var act = new UA_HardDrop();
+            var ret = act.CanAction(field, block);
+
+            Assert.AreEqual(ret, true);
+        }
+
+        [TestMethod()]
+        public void CanActionTest_OBlockCanNotDropAfterDrop()
+        {
+            // data
+            var block = new Block(SystemProperty.BlockType.O);
+            var holdBlock = new Block(SystemProperty.BlockType.nothing);
+            var field = new Field();
+
+            // target
+            var act = new UA_HardDrop();
+
+            act.Action(ref field, ref block, ref holdBlock);
+
+            var ret = act.CanAction(field, block);
+            Assert.AreEqual(ret, false);
         }
     }
 }
