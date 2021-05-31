@@ -1,6 +1,6 @@
 ﻿namespace TetrisLogic
 {
-    public static class SystemProperty
+    public class SystemProperty
     {
 
     }

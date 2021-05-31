@@ -10,12 +10,12 @@ namespace TetrisLogic.UserAction
     {
         public void Action(ref Field field, ref Block currentBlock, ref Block holdBlock)
         {
-            throw new NotImplementedException();
+            currentBlock.RotateLeft();
         }
 
         public bool CanAction(Field field, Block block)
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 }

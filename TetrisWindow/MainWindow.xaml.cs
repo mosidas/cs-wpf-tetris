@@ -25,26 +25,14 @@ namespace TetrisWindow
             InitializeComponent();
             _gameManager = new GameManager(new Field(),new BlocksPoolManager());
             _timer = new Timer();
-            _timer.Elapsed += new ElapsedEventHandler(OnElapsed_TimersTimer);
+            _timer.Elapsed += new ElapsedEventHandler(OnElapsed_Timer);
             _timer.Interval = _gameManager.FrameRate;
         }
 
-        void OnElapsed_TimersTimer(object sender, ElapsedEventArgs e)
+        void OnElapsed_Timer(object sender, ElapsedEventArgs e)
         {
             var doTimerAction = _time >= _gameManager.DownRate ? true : false;
             _gameManager.Update(_userAction, doTimerAction);
-
-            if (_gameManager.IsGameOver)
-            {
-                _userAction = ActionTypes.nothing;
-                Dispatcher.Invoke(() =>
-                {
-                    UpdateView_GameOver();
-                });
-
-                _timer.Stop();
-                return;
-            }
 
             if (doTimerAction)
             {
@@ -57,7 +45,17 @@ namespace TetrisWindow
 
             Dispatcher.Invoke(() =>
             {
-                UpdateView_Update();
+                if (_gameManager.IsGameOver)
+                {
+                    _userAction = ActionTypes.nothing;
+                    UpdateView_GameOver();
+                    _timer.Stop();
+                }
+                else
+                {
+                    UpdateView_Update();
+                }
+                    
             });
         }
 
