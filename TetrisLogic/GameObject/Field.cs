@@ -37,6 +37,42 @@ namespace TetrisLogic
             }
         }
 
+        public List<(Point,BlockTypes)> GetFieldBlockPointAndTypePairs()
+        {
+            var ret = new List<(Point, BlockTypes)>();
+
+            for (var w = 0; w < _width; w++)
+            {
+                for (var h = 0; h < _height; h++)
+                {
+                    if (_fieldState[w, h] != FieldTypes.empty)
+                    {
+                        ret.Add((new Point(w, h), _fieldTypeState[w, h]));
+                    }
+                }
+            }
+
+            return ret;
+        }
+
+        public List<Point> GetFieldBlockPoints()
+        {
+            var ret = new List<Point>();
+
+            for (var w = 0; w < _width; w++)
+            {
+                for (var h = 0; h < _height; h++)
+                {
+                    if (_fieldState[w, h] != FieldTypes.empty)
+                    {
+                        ret.Add(new Point(w, h));
+                    }
+                }
+            }
+
+            return ret;
+        }
+
         public List<Point> GetFixedBlockPoints()
         {
             var points = new List<Point>();
@@ -142,6 +178,7 @@ namespace TetrisLogic
                     if (GetFieldType(point.X, point.Y) != FieldTypes.outOfField)
                     {
                         _fieldState[point.X, point.Y] = FieldTypes.block;
+                        _fieldTypeState[point.X, point.Y] = cb.BlockType;
                     }
                 }
             }

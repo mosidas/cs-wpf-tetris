@@ -15,35 +15,34 @@ namespace TetrisWindow
     /// </summary> 
     public partial class MainWindow : Window
     {
-        private GameManager Manager { get; set; }
-        private Timer TimersTimer;
-        private double _time = 0.0;
+        private GameManager _gameManager;
+        private Timer _timer;
+        private double _time;
         private ActionTypes _userAction;
 
         public MainWindow()
         {
             InitializeComponent();
-            Manager = new GameManager(new Field(),new BlocksPoolManager());
-            TimersTimer = new Timer();
-            TimersTimer.Elapsed += new ElapsedEventHandler(OnElapsed_TimersTimer);
-            TimersTimer.Interval = Manager.FrameRate;
+            _gameManager = new GameManager(new Field(),new BlocksPoolManager());
+            _timer = new Timer();
+            _timer.Elapsed += new ElapsedEventHandler(OnElapsed_TimersTimer);
+            _timer.Interval = _gameManager.FrameRate;
         }
 
         void OnElapsed_TimersTimer(object sender, ElapsedEventArgs e)
         {
-            var doTimerAction = _time >= Manager.DownRate ? true : false;
-            Manager.Update(_userAction, doTimerAction);
+            var doTimerAction = _time >= _gameManager.DownRate ? true : false;
+            _gameManager.Update(_userAction, doTimerAction);
 
-            if (Manager.IsGameOver)
+            if (_gameManager.IsGameOver)
             {
                 _userAction = ActionTypes.nothing;
-
                 Dispatcher.Invoke(() =>
                 {
-                    UpdateViewGameOver(Manager.CurrentBlockPoints, Manager.CurrentBlockType, Manager.FixedBlockPoints, Manager.FixedBlockTypes);
+                    UpdateViewMod_GameOver();
                 });
 
-                TimersTimer.Stop();
+                _timer.Stop();
                 return;
             }
 
@@ -53,95 +52,66 @@ namespace TetrisWindow
             }
             else
             {
-                _time += Manager.FrameRate;
+                _time += _gameManager.FrameRate;
             }
 
             Dispatcher.Invoke(() =>
             {
-                UpdateView(Manager.CurrentBlockPoints, Manager.CurrentBlockType, Manager.FixedBlockPoints, Manager.FixedBlockTypes);
+                UpdateViewMod();
             });
         }
 
-        private void UpdateViewGameOver(List<System.Drawing.Point> currentBlockPoints, BlockTypes currentBlockType, List<System.Drawing.Point> fixedBlockPoints, List<BlockTypes> fixedBlockTypes)
+        private void UpdateViewMod()
         {
-            UpdateCurrnetBlock_GameOver(currentBlockPoints, currentBlockType);
-            UpdateFixedBlock_GameOver(fixedBlockPoints, fixedBlockTypes);
+            for (var x = 0; x < _gameManager.FieldWidth;x++)
+            {
+                for (var y = 0; y < _gameManager.FieldHeight; y++)
+                {
+                    var block = (BlockRectangle)MainField.FindName("Cell_" + y + "_" + x);
+                    block.Rect.Fill = Brushes.DarkGray;
+                }
+            }
+
+            var fieldPointAndTypePairs = _gameManager.FieldPointAndTypePairs;
+            fieldPointAndTypePairs.ForEach(pair =>
+            {
+                var block = (BlockRectangle)MainField.FindName("Cell_" + pair.Item1.Y + "_" + pair.Item1.X);
+                block.Rect.Fill = GetBlockColor(pair.Item2);
+            });
         }
 
-        private void UpdateFixedBlock_GameOver(List<System.Drawing.Point> fixedBlockPoints, List<BlockTypes> fixedBlockTypes)
+        private void UpdateViewMod_GameOver()
         {
-            _beforeFixedPoints.ForEach(p =>
+            for (var x = 0; x < _gameManager.FieldWidth; x++)
             {
+                for (var y = 0; y < _gameManager.FieldHeight; y++)
+                {
+                    var block = (BlockRectangle)MainField.FindName("Cell_" + y + "_" + x);
+                    block.Rect.Fill = Brushes.DarkGray;
+                }
+            }
+
+            var fieldBlockPoints = _gameManager.FieldBlockPoints;
+            //System.Threading.Tasks.Parallel.ForEach(fieldBlockPoints, p => 
+            //{
+            //    Delay();
+            //    Dispatcher.Invoke(() =>
+            //    {
+            //        var block = (BlockRectangle)MainField.FindName("Cell_" + p.Y + "_" + p.X);
+            //        block.Rect.Fill = Brushes.Black;
+            //    });
+            //});
+            fieldBlockPoints.ForEach(p =>
+            {
+                Delay();
                 var block = (BlockRectangle)MainField.FindName("Cell_" + p.Y + "_" + p.X);
                 block.Rect.Fill = Brushes.Black;
             });
-
-            fixedBlockPoints.ForEach(p =>
-            {
-                var block = (BlockRectangle)MainField.FindName("Cell_" + p.Y + "_" + p.X);
-                block.Rect.Fill = Brushes.Black;
-            });
         }
 
-        private void UpdateCurrnetBlock_GameOver(List<System.Drawing.Point> currentBlockPoints, BlockTypes currentBlockType)
+        private async void Delay()
         {
-            _beforeCurrnetBlockPoints.ForEach(p => 
-            {
-                var block = (BlockRectangle)MainField.FindName("Cell_" + p.Y + "_" + p.X);
-                block.Rect.Fill = Brushes.Black;
-            });
-
-            currentBlockPoints.ForEach(p =>
-            {
-                var block = (BlockRectangle)MainField.FindName("Cell_" + p.Y + "_" + p.X);
-                block.Rect.Fill = Brushes.Black;
-            });
-        }
-
-        private void UpdateView(List<System.Drawing.Point> blockPoints, BlockTypes blockType, List<System.Drawing.Point> fixedPoints, List<BlockTypes> fixedBlockTypes)
-        {
-            UpdateCurrnetBlock(blockPoints, blockType);
-            UpdateFixedBlock(fixedPoints, fixedBlockTypes);
-        }
-
-        List<System.Drawing.Point> _beforeCurrnetBlockPoints = new List<System.Drawing.Point>();
-
-        private void UpdateCurrnetBlock(List<System.Drawing.Point> blockPoints, BlockTypes blockType)
-        {
-            _beforeCurrnetBlockPoints.ForEach(p =>
-            {
-                var block = (BlockRectangle)MainField.FindName("Cell_" + p.Y + "_" + p.X);
-                block.Rect.Fill = Brushes.DarkGray;
-            });
-
-            blockPoints.ForEach(p => 
-            {
-                var block = (BlockRectangle)MainField.FindName("Cell_" + p.Y + "_" + p.X);
-                block.Rect.Fill = GetBlockColor(blockType);
-            });
-
-            _beforeCurrnetBlockPoints = blockPoints.ToList();
-        }
-
-        List<System.Drawing.Point> _beforeFixedPoints = new List<System.Drawing.Point>();
-
-        private void UpdateFixedBlock(List<System.Drawing.Point> fixedPoints, List<BlockTypes> blockTypes)
-        {
-            _beforeFixedPoints.ForEach(p =>
-            {
-                var block = (BlockRectangle)MainField.FindName("Cell_" + p.Y + "_" + p.X);
-                block.Rect.Fill = Brushes.DarkGray;
-            });
-
-            var list = fixedPoints.Zip(blockTypes, (p, t) => new { point = p, type = t }).ToList();
-
-            list.ForEach(pair => 
-            {
-                var block = (BlockRectangle)MainField.FindName("Cell_" + pair.point.Y + "_" + pair.point.X);
-                block.Rect.Fill = GetBlockColor(pair.type);
-            });
-
-            _beforeFixedPoints = fixedPoints.ToList();
+            await System.Threading.Tasks.Task.Delay(new Random().Next(100, 1000));
         }
 
         private Brush GetBlockColor(BlockTypes type)
@@ -183,18 +153,18 @@ namespace TetrisWindow
         private void button_Click(object sender, RoutedEventArgs e)
         {
             _time = 0.0;
-            Manager.Start();
-            TimersTimer.Start();
+            _gameManager.Start();
+            _timer.Start();
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            TimersTimer.Stop();
+            _timer.Stop();
         }
 
         private void button_Copy_Click(object sender, RoutedEventArgs e)
         {
-            TimersTimer.Start();
+            _timer.Start();
         }
 
         private void MainGrid_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)

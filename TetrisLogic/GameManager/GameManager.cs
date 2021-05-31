@@ -16,6 +16,10 @@ namespace TetrisLogic
         public BlockTypes CurrentBlockType { get { return _currentBlock == null ? BlockTypes.nothing : _currentBlock.BlockType; } }
         public List<Point> FixedBlockPoints { get { return _field == null ? new List<Point>() : _field.GetFixedBlockPoints(); } }
         public List<BlockTypes> FixedBlockTypes { get { return _field == null ? new List<BlockTypes>() : _field.GetFixedBlockTypes(); } }
+        public List<(Point, BlockTypes)> FieldPointAndTypePairs { get { return _field == null ? new List<(Point, BlockTypes)>() : _field.GetFieldBlockPointAndTypePairs(); } }
+        public List<Point> FieldBlockPoints { get { return _field == null ? new List<Point>() : _field.GetFieldBlockPoints(); } }
+        public int FieldWidth { get { return _field == null ? 0 : _field.Width; } }
+        public int FieldHeight { get { return _field == null ? 0 : _field.Height; } }
 
         public static readonly int FPS = 60;
         private Field _field;
@@ -38,6 +42,7 @@ namespace TetrisLogic
             _blocksPoolManager.Reset();
             _currentBlock = _blocksPoolManager.TakeNextBlock();
             _holdBlock = null;
+            _field.UpdateField(_currentBlock, false);
         }
 
         public void Update(ActionTypes userAction, bool doTimerAction)
@@ -132,6 +137,7 @@ namespace TetrisLogic
                 {
                     IsGameOver = true;
                 }
+                _field.UpdateField(_currentBlock, false);
             }
         }
 
