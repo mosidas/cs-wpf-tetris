@@ -159,33 +159,17 @@ namespace TetrisWindow
 
         private void MainGrid_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            switch(e.Key)
+            _userAction = e.Key switch
             {
-                case System.Windows.Input.Key.Down:
-                    _userAction = ActionTypes.moveDown;
-                    break;
-                case System.Windows.Input.Key.Left:
-                    _userAction = ActionTypes.moveLeft;
-                    break;
-                case System.Windows.Input.Key.Right:
-                    _userAction = ActionTypes.moveRight;
-                    break;
-                case System.Windows.Input.Key.Up:
-                    _userAction = ActionTypes.hardDrop;
-                    break;
-                case System.Windows.Input.Key.Z:
-                    _userAction = ActionTypes.rotateLeft;
-                    break;
-                case System.Windows.Input.Key.X:
-                    _userAction = ActionTypes.rotateRight;
-                    break;
-                case System.Windows.Input.Key.Space:
-                    _userAction = ActionTypes.hold;
-                    break;
-                default:
-                    _userAction = ActionTypes.nothing;
-                    break;
-            }
+                System.Windows.Input.Key.Down => ActionTypes.moveDown,
+                System.Windows.Input.Key.Left => ActionTypes.moveLeft,
+                System.Windows.Input.Key.Right => ActionTypes.moveRight,
+                System.Windows.Input.Key.Up => ActionTypes.hardDrop,
+                System.Windows.Input.Key.Z => ActionTypes.rotateLeft,
+                System.Windows.Input.Key.X => ActionTypes.rotateRight,
+                System.Windows.Input.Key.Space => ActionTypes.hold,
+                _ => ActionTypes.nothing,
+            };
         }
 
         private void MainGrid_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
