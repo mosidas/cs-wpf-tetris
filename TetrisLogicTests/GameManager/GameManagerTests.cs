@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static TetrisLogic.SystemProperty;
+using TetrisLogicTests.Stub;
 
 namespace TetrisLogic.Tests
 {
@@ -104,19 +105,6 @@ namespace TetrisLogic.Tests
             //    Assert.AreEqual(ret[i].X, 18);
             //    Assert.AreEqual(ret[i].X, 18);
             //}
-        }
-    }
-
-    class BlocksPoolManagerDummy : IBlocksPoolManager
-    {
-        public Block TakeNextBlock()
-        {
-            return new Block(BlockType.O);
-        }
-
-        public void Reset()
-        {
-            
         }
     }
 }
