@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Timers;
 using TetrisLogic.UserAction;
 
 namespace TetrisLogic

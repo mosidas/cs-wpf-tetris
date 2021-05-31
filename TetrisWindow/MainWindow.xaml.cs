@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Timers;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 using TetrisLogic;
 using TetrisLogic.UserAction;
@@ -15,23 +12,23 @@ namespace TetrisWindow
     /// </summary> 
     public partial class MainWindow : Window
     {
-        private GameManager _gameManager;
-        private Timer _timer;
+        private readonly GameManager _gameManager;
+        private readonly Timer _timer;
         private double _time;
         private ActionTypes _userAction;
 
         public MainWindow()
         {
             InitializeComponent();
-            _gameManager = new GameManager(new Field(),new BlocksPoolManager());
+            _gameManager = new GameManager(new Field(), new BlocksPoolManager());
             _timer = new Timer();
             _timer.Elapsed += new ElapsedEventHandler(OnElapsed_Timer);
             _timer.Interval = _gameManager.FrameRate;
         }
 
-        void OnElapsed_Timer(object sender, ElapsedEventArgs e)
+        private void OnElapsed_Timer(object sender, ElapsedEventArgs e)
         {
-            var doTimerAction = _time >= _gameManager.DownRate ? true : false;
+            var doTimerAction = _time >= _gameManager.DownRate;
             _gameManager.Update(_userAction, doTimerAction);
 
             if (doTimerAction)
@@ -54,8 +51,7 @@ namespace TetrisWindow
                 else
                 {
                     UpdateView_Update();
-                }
-                    
+                }    
             });
         }
 
@@ -94,7 +90,6 @@ namespace TetrisWindow
             fieldBlockPoints.ForEach(p =>
             {
                 System.Threading.Tasks.Task.Run(() => UpdateView_GameOver_FillBlack(p) );
-
             });
         }
 

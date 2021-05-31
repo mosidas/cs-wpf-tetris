@@ -20,8 +20,8 @@ namespace TetrisLogic
         public BlockTypes BlockType { get; private set; }
         public Point Location { get { return _location; } }
         private int[,] _block;
-        private readonly int block_width;
-        private readonly int block_height;
+        private readonly int _blockWidth;
+        private readonly int _blockHeight;
         private Point _location = new Point();
         public Block(BlockTypes bt)
         {
@@ -53,9 +53,25 @@ namespace TetrisLogic
                     _block = new int[1, 1];
                     break;
             }
-            block_width = _block.GetLength(0);
-            block_height = _block.GetLength(1);
+            _blockWidth = _block.GetLength(0);
+            _blockHeight = _block.GetLength(1);
             _location = BlockType == BlockTypes.I ? new Point(3, -1) : new Point(3, 0);
+        }
+
+        public Block(Block b)
+        {
+            BlockType = b.BlockType;
+            _block = new int[b._blockWidth, b._blockHeight];
+            _blockWidth = b._blockWidth;
+            _blockHeight = b._blockHeight;
+            for (var x = 0; x < _blockWidth; x++)
+            {
+                for (var y = 0; y < _blockHeight; y++)
+                {
+                    _block[x, y] = b._block[x, y];
+                }
+            }
+            _location = new Point(b._location.X, b._location.Y);
         }
 
         public void ResetLocation()
@@ -70,12 +86,12 @@ namespace TetrisLogic
 
         public void RotateRight()
         {
-            var tmp = new int[block_height, block_width];
-            for (var x = 0; x < block_width;x++)
+            var tmp = new int[_blockHeight, _blockWidth];
+            for (var x = 0; x < _blockWidth;x++)
             {
-                for (var y = 0; y < block_height; y++)
+                for (var y = 0; y < _blockHeight; y++)
                 {
-                    tmp[y, block_width - x - 1] = _block[x, y];
+                    tmp[y, _blockWidth - x - 1] = _block[x, y];
                 }
             }
 
@@ -84,12 +100,12 @@ namespace TetrisLogic
 
         public void RotateLeft()
         {
-            var tmp = new int[block_height, block_width];
-            for (var x = 0; x < block_width; x++)
+            var tmp = new int[_blockHeight, _blockWidth];
+            for (var x = 0; x < _blockWidth; x++)
             {
-                for (var y = 0; y < block_height; y++)
+                for (var y = 0; y < _blockHeight; y++)
                 {
-                    tmp[block_height- y - 1, x] = _block[x, y];
+                    tmp[_blockHeight- y - 1, x] = _block[x, y];
                 }
             }
 
@@ -99,9 +115,9 @@ namespace TetrisLogic
         public List<Point> GetBlockPoints()
         {
             var points = new List<Point>();
-            for (var y = 0; y < block_height; y++)
+            for (var y = 0; y < _blockHeight; y++)
             {
-                for (int x = 0; x < block_width; x++)
+                for (int x = 0; x < _blockWidth; x++)
                 {
                     if (_block[x, y] == 1)
                     {
@@ -116,9 +132,9 @@ namespace TetrisLogic
         public List<Point> GetBlockBottomPoints()
         {
             var points = new List<Point>();
-            for (int x = 0; x < block_width; x++) 
+            for (int x = 0; x < _blockWidth; x++) 
             {
-                for (var y = block_height - 1; y >= 0; y--)
+                for (var y = _blockHeight - 1; y >= 0; y--)
                 {
                     if (_block[x, y] == 1)
                     {
@@ -134,9 +150,9 @@ namespace TetrisLogic
         public List<Point> GetBlockLeftPoints()
         {
             var points = new List<Point>();
-            for (var y = 0; y < block_height; y++) 
+            for (var y = 0; y < _blockHeight; y++) 
             {
-                for (int x = 0; x < block_width; x++)
+                for (int x = 0; x < _blockWidth; x++)
                 {
                     if (_block[x, y] == 1)
                     {
@@ -152,9 +168,9 @@ namespace TetrisLogic
         public List<Point> GetBlockRightPoints()
         {
             var points = new List<Point>();
-            for (var y = 0; y < block_height; y++) 
+            for (var y = 0; y < _blockHeight; y++) 
             {
-                for (int x = block_width - 1; x >= 0; x--)
+                for (int x = _blockWidth - 1; x >= 0; x--)
                 {
                     if (_block[x, y] == 1)
                     {
@@ -167,11 +183,38 @@ namespace TetrisLogic
             return points;
         }
 
+        public List<Point> GetBlockRotatePoints()
+        {
+            var points = new List<Point>();
+            for (var x = 0; x < _blockWidth; x++)
+            {
+                for (var y = 0; y < _blockHeight; y++)
+                {
+                    if (_block[x, y] == 1)
+                    {
+                        if(BlockType == BlockTypes.O || BlockType == BlockTypes.I)
+                        {
+                            points.Add(new Point(x + _location.X, y + _location.Y));
+                        }
+                        else
+                        {
+                            if(!(x == 1 && y == 1))
+                            {
+                                points.Add(new Point(x + _location.X, y + _location.Y));
+                            }
+                        }
+                    }
+                }
+            }
+
+            return points;
+        }
+
         public Point GetLocation_BlockTop()
         {
-            for (var y = 0; y < block_height; y++) 
+            for (var y = 0; y < _blockHeight; y++) 
             {
-                for (int x = 0; x < block_width; x++)
+                for (int x = 0; x < _blockWidth; x++)
                 {
                     if (_block[x, y] == 1)
                     {
@@ -185,9 +228,9 @@ namespace TetrisLogic
 
         public Point GetGetLocation_BlockBottom()
         {
-            for (var y = block_height - 1; y >= 0; y--) 
+            for (var y = _blockHeight - 1; y >= 0; y--) 
             {
-                for (int x = 0; x < block_width; x++)
+                for (int x = 0; x < _blockWidth; x++)
                 {
                     if (_block[x, y] == 1)
                     {
@@ -201,9 +244,9 @@ namespace TetrisLogic
 
         public Point GetLocation_BlockLeft()
         {
-            for (int x = 0; x < block_width; x++) 
+            for (int x = 0; x < _blockWidth; x++) 
             {
-                for (var y = 0; y < block_height; y++)
+                for (var y = 0; y < _blockHeight; y++)
                 {
                     if (_block[x, y] == 1)
                     {
@@ -217,9 +260,9 @@ namespace TetrisLogic
 
         public Point GetLocation_BlockRight()
         {
-            for (int x = block_width - 1; x >= 0; x--) 
+            for (int x = _blockWidth - 1; x >= 0; x--) 
             {
-                for (var y = 0; y < block_height; y++)
+                for (var y = 0; y < _blockHeight; y++)
                 {
                     if (_block[x, y] == 1)
                     {
