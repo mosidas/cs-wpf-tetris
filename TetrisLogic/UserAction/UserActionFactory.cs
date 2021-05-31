@@ -3,30 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static TetrisLogic.SystemProperty;
 
 namespace TetrisLogic.UserAction
 {
-
     public class UserActionFactory
     {
-        public IUserAction CreateUserAction(ActionType actType)
+        public IUserAction CreateUserAction(ActionTypes actType)
         {
             switch (actType)
             {
-                case ActionType.moveLeft:
+                case ActionTypes.moveLeft:
                     return new UA_MoveLeft();
-                case ActionType.moveRight:
+                case ActionTypes.moveRight:
                     return new UA_MoveRight();
-                case ActionType.moveDown:
+                case ActionTypes.moveDown:
                     return new UA_MoveDown();
-                case ActionType.rotateLeft:
+                case ActionTypes.rotateLeft:
                     return new UA_RotateLeft();
-                case ActionType.rotateRight:
+                case ActionTypes.rotateRight:
                     return new UA_RotateRight();
-                case ActionType.hold:
+                case ActionTypes.hold:
                     return new UA_Hold();
-                case ActionType.hardDrop:
+                case ActionTypes.hardDrop:
                     return new UA_HardDrop();
                 default:
                     return null;

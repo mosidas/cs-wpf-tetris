@@ -15,8 +15,8 @@ namespace TetrisLogic.UserAction.Tests
         public void ActionTest_Normal()
         {
             // data
-            var block = new Block(SystemProperty.BlockType.O);
-            var holdBlock = new Block(SystemProperty.BlockType.nothing);
+            var block = new Block(BlockTypes.O);
+            var holdBlock = new Block(BlockTypes.nothing);
             var field = new Field();
 
             // target
@@ -39,8 +39,8 @@ namespace TetrisLogic.UserAction.Tests
         public void CanActionTest_InitStateCanDown()
         {
             // data
-            var block = new Block(SystemProperty.BlockType.O);
-            var holdBlock = new Block(SystemProperty.BlockType.nothing);
+            var block = new Block(BlockTypes.O);
+            var holdBlock = new Block(BlockTypes.nothing);
             var field = new Field();
 
             // target
@@ -54,8 +54,8 @@ namespace TetrisLogic.UserAction.Tests
         public void CanActionTest_OBlockCanDown18th()
         {
             // data
-            var block = new Block(SystemProperty.BlockType.O);
-            var holdBlock = new Block(SystemProperty.BlockType.nothing);
+            var block = new Block(BlockTypes.O);
+            var holdBlock = new Block(BlockTypes.nothing);
             var field = new Field();
 
             // target
@@ -72,8 +72,8 @@ namespace TetrisLogic.UserAction.Tests
         public void CanActionTest_OBlockCanNotDownAfter18Down()
         {
             // data
-            var block = new Block(SystemProperty.BlockType.O);
-            var holdBlock = new Block(SystemProperty.BlockType.nothing);
+            var block = new Block(BlockTypes.O);
+            var holdBlock = new Block(BlockTypes.nothing);
             var field = new Field();
 
             // target
@@ -92,8 +92,8 @@ namespace TetrisLogic.UserAction.Tests
         public void CanActionTest_TBlockCanDown17th()
         {
             // data
-            var block = new Block(SystemProperty.BlockType.T);
-            var holdBlock = new Block(SystemProperty.BlockType.nothing);
+            var block = new Block(BlockTypes.T);
+            var holdBlock = new Block(BlockTypes.nothing);
             var field = new Field();
 
             // target
@@ -110,8 +110,8 @@ namespace TetrisLogic.UserAction.Tests
         public void CanActionTest_TBlockCanNotDownAfter17Down()
         {
             // data
-            var block = new Block(SystemProperty.BlockType.T);
-            var holdBlock = new Block(SystemProperty.BlockType.nothing);
+            var block = new Block(BlockTypes.T);
+            var holdBlock = new Block(BlockTypes.nothing);
             var field = new Field();
 
             // target
@@ -130,8 +130,8 @@ namespace TetrisLogic.UserAction.Tests
         public void CanActionTest_IBlockCanDown16th()
         {
             // data
-            var block = new Block(SystemProperty.BlockType.I);
-            var holdBlock = new Block(SystemProperty.BlockType.nothing);
+            var block = new Block(BlockTypes.I);
+            var holdBlock = new Block(BlockTypes.nothing);
             var field = new Field();
 
             // target
@@ -148,8 +148,8 @@ namespace TetrisLogic.UserAction.Tests
         public void CanActionTest_IBlockCanNotDownAfter16Down()
         {
             // data
-            var block = new Block(SystemProperty.BlockType.I);
-            var holdBlock = new Block(SystemProperty.BlockType.nothing);
+            var block = new Block(BlockTypes.I);
+            var holdBlock = new Block(BlockTypes.nothing);
             var field = new Field();
 
             // target

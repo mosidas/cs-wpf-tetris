@@ -17,7 +17,7 @@ namespace TetrisLogic.UserAction
         {
             foreach (var p in block.GetBlockLeftPoints())
             {
-                if (field.GetFieldState(p.X - 1, p.Y) != SystemProperty.Empty)
+                if (field.GetFieldType(p.X - 1, p.Y) != FieldTypes.empty)
                 {
                     return false;
                 }

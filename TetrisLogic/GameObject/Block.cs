@@ -1,53 +1,64 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using static TetrisLogic.SystemProperty;
 
 namespace TetrisLogic
 {
+    public enum BlockTypes
+    {
+        nothing,
+        T,
+        I,
+        J,
+        L,
+        S,
+        Z,
+        O,
+    }
+
     public class Block
     {
-        public BlockType BlockType { get; private set; }
+        public BlockTypes BlockType { get; private set; }
         public Point Location { get { return _location; } }
-        private int[,] _block;
+        private int[,] _block = new int[block_width, block_height];
         private static readonly int block_width = 4;
         private static readonly int block_height = 4;
-        private Point _location;
-        public Block(BlockType bt)
+        private Point _location = new Point();
+        public Block(BlockTypes bt)
         {
             BlockType = bt;
             switch(bt)
             {
-                case BlockType.O:
+                case BlockTypes.O:
                     _block = CreateBlockO();
                     break;
-                case BlockType.I:
+                case BlockTypes.I:
                     _block = CreateBlockI();
                     break;
-                case BlockType.T:
+                case BlockTypes.T:
                     _block = CreateBlockT();
                     break;
-                case BlockType.J:
+                case BlockTypes.J:
                     _block = CreateBlockJ();
                     break;
-                case BlockType.L:
+                case BlockTypes.L:
                     _block = CreateBlockL();
                     break;
-                case BlockType.Z:
+                case BlockTypes.Z:
                     _block = CreateBlockZ();
                     break;
-                case BlockType.S:
+                case BlockTypes.S:
                     _block = CreateBlockS();
                     break;
                 default:
                     _block = new int[block_width, block_height];
                     break;
             }
-            _location = BlockType == BlockType.I ? new Point(3, 0) : new Point(3, -1);
+            _location = BlockType == BlockTypes.I ? new Point(3, 0) : new Point(3, -1);
         }
 
         public void ResetLocation()
         {
-            _location = BlockType == BlockType.I ? new Point(3, 0) : new Point(3, -1);
+            _location = BlockType == BlockTypes.I ? new Point(3, 0) : new Point(3, -1);
         }
 
         public void MoveLocation(int x,int y)

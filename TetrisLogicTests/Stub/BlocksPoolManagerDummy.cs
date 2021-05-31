@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TetrisLogic;
-using static TetrisLogic.SystemProperty;
 
 namespace TetrisLogicTests.Stub
 {
@@ -12,7 +11,7 @@ namespace TetrisLogicTests.Stub
     {
         public Block TakeNextBlock()
         {
-            return new Block(BlockType.O);
+            return new Block(BlockTypes.O);
         }
 
         public void Reset()

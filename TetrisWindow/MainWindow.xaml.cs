@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using TetrisLogic;
-using static TetrisLogic.SystemProperty;
+using TetrisLogic.UserAction;
 
 namespace TetrisWindow
 {
@@ -18,7 +18,7 @@ namespace TetrisWindow
         private GameManager Manager { get; set; }
         private Timer TimersTimer;
         private double _time = 0.0;
-        private ActionType _userAction;
+        private ActionTypes _userAction;
 
         public MainWindow()
         {
@@ -59,13 +59,13 @@ namespace TetrisWindow
             });
         }
 
-        private void UpdateViewGameOver(List<System.Drawing.Point> currentBlockPoints, BlockType currentBlockType, List<System.Drawing.Point> fixedBlockPoints, List<BlockType> fixedBlockTypes)
+        private void UpdateViewGameOver(List<System.Drawing.Point> currentBlockPoints, BlockTypes currentBlockType, List<System.Drawing.Point> fixedBlockPoints, List<BlockTypes> fixedBlockTypes)
         {
             UpdateCurrnetBlock_GameOver(currentBlockPoints, currentBlockType);
             UpdateFixedBlock_GameOver(fixedBlockPoints, fixedBlockTypes);
         }
 
-        private void UpdateFixedBlock_GameOver(List<System.Drawing.Point> fixedBlockPoints, List<BlockType> fixedBlockTypes)
+        private void UpdateFixedBlock_GameOver(List<System.Drawing.Point> fixedBlockPoints, List<BlockTypes> fixedBlockTypes)
         {
             for (var i = 0; i < _beforeFixedPoints.Count; i++)
             {
@@ -80,7 +80,7 @@ namespace TetrisWindow
             }
         }
 
-        private void UpdateCurrnetBlock_GameOver(List<System.Drawing.Point> currentBlockPoints, BlockType currentBlockType)
+        private void UpdateCurrnetBlock_GameOver(List<System.Drawing.Point> currentBlockPoints, BlockTypes currentBlockType)
         {
             for (var i = 0; i < _beforeCurrnetBlockPoints.Count; i++)
             {
@@ -95,7 +95,7 @@ namespace TetrisWindow
             }
         }
 
-        private void UpdateView(List<System.Drawing.Point> blockPoints, BlockType blockType, List<System.Drawing.Point> fixedPoints, List<BlockType> fixedBlockTypes)
+        private void UpdateView(List<System.Drawing.Point> blockPoints, BlockTypes blockType, List<System.Drawing.Point> fixedPoints, List<BlockTypes> fixedBlockTypes)
         {
             UpdateCurrnetBlock(blockPoints, blockType);
             UpdateFixedBlock(fixedPoints, fixedBlockTypes);
@@ -103,7 +103,7 @@ namespace TetrisWindow
 
         List<System.Drawing.Point> _beforeCurrnetBlockPoints = new List<System.Drawing.Point>();
 
-        private void UpdateCurrnetBlock(List<System.Drawing.Point> blockPoints, BlockType blockType)
+        private void UpdateCurrnetBlock(List<System.Drawing.Point> blockPoints, BlockTypes blockType)
         {
             for (var i = 0; i < _beforeCurrnetBlockPoints.Count; i++)
             {
@@ -119,31 +119,31 @@ namespace TetrisWindow
                     continue;
                 }
 
-                if (blockType == BlockType.I)
+                if (blockType == BlockTypes.I)
                 {
                     block.Rect.Fill = Brushes.LightBlue;
                 }
-                else if (blockType == BlockType.O)
+                else if (blockType == BlockTypes.O)
                 {
                     block.Rect.Fill = Brushes.Yellow;
                 }
-                else if (blockType == BlockType.S)
+                else if (blockType == BlockTypes.S)
                 {
                     block.Rect.Fill = Brushes.Green;
                 }
-                else if (blockType == BlockType.Z)
+                else if (blockType == BlockTypes.Z)
                 {
                     block.Rect.Fill = Brushes.Red;
                 }
-                else if (blockType == BlockType.J)
+                else if (blockType == BlockTypes.J)
                 {
                     block.Rect.Fill = Brushes.Blue;
                 }
-                else if (blockType == BlockType.L)
+                else if (blockType == BlockTypes.L)
                 {
                     block.Rect.Fill = Brushes.Orange;
                 }
-                else if (blockType == BlockType.T)
+                else if (blockType == BlockTypes.T)
                 {
                     block.Rect.Fill = Brushes.Purple;
                 }
@@ -158,7 +158,7 @@ namespace TetrisWindow
 
         List<System.Drawing.Point> _beforeFixedPoints = new List<System.Drawing.Point>();
 
-        private void UpdateFixedBlock(List<System.Drawing.Point> fixedPoints, List<BlockType> blockTypes)
+        private void UpdateFixedBlock(List<System.Drawing.Point> fixedPoints, List<BlockTypes> blockTypes)
         {
             for (var i = 0; i < _beforeFixedPoints.Count; i++)
             {
@@ -170,31 +170,31 @@ namespace TetrisWindow
             {
                 var block = (BlockRectangle)MainField.FindName("Cell_" + fixedPoints[i].Y + "_" + fixedPoints[i].X);
 
-                if (blockTypes[i] == BlockType.I)
+                if (blockTypes[i] == BlockTypes.I)
                 {
                     block.Rect.Fill = Brushes.LightBlue;
                 }
-                else if (blockTypes[i] == BlockType.O)
+                else if (blockTypes[i] == BlockTypes.O)
                 {
                     block.Rect.Fill = Brushes.Yellow;
                 }
-                else if (blockTypes[i] == BlockType.S)
+                else if (blockTypes[i] == BlockTypes.S)
                 {
                     block.Rect.Fill = Brushes.Green;
                 }
-                else if (blockTypes[i] == BlockType.Z)
+                else if (blockTypes[i] == BlockTypes.Z)
                 {
                     block.Rect.Fill = Brushes.Red;
                 }
-                else if (blockTypes[i] == BlockType.J)
+                else if (blockTypes[i] == BlockTypes.J)
                 {
                     block.Rect.Fill = Brushes.Blue;
                 }
-                else if (blockTypes[i] == BlockType.L)
+                else if (blockTypes[i] == BlockTypes.L)
                 {
                     block.Rect.Fill = Brushes.Orange;
                 }
-                else if (blockTypes[i] == BlockType.T)
+                else if (blockTypes[i] == BlockTypes.T)
                 {
                     block.Rect.Fill = Brushes.Purple;
                 }
@@ -229,35 +229,35 @@ namespace TetrisWindow
             switch(e.Key)
             {
                 case System.Windows.Input.Key.Down:
-                    _userAction = ActionType.moveDown;
+                    _userAction = ActionTypes.moveDown;
                     break;
                 case System.Windows.Input.Key.Left:
-                    _userAction = ActionType.moveLeft;
+                    _userAction = ActionTypes.moveLeft;
                     break;
                 case System.Windows.Input.Key.Right:
-                    _userAction = ActionType.moveRight;
+                    _userAction = ActionTypes.moveRight;
                     break;
                 case System.Windows.Input.Key.Up:
-                    _userAction = ActionType.hardDrop;
+                    _userAction = ActionTypes.hardDrop;
                     break;
                 case System.Windows.Input.Key.Z:
-                    _userAction = ActionType.rotateLeft;
+                    _userAction = ActionTypes.rotateLeft;
                     break;
                 case System.Windows.Input.Key.X:
-                    _userAction = ActionType.rotateRight;
+                    _userAction = ActionTypes.rotateRight;
                     break;
                 case System.Windows.Input.Key.Space:
-                    _userAction = ActionType.hold;
+                    _userAction = ActionTypes.hold;
                     break;
                 default:
-                    _userAction = ActionType.nothing;
+                    _userAction = ActionTypes.nothing;
                     break;
             }
         }
 
         private void MainGrid_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            _userAction = ActionType.nothing;
+            _userAction = ActionTypes.nothing;
         }
     }
 }

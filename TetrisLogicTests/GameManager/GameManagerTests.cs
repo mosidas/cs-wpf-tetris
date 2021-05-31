@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static TetrisLogic.SystemProperty;
 using TetrisLogicTests.Stub;
+using TetrisLogic.UserAction;
 
 namespace TetrisLogic.Tests
 {
@@ -40,7 +40,7 @@ namespace TetrisLogic.Tests
             var manager = new GameManager(new Field(), new BlocksPoolManagerDummy());
             manager.Start();
             var before = manager.CurrentBlockPoints;
-            manager.Update(ActionType.nothing, true);
+            manager.Update(ActionTypes.nothing, true);
             var after = manager.CurrentBlockPoints;
 
             for(var i = 0;i < before.Count;i++)
@@ -58,7 +58,7 @@ namespace TetrisLogic.Tests
             var before = manager.CurrentBlockPoints;
             for (var i = 0; i < 10; i++)
             {
-                manager.Update(ActionType.nothing, true);
+                manager.Update(ActionTypes.nothing, true);
             }
             var after = manager.CurrentBlockPoints;
 
@@ -77,7 +77,7 @@ namespace TetrisLogic.Tests
             var before = manager.CurrentBlockPoints;
             for (var i = 0; i < 19; i++)
             {
-                manager.Update(ActionType.nothing, true);
+                manager.Update(ActionTypes.nothing, true);
             }
             var after = manager.CurrentBlockPoints;
 
@@ -95,7 +95,7 @@ namespace TetrisLogic.Tests
             manager.Start();
             for (var i = 0; i < 19; i++)
             {
-                manager.Update(ActionType.nothing, true);
+                manager.Update(ActionTypes.nothing, true);
             }
             var ret = manager.FixedBlockPoints;
 

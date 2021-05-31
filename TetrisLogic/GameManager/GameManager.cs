@@ -3,31 +3,25 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Timers;
 using TetrisLogic.UserAction;
-using static TetrisLogic.SystemProperty;
 
 namespace TetrisLogic
 {
     public class GameManager
     {
         public bool IsGameOver { get; set; }
-        public bool IsSpawn { get; set; }
-        public double FrameRate { get { return 1000 / SystemProperty.FPS; } }
+        public double FrameRate { get { return 1000 / FPS; } }
         public double GameLevel { get; private set; }
         public double DownRate { get { return FrameRate * (50 / GameLevel * 5); } }
+        public List<Point> CurrentBlockPoints { get { return _currentBlock == null ? new List<Point>() : _currentBlock.GetBlockPoints(); } }
+        public BlockTypes CurrentBlockType { get { return _currentBlock == null ? BlockTypes.nothing : _currentBlock.BlockType; } }
+        public List<Point> FixedBlockPoints { get { return _field == null ? new List<Point>() : _field.GetFixedBlockPoints(); } }
+        public List<BlockTypes> FixedBlockTypes { get { return _field == null ? new List<BlockTypes>() : _field.GetFixedBlockTypes(); } }
 
-        public List<Point> CurrentBlockPoints { get { return _currentBlock.GetBlockPoints(); } }
-
-        public BlockType CurrentBlockType { get { return _currentBlock.BlockType; } }
-
-        public List<Point> FixedBlockPoints { get { return _field.GetFixedBlockPoints(); } }
-
-        public List<BlockType> FixedBlockTypes { get { return _field.GetFixedBlockTypes(); } }
-
+        public static readonly int FPS = 60;
         private Field _field;
         private Block _currentBlock;
         private Block _holdBlock;
         private readonly IBlocksPoolManager _blocksPoolManager;
-        private Timer TimersTimer;
 
         public GameManager(Field field, IBlocksPoolManager bpm)
         {
@@ -40,16 +34,13 @@ namespace TetrisLogic
         {
             GameLevel = gamelevel;
             IsGameOver = false;
-            _field.InitFieldState();
+            _field.InitField();
             _blocksPoolManager.Reset();
             _currentBlock = _blocksPoolManager.TakeNextBlock();
             _holdBlock = null;
         }
 
-        private ActionType _beforeAction = ActionType.nothing;
-        private int _actionCount = 0;
-
-        public void Update(ActionType userAction, bool doTimerAction)
+        public void Update(ActionTypes userAction, bool doTimerAction)
         {
             if (IsGameOver)
             {
@@ -59,23 +50,25 @@ namespace TetrisLogic
 
             if (doTimerAction)
             {
-                var canTimerAction = Act(ActionType.moveDown);
-                UpdateState(ActionType.moveDown, canTimerAction);
+                var canTimerAction = Act(ActionTypes.moveDown);
+                UpdateGameState(ActionTypes.moveDown, canTimerAction);
             }
 
             if(DoContinueSameAction(userAction))
             {
                 var canUserAction = Act(userAction);
-                UpdateState(userAction, canUserAction);
+                UpdateGameState(userAction, canUserAction);
             }
         }
 
-        private bool DoContinueSameAction(ActionType userAction)
+        private ActionTypes _beforeAction = ActionTypes.nothing;
+        private int _actionCount = 0;
+        private bool DoContinueSameAction(ActionTypes userAction)
         {
             var bAct = _beforeAction;
             _beforeAction = userAction;
 
-            if (userAction == ActionType.nothing)
+            if (userAction == ActionTypes.nothing)
             {
                 _actionCount = 0;
                 return false;
@@ -84,7 +77,7 @@ namespace TetrisLogic
             if (bAct == userAction)
             {
                 _actionCount++;
-                if (_actionCount % 10 == 0)
+                if (_actionCount % 10 == 0 || _actionCount > 100)
                 {
                     return true;
                 }
@@ -110,7 +103,7 @@ namespace TetrisLogic
             return _field.CanSpawn(_currentBlock);
         }
 
-        private bool Act(ActionType actType)
+        private bool Act(ActionTypes actType)
         {
             var factory = new UserActionFactory();
             var userAction = factory.CreateUserAction(actType);
@@ -128,10 +121,10 @@ namespace TetrisLogic
             return canAction;
         }
 
-        private void UpdateState(ActionType actType, bool canAction)
+        private void UpdateGameState(ActionTypes actType, bool canAction)
         {
             var isFixedBlock = NeedBlockFixed(actType, canAction);
-            _field.UpdateFieldState(_currentBlock, isFixedBlock);
+            _field.UpdateField(_currentBlock, isFixedBlock);
             if (isFixedBlock)
             {
                 _currentBlock = _blocksPoolManager.TakeNextBlock();
@@ -149,9 +142,9 @@ namespace TetrisLogic
         /// <param name="actType">操作タイプ</param>
         /// <param name="canAction">操作の実行可否</param>
         /// <returns>判定結果</returns>
-        private bool NeedBlockFixed(ActionType actType, bool canAction)
+        private bool NeedBlockFixed(ActionTypes actType, bool canAction)
         {
-            if ((actType == ActionType.moveDown && !canAction) || actType == ActionType.hardDrop)
+            if ((actType == ActionTypes.moveDown && !canAction) || actType == ActionTypes.hardDrop)
             {
                 return true;
             }

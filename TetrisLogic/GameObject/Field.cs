@@ -7,31 +7,32 @@ using System.Threading.Tasks;
 
 namespace TetrisLogic
 {
+    public enum FieldTypes
+    {
+        empty,
+        block,
+        fixedBlock,
+        outOfField,
+    }
+
     public class Field
     {
         public int Width { get { return _width; } }
         public int Height { get { return _height; } }
-        public enum FieldState
-        {
-            empty,
-            block,
-            fixedBlock,
-            outOfField,
-        }
 
         private static readonly int _width = 10;
         private static readonly int _height = 20;
-        private FieldState[,] _fieldState = new FieldState[_width, _height];
-        private SystemProperty.BlockType[,] _fieldTypeState = new SystemProperty.BlockType[_width, _height];
+        private FieldTypes[,] _fieldState = new FieldTypes[_width, _height];
+        private BlockTypes[,] _fieldTypeState = new BlockTypes[_width, _height];
 
-        public void InitFieldState()
+        public void InitField()
         {
             for (var w = 0; w < _width; w++)
             {
                 for (var h = 0; h < _height; h++)
                 {
-                    _fieldState[w, h] = FieldState.empty;
-                    _fieldTypeState[w, h] = SystemProperty.BlockType.nothing;
+                    _fieldState[w, h] = FieldTypes.empty;
+                    _fieldTypeState[w, h] = BlockTypes.nothing;
                 }
             }
         }
@@ -44,7 +45,7 @@ namespace TetrisLogic
             {
                 for (var h = 0; h < _height; h++)
                 {
-                    if(_fieldState[w, h] == FieldState.fixedBlock)
+                    if(_fieldState[w, h] == FieldTypes.fixedBlock)
                     {
                         points.Add(new Point(w,h));
                     }
@@ -54,15 +55,15 @@ namespace TetrisLogic
             return points;
         }
 
-        public List<SystemProperty.BlockType> GetFixedBlockTypes()
+        public List<BlockTypes> GetFixedBlockTypes()
         {
-            var types = new List<SystemProperty.BlockType>();
+            var types = new List<BlockTypes>();
 
             for (var w = 0; w < _width; w++)
             {
                 for (var h = 0; h < _height; h++)
                 {
-                    if (_fieldState[w, h] == FieldState.fixedBlock)
+                    if (_fieldState[w, h] == FieldTypes.fixedBlock)
                     {
                         types.Add(_fieldTypeState[w, h]);
                     }
@@ -72,11 +73,11 @@ namespace TetrisLogic
             return types;
         }
 
-        public FieldState GetFieldState(int w, int h)
+        public FieldTypes GetFieldType(int w, int h)
         {
             if(_width <= w || w < 0 || _height <= h || h < 0)
             {
-                return FieldState.outOfField;
+                return FieldTypes.outOfField;
             }
 
             return _fieldState[w, h];
@@ -86,7 +87,7 @@ namespace TetrisLogic
         {
             foreach(var p in cb.GetBlockPoints())
             {
-                if(GetFieldState(p.X, p.Y) != FieldState.empty)
+                if(GetFieldType(p.X, p.Y) != FieldTypes.empty)
                 {
                     return false;
                 }
@@ -94,7 +95,7 @@ namespace TetrisLogic
             return true;
         }
 
-        public void UpdateFieldState(Block cb, bool fixedBlock)
+        public void UpdateField(Block cb, bool fixedBlock)
         {
             UpdateCurerntBlock(cb, fixedBlock);
 
@@ -116,9 +117,9 @@ namespace TetrisLogic
             {
                 for (var y = 0; y < _height; y++)
                 {
-                    if (_fieldState[x, y] == FieldState.block)
+                    if (_fieldState[x, y] == FieldTypes.block)
                     {
-                        _fieldState[x, y] = FieldState.empty;
+                        _fieldState[x, y] = FieldTypes.empty;
                     }
                 }
             }
@@ -127,9 +128,9 @@ namespace TetrisLogic
             {
                 foreach (var point in cb.GetBlockPoints())
                 {
-                    if (GetFieldState(point.X, point.Y) != FieldState.outOfField)
+                    if (GetFieldType(point.X, point.Y) != FieldTypes.outOfField)
                     {
-                        _fieldState[point.X, point.Y] = FieldState.fixedBlock;
+                        _fieldState[point.X, point.Y] = FieldTypes.fixedBlock;
                         _fieldTypeState[point.X, point.Y] = cb.BlockType;
                     }
                 }
@@ -138,9 +139,9 @@ namespace TetrisLogic
             {
                 foreach (var point in cb.GetBlockPoints())
                 {
-                    if (GetFieldState(point.X, point.Y) != FieldState.outOfField)
+                    if (GetFieldType(point.X, point.Y) != FieldTypes.outOfField)
                     {
-                        _fieldState[point.X, point.Y] = FieldState.block;
+                        _fieldState[point.X, point.Y] = FieldTypes.block;
                     }
                 }
             }

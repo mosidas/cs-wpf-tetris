@@ -15,8 +15,8 @@ namespace TetrisLogic.UserAction.Tests
         public void ActionTest_Normal()
         {
             // data
-            var block = new Block(SystemProperty.BlockType.O);
-            var holdBlock = new Block(SystemProperty.BlockType.nothing);
+            var block = new Block(BlockTypes.O);
+            var holdBlock = new Block(BlockTypes.nothing);
             var field = new Field();
 
             // target
@@ -39,7 +39,7 @@ namespace TetrisLogic.UserAction.Tests
         public void CanActionTest_CanDropInInitState()
         {
             // data
-            var block = new Block(SystemProperty.BlockType.O);
+            var block = new Block(BlockTypes.O);
             var field = new Field();
 
             // target
@@ -53,8 +53,8 @@ namespace TetrisLogic.UserAction.Tests
         public void CanActionTest_OBlockCanNotDropAfterDrop()
         {
             // data
-            var block = new Block(SystemProperty.BlockType.O);
-            var holdBlock = new Block(SystemProperty.BlockType.nothing);
+            var block = new Block(BlockTypes.O);
+            var holdBlock = new Block(BlockTypes.nothing);
             var field = new Field();
 
             // target
