@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace TetrisLogic.UserAction
 {
-    public class UA_RotateLeft : UA_RotateRight
+    public class UA_RotateLeft : IUserAction
     {
-        public new void Action(ref Field field, ref Block currentBlock, ref Block holdBlock)
+        protected int MoveX = 0;
+        protected int MoveY = 0;
+        public void Action(ref Field field, ref Block currentBlock, ref Block holdBlock)
         {
             currentBlock.MoveLocation(MoveX, MoveY);
             currentBlock.RotateLeft();
         }
 
-        protected new Block GetDummyActionBlock(Block block)
+        public bool CanAction(Field field, Block block)
         {
-            var tmp = new Block(block);
-            tmp.RotateLeft();
-            return tmp;
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
@@ -6,8 +7,8 @@ namespace TetrisLogic.UserAction
 {
     public class UA_RotateRight : IUserAction
     {
-        protected int MoveX = 0;
-        protected int MoveY = 0;
+        private int MoveX = 0;
+        private int MoveY = 0;
         public void Action(ref Field field, ref Block currentBlock, ref Block holdBlock)
         {
             currentBlock.MoveLocation(MoveX, MoveY);
@@ -16,205 +17,185 @@ namespace TetrisLogic.UserAction
 
         public bool CanAction(Field field, Block block)
         {
-            switch (block.BlockType)
+            if(block.BlockType == BlockTypes.O)
             {
-                case BlockTypes.O:
-                    return CanAction_O(field, block);
-                case BlockTypes.I:
-                    return CanAction_I(field, block);
-                case BlockTypes.J:
-                    return CanAction_J(field, block);
-                case BlockTypes.L:
-                    return CanAction_L(field, block);
-                case BlockTypes.S:
-                    return CanAction_S(field, block);
-                case BlockTypes.Z:
-                    return CanAction_Z(field, block);
-                case BlockTypes.T:
-                    return CanAction_T(field, block);
-                default:
-                    return false;
+                return true;
+            }
+            else if (block.BlockType == BlockTypes.I)
+            {
+                return CanAction_SRS_I(field, block);
+            }
+            else
+            {
+                return CanAction_SRS(field, block);
+            }
+
+        }
+
+        private bool CanAction_SRS_I(Field field, Block block)
+        {
+            var dummyblock = GetDummyActionBlock(block);
+
+            if (!ExistsCollisionPoint(field, dummyblock))
+            {
+                return true;
+            }
+
+            GetSRSState1_I(ref dummyblock);
+
+            if (!ExistsCollisionPoint(field, dummyblock))
+            {
+                return true;
+            }
+
+            //GetSRSState2_I(ref dummyblock);
+
+            if (!ExistsCollisionPoint(field, dummyblock))
+            {
+                return true;
+            }
+
+            //GetSRSState3_I(ref dummyblock);
+
+            if (!ExistsCollisionPoint(field, dummyblock))
+            {
+                return true;
+            }
+
+            //GetSRSState4_I(ref dummyblock);
+
+            if (!ExistsCollisionPoint(field, dummyblock))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private void GetSRSState1_I(ref Block dummyblock)
+        {
+            if (dummyblock.Direction == DirectionTypes.B)
+            {
+                dummyblock.MoveLocation(-2, 0);
+            }
+            else if(dummyblock.Direction == DirectionTypes.D)
+            {
+                dummyblock.MoveLocation(2, 0);
             }
         }
 
-        protected int OutOfFieldCount(Field field, List<Point> rotatePoints)
+        private bool CanAction_SRS(Field field, Block block)
         {
-            var count = rotatePoints.Where(p => field.GetFieldType(p.X, p.Y) == FieldTypes.outOfField).Count();
-            return count;
-        }
+            var dummyblock = GetDummyActionBlock(block);
 
-        protected int WhichWallNearBy(Field field, Block block)
-        {
-            var count = OutOfFieldCount(field, block.GetBlockRotatePoints());
-            if (count == 0)
+            if (!ExistsCollisionPoint(field, dummyblock))
             {
-                return 0;
+                return true;
             }
-            return 1;
+
+            GetSRSState1(ref dummyblock);
+
+            if (!ExistsCollisionPoint(field, dummyblock))
+            {
+                return true;
+            }
+
+            GetSRSState2(ref dummyblock);
+
+            if (!ExistsCollisionPoint(field, dummyblock))
+            {
+                return true;
+            }
+
+            GetSRSState3(ref dummyblock);
+
+            if (!ExistsCollisionPoint(field, dummyblock))
+            {
+                return true;
+            }
+
+            GetSRSState4(ref dummyblock);
+
+            if (!ExistsCollisionPoint(field, dummyblock))
+            {
+                return true;
+            }
+
+            return false;
         }
 
-        protected Block GetDummyActionBlock(Block block)
+        private void GetSRSState4(ref Block dummyblock)
+        {
+            if (dummyblock.Direction == DirectionTypes.A || dummyblock.Direction == DirectionTypes.B || dummyblock.Direction == DirectionTypes.C)
+            {
+                dummyblock.MoveLocation(-1, 0);
+                MoveX += -1;
+            }
+            else if (dummyblock.Direction == DirectionTypes.D)
+            {
+                dummyblock.MoveLocation(1, 0);
+                MoveX += 1;
+            }
+        }
+
+        private void GetSRSState3(ref Block dummyblock)
+        {
+            dummyblock.MoveLocation(-1 * MoveX, -1 * MoveY);
+
+            if (dummyblock.Direction == DirectionTypes.B || dummyblock.Direction == DirectionTypes.D)
+            {
+                dummyblock.MoveLocation(0, 2);
+                MoveX = 0;
+                MoveY = 2;
+            }
+            else if (dummyblock.Direction == DirectionTypes.A || dummyblock.Direction == DirectionTypes.C)
+            {
+                dummyblock.MoveLocation(0, -2);
+                MoveX = 0;
+                MoveY = -2;
+            }
+        }
+
+        private void GetSRSState2(ref Block dummyblock)
+        {
+            if ( dummyblock.Direction == DirectionTypes.B || dummyblock.Direction == DirectionTypes.D)
+            {
+                dummyblock.MoveLocation(0, -1);
+                MoveY += -1;
+            }
+            else if (dummyblock.Direction == DirectionTypes.A || dummyblock.Direction == DirectionTypes.C)
+            {
+                dummyblock.MoveLocation(0, 1);
+                MoveY += 1;
+            }
+        }
+
+        private void GetSRSState1(ref Block dummyblock)
+        {
+            if (dummyblock.Direction == DirectionTypes.A || dummyblock.Direction == DirectionTypes.B || dummyblock.Direction == DirectionTypes.C)
+            {
+                dummyblock.MoveLocation(-1, 0);
+                MoveX += -1;
+            }
+            else if(dummyblock.Direction == DirectionTypes.D)
+            {
+                dummyblock.MoveLocation(1, 0);
+                MoveX += 1;
+            }
+        }
+
+        private bool ExistsCollisionPoint(Field field, Block block)
+        {
+            return block
+                .GetBlockPoints()
+                .Exists(p => field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock || field.GetFieldType(p.X, p.Y) == FieldTypes.outOfField);
+        }
+
+        private Block GetDummyActionBlock(Block block)
         {
             var tmp = new Block(block);
             tmp.RotateRight();
             return tmp;
-        }
-
-        protected bool CanAction_T(Field field, Block block)
-        {
-            var tmpblock = GetDummyActionBlock(block);
-
-            switch (WhichWallNearBy(field, tmpblock))
-            {
-                case 1:
-                    MoveX = 1;
-                    MoveY = 0;
-                    break;
-                case 2:
-                    MoveX = -1;
-                    MoveY = 0;
-                    break;
-                case 3:
-                    MoveX = 0;
-                    MoveY = -1;
-                    break;
-                default:
-                    MoveX = 0;
-                    MoveY = 0;
-                    break;
-            }
-
-            tmpblock.MoveLocation(MoveX, MoveY);
-
-            foreach (var p in tmpblock.GetBlockRotatePoints())
-            {
-                if (field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        protected bool CanAction_Z(Field field, Block block)
-        {
-            var tmpblock = GetDummyActionBlock(block);
-
-            foreach (var p in tmpblock.GetBlockRotatePoints())
-            {
-                if (field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock || field.GetFieldType(p.X, p.Y) == FieldTypes.outOfField)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        protected bool CanAction_S(Field field, Block block)
-        {
-            var tmpblock = GetDummyActionBlock(block);
-
-            foreach (var p in tmpblock.GetBlockRotatePoints())
-            {
-                if (field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock || field.GetFieldType(p.X, p.Y) == FieldTypes.outOfField)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        protected bool CanAction_L(Field field, Block block)
-        {
-            var tmpblock = GetDummyActionBlock(block);
-
-            switch (WhichWallNearBy(field, tmpblock))
-            {
-                case 1:
-                    MoveX = 1;
-                    MoveY = 0;
-                    break;
-                case 2:
-                    MoveX = -1;
-                    MoveY = 0;
-                    break;
-                case 3:
-                    MoveX = 0;
-                    MoveY = -1;
-                    break;
-                default:
-                    MoveX = 0;
-                    MoveY = 0;
-                    break;
-            }
-
-            foreach (var p in tmpblock.GetBlockRotatePoints())
-            {
-                if (field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        protected bool CanAction_J(Field field, Block block)
-        {
-            var tmpblock = GetDummyActionBlock(block);
-
-            switch (WhichWallNearBy(field, tmpblock))
-            {
-                case 1:
-                    MoveX = 1;
-                    MoveY = 0;
-                    break;
-                case 2:
-                    MoveX = -1;
-                    MoveY = 0;
-                    break;
-                case 3:
-                    MoveX = 0;
-                    MoveY = -1;
-                    break;
-                default:
-                    MoveX = 0;
-                    MoveY = 0;
-                    break;
-            }
-
-            foreach (var p in tmpblock.GetBlockRotatePoints())
-            {
-                if (field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        protected bool CanAction_I(Field field, Block block)
-        {
-            var tmpblock = GetDummyActionBlock(block);
-
-            foreach (var p in tmpblock.GetBlockRotatePoints())
-            {
-                if (field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock || field.GetFieldType(p.X, p.Y) == FieldTypes.outOfField)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        protected bool CanAction_O(Field field, Block block)
-        {
-            return true;
         }
     }
 }
