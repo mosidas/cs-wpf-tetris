@@ -19,7 +19,6 @@ namespace TetrisLogic
     {
         public BlockTypes BlockType { get; private set; }
         public Point Location { get { return _location; } }
-        public int[,] _Block { get { return _block; } }
 
         private int[,] _block;
         private readonly int _blockWidth;
@@ -209,6 +208,26 @@ namespace TetrisLogic
             }
 
             return points;
+        }
+
+        public string DrawBlock()
+        {
+            var ret = new List<string>();
+
+            for (int i = 0; i < _block.GetLength(0); i++)
+            {
+                var tmp = new List<string>();
+                for (int j = 0; j < _block.GetLength(1); j++)
+                {
+                    tmp.Add(_block[i, j].ToString());
+                }
+
+                ret.Add(string.Join(",", tmp));
+            }
+
+            var rret = string.Join("\r\n", ret);
+
+            return rret;
         }
 
         /// <summary>

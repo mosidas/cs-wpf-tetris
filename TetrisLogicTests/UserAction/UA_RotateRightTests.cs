@@ -24,7 +24,7 @@ namespace TetrisLogic.UserAction.Tests
 @"0,1,0
 0,1,1
 0,1,0";
-            var actual = StringDraw(block._Block);
+            var actual = block.DrawBlock();
             System.Diagnostics.Debug.WriteLine(actual);
             Assert.AreEqual(expect, actual);
         }
@@ -47,7 +47,7 @@ namespace TetrisLogic.UserAction.Tests
 0,0,1,0
 0,0,1,0
 0,0,1,0";
-            var actual = StringDraw(block._Block);
+            var actual = block.DrawBlock();
             System.Diagnostics.Debug.WriteLine(actual);
             Assert.AreEqual(expect, actual);
         }
@@ -69,7 +69,7 @@ namespace TetrisLogic.UserAction.Tests
 @"0,0,1
 0,1,1
 0,1,0";
-            var actual = StringDraw(block._Block);
+            var actual = block.DrawBlock();
             System.Diagnostics.Debug.WriteLine(actual);
             Assert.AreEqual(expect, actual);
         }
@@ -91,7 +91,7 @@ namespace TetrisLogic.UserAction.Tests
 @"0,1,0
 0,1,1
 0,0,1";
-            var actual = StringDraw(block._Block);
+            var actual = block.DrawBlock();
             System.Diagnostics.Debug.WriteLine(actual);
             Assert.AreEqual(expect, actual);
         }
@@ -113,7 +113,7 @@ namespace TetrisLogic.UserAction.Tests
 @"0,1,1
 0,1,0
 0,1,0";
-            var actual = StringDraw(block._Block);
+            var actual = block.DrawBlock();
             System.Diagnostics.Debug.WriteLine(actual);
             Assert.AreEqual(expect, actual);
         }
@@ -135,7 +135,7 @@ namespace TetrisLogic.UserAction.Tests
 @"0,1,0
 0,1,0
 0,1,1";
-            var actual = StringDraw(block._Block);
+            var actual = block.DrawBlock();
             System.Diagnostics.Debug.WriteLine(actual);
             Assert.AreEqual(expect, actual);
         }
@@ -156,7 +156,7 @@ namespace TetrisLogic.UserAction.Tests
             var expect =
 @"1,1
 1,1";
-            var actual = StringDraw(block._Block);
+            var actual = block.DrawBlock();
             System.Diagnostics.Debug.WriteLine(actual);
             Assert.AreEqual(expect, actual);
         }
@@ -292,26 +292,6 @@ namespace TetrisLogic.UserAction.Tests
             // target
             var act = new UA_RotateRight();
             Assert.AreEqual(true, act.CanAction(field, block));
-        }
-
-        private string StringDraw(int[,] array)
-        {
-            var ret = new List<string>();
-
-            for (int i = 0; i < array.GetLength(0); i++)
-            {
-                var tmp = new List<string>();
-                for (int j = 0; j < array.GetLength(1); j++)
-                {
-                    tmp.Add(array[i, j].ToString());
-                }
-
-                ret.Add(string.Join(",",tmp));
-            }
-
-            var rret = string.Join("\r\n", ret);
-
-            return rret;
         }
     }
 }
