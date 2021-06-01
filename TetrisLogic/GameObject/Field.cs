@@ -127,6 +127,13 @@ namespace TetrisLogic
             return true;
         }
 
+        public bool ExistsCollisionPoint(Block block)
+        {
+            return block
+                .GetBlockPoints()
+                .Exists(p => GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock || GetFieldType(p.X, p.Y) == FieldTypes.outOfField);
+        }
+
         public void UpdateField(Block cb, bool fixedBlock)
         {
             UpdateCurerntBlock(cb, fixedBlock);

@@ -36,35 +36,35 @@ namespace TetrisLogic.UserAction
         {
             var dummyblock = GetDummyActionBlock(block);
 
-            if (!ExistsCollisionPoint(field, dummyblock))
+            if (!field.ExistsCollisionPoint(dummyblock))
             {
                 return true;
             }
 
-            GetSRSState1_I(ref dummyblock);
+            GetSRSState1_I(ref dummyblock, block);
 
-            if (!ExistsCollisionPoint(field, dummyblock))
+            if (!field.ExistsCollisionPoint(dummyblock))
             {
                 return true;
             }
 
-            //GetSRSState2_I(ref dummyblock);
+            GetSRSState2_I(ref dummyblock, block);
 
-            if (!ExistsCollisionPoint(field, dummyblock))
+            if (!field.ExistsCollisionPoint(dummyblock))
             {
                 return true;
             }
 
-            //GetSRSState3_I(ref dummyblock);
+            GetSRSState3_I(ref dummyblock, block);
 
-            if (!ExistsCollisionPoint(field, dummyblock))
+            if (!field.ExistsCollisionPoint(dummyblock))
             {
                 return true;
             }
 
-            //GetSRSState4_I(ref dummyblock);
+            GetSRSState4_I(ref dummyblock, block);
 
-            if (!ExistsCollisionPoint(field, dummyblock))
+            if (!field.ExistsCollisionPoint(dummyblock))
             {
                 return true;
             }
@@ -72,15 +72,113 @@ namespace TetrisLogic.UserAction
             return false;
         }
 
-        private void GetSRSState1_I(ref Block dummyblock)
+        private void GetSRSState4_I(ref Block dummyblock, Block block)
         {
-            if (dummyblock.Direction == DirectionTypes.B)
+            dummyblock.MoveLocation(-1 * MoveX, -1 * MoveY);
+
+            if (block.Direction == DirectionTypes.north)
             {
-                dummyblock.MoveLocation(-2, 0);
+                dummyblock.MoveLocation(1, -2);
+                MoveX = 1;
+                MoveY = -2;
             }
-            else if(dummyblock.Direction == DirectionTypes.D)
+            else if (block.Direction == DirectionTypes.east)
+            {
+                dummyblock.MoveLocation(2, 1);
+                MoveX = 2;
+                MoveY = 1;
+            }
+            else if (block.Direction == DirectionTypes.south)
+            {
+                dummyblock.MoveLocation(-1, 2);
+                MoveX = -1;
+                MoveY = 2;
+            }
+            else if (block.Direction == DirectionTypes.west)
+            {
+                dummyblock.MoveLocation(-2, -1);
+                MoveX = -2;
+                MoveY = 1;
+            }
+        }
+
+        private void GetSRSState3_I(ref Block dummyblock, Block block)
+        {
+            dummyblock.MoveLocation(-1 * MoveX, -1 * MoveY);
+
+            if (block.Direction == DirectionTypes.north)
+            {
+                dummyblock.MoveLocation(-2, 1);
+                MoveX = -2;
+                MoveY = 1;
+            }
+            else if (block.Direction == DirectionTypes.east)
+            {
+                dummyblock.MoveLocation(-1, -2);
+                MoveX = -1;
+                MoveY = -2;
+            }
+            else if (block.Direction == DirectionTypes.south)
+            {
+                dummyblock.MoveLocation(2, -1);
+                MoveX = 2;
+                MoveY = -1;
+            }
+            else if (block.Direction == DirectionTypes.west)
+            {
+                dummyblock.MoveLocation(1, 2);
+                MoveX = 1;
+                MoveY = 2;
+            }
+        }
+
+        private void GetSRSState2_I(ref Block dummyblock, Block block)
+        {
+            dummyblock.MoveLocation(-1 * MoveX, -1 * MoveY);
+
+            if (block.Direction == DirectionTypes.north)
+            {
+                dummyblock.MoveLocation(1, 0);
+                MoveX = 1;
+            }
+            else if (block.Direction == DirectionTypes.east)
             {
                 dummyblock.MoveLocation(2, 0);
+                MoveX = 2;
+            }
+            else if (block.Direction == DirectionTypes.south)
+            {
+                dummyblock.MoveLocation(-1, 0);
+                MoveX = -1;
+            }
+            else if (block.Direction == DirectionTypes.west)
+            {
+                dummyblock.MoveLocation(1, 0);
+                MoveX = 1;
+            }
+        }
+
+        private void GetSRSState1_I(ref Block dummyblock, Block block)
+        {
+            if (block.Direction == DirectionTypes.north)
+            {
+                dummyblock.MoveLocation(-2, 0);
+                MoveX = -2;
+            }
+            else if(block.Direction == DirectionTypes.east)
+            {
+                dummyblock.MoveLocation(-1, 0);
+                MoveX = -1;
+            }
+            else if (block.Direction == DirectionTypes.south)
+            {
+                dummyblock.MoveLocation(2, 0);
+                MoveX = 2;
+            }
+            else if (block.Direction == DirectionTypes.west)
+            {
+                dummyblock.MoveLocation(-2, 0);
+                MoveX = -2;
             }
         }
 
@@ -88,35 +186,35 @@ namespace TetrisLogic.UserAction
         {
             var dummyblock = GetDummyActionBlock(block);
 
-            if (!ExistsCollisionPoint(field, dummyblock))
+            if (!field.ExistsCollisionPoint(dummyblock))
             {
                 return true;
             }
 
             GetSRSState1(ref dummyblock);
 
-            if (!ExistsCollisionPoint(field, dummyblock))
+            if (!field.ExistsCollisionPoint(dummyblock))
             {
                 return true;
             }
 
             GetSRSState2(ref dummyblock);
 
-            if (!ExistsCollisionPoint(field, dummyblock))
+            if (!field.ExistsCollisionPoint(dummyblock))
             {
                 return true;
             }
 
             GetSRSState3(ref dummyblock);
 
-            if (!ExistsCollisionPoint(field, dummyblock))
+            if (!field.ExistsCollisionPoint(dummyblock))
             {
                 return true;
             }
 
             GetSRSState4(ref dummyblock);
 
-            if (!ExistsCollisionPoint(field, dummyblock))
+            if (!field.ExistsCollisionPoint(dummyblock))
             {
                 return true;
             }
@@ -126,12 +224,12 @@ namespace TetrisLogic.UserAction
 
         private void GetSRSState4(ref Block dummyblock)
         {
-            if (dummyblock.Direction == DirectionTypes.A || dummyblock.Direction == DirectionTypes.B || dummyblock.Direction == DirectionTypes.C)
+            if (dummyblock.Direction == DirectionTypes.north || dummyblock.Direction == DirectionTypes.east || dummyblock.Direction == DirectionTypes.south)
             {
                 dummyblock.MoveLocation(-1, 0);
                 MoveX += -1;
             }
-            else if (dummyblock.Direction == DirectionTypes.D)
+            else if (dummyblock.Direction == DirectionTypes.west)
             {
                 dummyblock.MoveLocation(1, 0);
                 MoveX += 1;
@@ -142,13 +240,13 @@ namespace TetrisLogic.UserAction
         {
             dummyblock.MoveLocation(-1 * MoveX, -1 * MoveY);
 
-            if (dummyblock.Direction == DirectionTypes.B || dummyblock.Direction == DirectionTypes.D)
+            if (dummyblock.Direction == DirectionTypes.east || dummyblock.Direction == DirectionTypes.west)
             {
                 dummyblock.MoveLocation(0, 2);
                 MoveX = 0;
                 MoveY = 2;
             }
-            else if (dummyblock.Direction == DirectionTypes.A || dummyblock.Direction == DirectionTypes.C)
+            else if (dummyblock.Direction == DirectionTypes.north || dummyblock.Direction == DirectionTypes.south)
             {
                 dummyblock.MoveLocation(0, -2);
                 MoveX = 0;
@@ -158,12 +256,12 @@ namespace TetrisLogic.UserAction
 
         private void GetSRSState2(ref Block dummyblock)
         {
-            if ( dummyblock.Direction == DirectionTypes.B || dummyblock.Direction == DirectionTypes.D)
+            if ( dummyblock.Direction == DirectionTypes.east || dummyblock.Direction == DirectionTypes.west)
             {
                 dummyblock.MoveLocation(0, -1);
                 MoveY += -1;
             }
-            else if (dummyblock.Direction == DirectionTypes.A || dummyblock.Direction == DirectionTypes.C)
+            else if (dummyblock.Direction == DirectionTypes.north || dummyblock.Direction == DirectionTypes.south)
             {
                 dummyblock.MoveLocation(0, 1);
                 MoveY += 1;
@@ -172,23 +270,16 @@ namespace TetrisLogic.UserAction
 
         private void GetSRSState1(ref Block dummyblock)
         {
-            if (dummyblock.Direction == DirectionTypes.A || dummyblock.Direction == DirectionTypes.B || dummyblock.Direction == DirectionTypes.C)
+            if (dummyblock.Direction == DirectionTypes.north || dummyblock.Direction == DirectionTypes.east || dummyblock.Direction == DirectionTypes.south)
             {
                 dummyblock.MoveLocation(-1, 0);
                 MoveX += -1;
             }
-            else if(dummyblock.Direction == DirectionTypes.D)
+            else if(dummyblock.Direction == DirectionTypes.west)
             {
                 dummyblock.MoveLocation(1, 0);
                 MoveX += 1;
             }
-        }
-
-        private bool ExistsCollisionPoint(Field field, Block block)
-        {
-            return block
-                .GetBlockPoints()
-                .Exists(p => field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock || field.GetFieldType(p.X, p.Y) == FieldTypes.outOfField);
         }
 
         private Block GetDummyActionBlock(Block block)

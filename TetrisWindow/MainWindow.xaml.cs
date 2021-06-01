@@ -143,7 +143,7 @@ namespace TetrisWindow
         private void button_Click(object sender, RoutedEventArgs e)
         {
             _time = 0.0;
-            _gameManager.Start();
+            _gameManager.Start(1);
             _timer.Start();
         }
 

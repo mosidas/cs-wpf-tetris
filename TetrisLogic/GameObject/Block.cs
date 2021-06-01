@@ -17,10 +17,10 @@ namespace TetrisLogic
 
     public enum DirectionTypes
     {
-        A = 0,
-        B,
-        C,
-        D,
+        north = 0,
+        east,
+        south,
+        west,
     }
 
     public class Block
@@ -68,7 +68,7 @@ namespace TetrisLogic
             _blockWidth =  _block.GetLength(1);
             _blockHeight = _block.GetLength(0);
             _location = BlockType == BlockTypes.I ? new Point(3, -1) : new Point(3, 0);
-            _direction = DirectionTypes.A;
+            _direction = DirectionTypes.north;
         }
 
         public Block(Block b)
@@ -109,7 +109,7 @@ namespace TetrisLogic
                 }
             }
             _block = tmp;
-            _direction = (DirectionTypes)(((int)_direction + 1) % 5);
+            _direction = (DirectionTypes)(((int)_direction + 1) % 4);
         }
 
         public void RotateLeft()
@@ -124,7 +124,7 @@ namespace TetrisLogic
             }
 
             _block = tmp;
-            _direction = (DirectionTypes)(((int)_direction + 4) % 5);
+            _direction = (DirectionTypes)(((int)_direction + 3) % 4);
         }
 
         public List<Point> GetBlockPoints()
