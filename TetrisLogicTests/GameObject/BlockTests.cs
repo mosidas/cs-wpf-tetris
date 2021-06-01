@@ -12,7 +12,19 @@ namespace TetrisLogic.Tests
     public class BlockTests
     {
         [TestMethod()]
-        public void BlockTest()
+        public void BlockTest_I()
+        {
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        public void BlockTest_O()
+        {
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        public void BlockTest_T()
         {
             Assert.Fail();
         }

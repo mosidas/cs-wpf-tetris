@@ -190,7 +190,7 @@ namespace TetrisLogic.UserAction.Tests
         }
 
         [TestMethod()]
-        public void CanActionTest_TBlock_ByTheWall()
+        public void CanActionTest_TBlock_ByTheLeftWall()
         {
             // data
             var block = new Block(BlockTypes.T);
@@ -198,6 +198,21 @@ namespace TetrisLogic.UserAction.Tests
 
             block.RotateRight();
             block.MoveLocation(-4, 2);
+
+            // target
+            var act = new UA_RotateRight();
+            Assert.AreEqual(true, act.CanAction(field, block));
+        }
+
+        [TestMethod()]
+        public void CanActionTest_TBlock_ByTheRightWall()
+        {
+            // data
+            var block = new Block(BlockTypes.T);
+            var field = new Field();
+
+            block.RotateLeft();
+            block.MoveLocation(5, 2);
 
             // target
             var act = new UA_RotateRight();
@@ -220,7 +235,7 @@ namespace TetrisLogic.UserAction.Tests
         }
 
         [TestMethod()]
-        public void CanActionTest_LBlock_ByTheWall()
+        public void CanActionTest_LBlock_ByTheLeftWall()
         {
             // data
             var block = new Block(BlockTypes.L);
@@ -228,6 +243,21 @@ namespace TetrisLogic.UserAction.Tests
 
             block.RotateRight();
             block.MoveLocation(-4, 2);
+
+            // target
+            var act = new UA_RotateRight();
+            Assert.AreEqual(true, act.CanAction(field, block));
+        }
+
+        [TestMethod()]
+        public void CanActionTest_LBlock_ByTheRightWall()
+        {
+            // data
+            var block = new Block(BlockTypes.L);
+            var field = new Field();
+
+            block.RotateLeft();
+            block.MoveLocation(5, 2);
 
             // target
             var act = new UA_RotateRight();

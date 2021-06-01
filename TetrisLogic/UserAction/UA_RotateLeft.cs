@@ -6,129 +6,19 @@ using System.Threading.Tasks;
 
 namespace TetrisLogic.UserAction
 {
-    public class UA_RotateLeft : IUserAction
+    public class UA_RotateLeft : UA_RotateRight
     {
-        public void Action(ref Field field, ref Block currentBlock, ref Block holdBlock)
+        public new void Action(ref Field field, ref Block currentBlock, ref Block holdBlock)
         {
+            currentBlock.MoveLocation(MoveX, MoveY);
             currentBlock.RotateLeft();
         }
 
-        public bool CanAction(Field field, Block block)
+        protected new Block GetDummyActionBlock(Block block)
         {
-            switch(block.BlockType)
-            {
-                case BlockTypes.O:
-                    return CanAction_O(field, block);
-                case BlockTypes.I:
-                    return CanAction_I(field, block);
-                case BlockTypes.J:
-                    return CanAction_J(field, block);
-                case BlockTypes.L:
-                    return CanAction_L(field, block);
-                case BlockTypes.S:
-                    return CanAction_S(field, block);
-                case BlockTypes.Z:
-                    return CanAction_Z(field, block);
-                case BlockTypes.T:
-                    return CanAction_T(field, block);
-                default:
-                    return false;
-            }
-        }
-
-        private bool CanAction_T(Field field, Block block)
-        {
-            var tmpblock = new Block(block);
-            tmpblock.RotateLeft();
-            foreach (var p in tmpblock.GetBlockRotatePoints())
-            {
-                if (field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock || field.GetFieldType(p.X, p.Y) == FieldTypes.outOfField)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        private bool CanAction_Z(Field field, Block block)
-        {
-            var tmpblock = new Block(block);
-            tmpblock.RotateLeft();
-            foreach (var p in tmpblock.GetBlockRotatePoints())
-            {
-                if (field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock || field.GetFieldType(p.X, p.Y) == FieldTypes.outOfField)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        private bool CanAction_S(Field field, Block block)
-        {
-            var tmpblock = new Block(block);
-            tmpblock.RotateLeft();
-            foreach (var p in tmpblock.GetBlockRotatePoints())
-            {
-                if (field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock || field.GetFieldType(p.X, p.Y) == FieldTypes.outOfField)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        private bool CanAction_L(Field field, Block block)
-        {
-            var tmpblock = new Block(block);
-            tmpblock.RotateLeft();
-            foreach (var p in tmpblock.GetBlockRotatePoints())
-            {
-                if (field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock || field.GetFieldType(p.X, p.Y) == FieldTypes.outOfField)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        private bool CanAction_J(Field field, Block block)
-        {
-            var tmpblock = new Block(block);
-            tmpblock.RotateLeft();
-            foreach (var p in tmpblock.GetBlockRotatePoints())
-            {
-                if (field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock || field.GetFieldType(p.X, p.Y) == FieldTypes.outOfField)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        private bool CanAction_I(Field field, Block block)
-        {
-            var tmpblock = new Block(block);
-            tmpblock.RotateLeft();
-            foreach (var p in tmpblock.GetBlockRotatePoints())
-            {
-                if (field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock || field.GetFieldType(p.X, p.Y) == FieldTypes.outOfField)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        private bool CanAction_O(Field field, Block block)
-        {
-            return true;
+            var tmp = new Block(block);
+            tmp.RotateLeft();
+            return tmp;
         }
     }
 }

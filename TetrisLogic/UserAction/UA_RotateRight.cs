@@ -6,10 +6,11 @@ namespace TetrisLogic.UserAction
 {
     public class UA_RotateRight : IUserAction
     {
-        private int move = 0;
+        protected int MoveX = 0;
+        protected int MoveY = 0;
         public void Action(ref Field field, ref Block currentBlock, ref Block holdBlock)
         {
-            currentBlock.MoveLocation(move, 0);
+            currentBlock.MoveLocation(MoveX, MoveY);
             currentBlock.RotateRight();
         }
 
@@ -35,38 +36,119 @@ namespace TetrisLogic.UserAction
                     return false;
             }
         }
-        private int OutOfFieldCount(Field field, List<Point> rotatePoints)
+
+        protected int OutOfFieldCount(Field field, List<Point> rotatePoints)
         {
             var count = rotatePoints.Where(p => field.GetFieldType(p.X, p.Y) == FieldTypes.outOfField).Count();
             return count;
         }
 
-        private bool IsBlockbyTheWall(Field field, Block block)
+        protected int WhichWallNearBy(Field field, Block block)
         {
             var count = OutOfFieldCount(field, block.GetBlockRotatePoints());
-            return count > 0;
+            if (count == 0)
+            {
+                return 0;
+            }
+            return 1;
         }
 
-        private bool CanAction_T(Field field, Block block)
+        protected Block GetDummyActionBlock(Block block)
         {
-            var tmpblock = new Block(block);
-            tmpblock.RotateRight();
+            var tmp = new Block(block);
+            tmp.RotateRight();
+            return tmp;
+        }
 
-            if (IsBlockbyTheWall(field, tmpblock))
+        protected bool CanAction_T(Field field, Block block)
+        {
+            var tmpblock = GetDummyActionBlock(block);
+
+            switch (WhichWallNearBy(field, tmpblock))
             {
-                if (block.GetBlockLeftPoints().Count == 3)
-                {
-                    move = 1;
-                }
-                else
-                {
-                    move = -1;
-                }
-                tmpblock.MoveLocation(move, 0);
+                case 1:
+                    MoveX = 1;
+                    MoveY = 0;
+                    break;
+                case 2:
+                    MoveX = -1;
+                    MoveY = 0;
+                    break;
+                case 3:
+                    MoveX = 0;
+                    MoveY = -1;
+                    break;
+                default:
+                    MoveX = 0;
+                    MoveY = 0;
+                    break;
             }
-            else
+
+            tmpblock.MoveLocation(MoveX, MoveY);
+
+            foreach (var p in tmpblock.GetBlockRotatePoints())
             {
-                move = 0;
+                if (field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        protected bool CanAction_Z(Field field, Block block)
+        {
+            var tmpblock = GetDummyActionBlock(block);
+
+            foreach (var p in tmpblock.GetBlockRotatePoints())
+            {
+                if (field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock || field.GetFieldType(p.X, p.Y) == FieldTypes.outOfField)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        protected bool CanAction_S(Field field, Block block)
+        {
+            var tmpblock = GetDummyActionBlock(block);
+
+            foreach (var p in tmpblock.GetBlockRotatePoints())
+            {
+                if (field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock || field.GetFieldType(p.X, p.Y) == FieldTypes.outOfField)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        protected bool CanAction_L(Field field, Block block)
+        {
+            var tmpblock = GetDummyActionBlock(block);
+
+            switch (WhichWallNearBy(field, tmpblock))
+            {
+                case 1:
+                    MoveX = 1;
+                    MoveY = 0;
+                    break;
+                case 2:
+                    MoveX = -1;
+                    MoveY = 0;
+                    break;
+                case 3:
+                    MoveX = 0;
+                    MoveY = -1;
+                    break;
+                default:
+                    MoveX = 0;
+                    MoveY = 0;
+                    break;
             }
 
             foreach (var p in tmpblock.GetBlockRotatePoints())
@@ -80,59 +162,28 @@ namespace TetrisLogic.UserAction
             return true;
         }
 
-
-
-        private bool CanAction_Z(Field field, Block block)
+        protected bool CanAction_J(Field field, Block block)
         {
-            var tmpblock = new Block(block);
-            tmpblock.RotateRight();
+            var tmpblock = GetDummyActionBlock(block);
 
-            foreach (var p in tmpblock.GetBlockRotatePoints())
+            switch (WhichWallNearBy(field, tmpblock))
             {
-                if (field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock || field.GetFieldType(p.X, p.Y) == FieldTypes.outOfField)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        private bool CanAction_S(Field field, Block block)
-        {
-            var tmpblock = new Block(block);
-            tmpblock.RotateRight();
-            foreach (var p in tmpblock.GetBlockRotatePoints())
-            {
-                if (field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock || field.GetFieldType(p.X, p.Y) == FieldTypes.outOfField)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        private bool CanAction_L(Field field, Block block)
-        {
-            var tmpblock = new Block(block);
-            tmpblock.RotateRight();
-
-            if (IsBlockbyTheWall(field, tmpblock))
-            {
-                if (block.GetBlockLeftPoints().Count == 3)
-                {
-                    move = 1;
-                }
-                else
-                {
-                    move = -1;
-                }
-                tmpblock.MoveLocation(move, 0);
-            }
-            else
-            {
-                move = 0;
+                case 1:
+                    MoveX = 1;
+                    MoveY = 0;
+                    break;
+                case 2:
+                    MoveX = -1;
+                    MoveY = 0;
+                    break;
+                case 3:
+                    MoveX = 0;
+                    MoveY = -1;
+                    break;
+                default:
+                    MoveX = 0;
+                    MoveY = 0;
+                    break;
             }
 
             foreach (var p in tmpblock.GetBlockRotatePoints())
@@ -146,44 +197,10 @@ namespace TetrisLogic.UserAction
             return true;
         }
 
-        private bool CanAction_J(Field field, Block block)
+        protected bool CanAction_I(Field field, Block block)
         {
-            var tmpblock = new Block(block);
-            tmpblock.RotateRight();
+            var tmpblock = GetDummyActionBlock(block);
 
-            if (IsBlockbyTheWall(field, tmpblock))
-            {
-                if (block.GetBlockLeftPoints().Count == 3)
-                {
-                    move = 1;
-
-                }
-                else if (block.GetBlockRightPoints().Count == 3)
-                {
-                    move = -1;
-                }
-                tmpblock.MoveLocation(move, 0);
-            }
-            else
-            {
-                move = 0;
-            }
-
-            foreach (var p in tmpblock.GetBlockRotatePoints())
-            {
-                if (field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        private bool CanAction_I(Field field, Block block)
-        {
-            var tmpblock = new Block(block);
-            tmpblock.RotateRight();
             foreach (var p in tmpblock.GetBlockRotatePoints())
             {
                 if (field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock || field.GetFieldType(p.X, p.Y) == FieldTypes.outOfField)
@@ -195,7 +212,7 @@ namespace TetrisLogic.UserAction
             return true;
         }
 
-        private bool CanAction_O(Field field, Block block)
+        protected bool CanAction_O(Field field, Block block)
         {
             return true;
         }
