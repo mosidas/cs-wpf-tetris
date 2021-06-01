@@ -12,7 +12,7 @@ namespace TetrisLogic.UserAction.Tests
     public class UA_MoveDownTests
     {
         [TestMethod()]
-        public void ActionTest_Normal()
+        public void ActionTest_LocationYIsPlus1()
         {
             // data
             var block = new Block(BlockTypes.O);
@@ -47,7 +47,7 @@ namespace TetrisLogic.UserAction.Tests
             var act = new UA_MoveDown();
             var ret = act.CanAction(field, block);
 
-            Assert.AreEqual(ret, true);
+            Assert.AreEqual(true, ret);
         }
 
         [TestMethod()]
@@ -60,16 +60,16 @@ namespace TetrisLogic.UserAction.Tests
 
             // target
             var act = new UA_MoveDown();
-            for (var i = 0; i < 18; i++)
+            for (var i = 0; i < 17; i++)
             {
-                var ret1 = act.CanAction(field, block);
                 act.Action(ref field, ref block, ref holdBlock);
-                Assert.AreEqual(ret1, true);
             }
+
+            Assert.AreEqual(true, act.CanAction(field, block));
         }
 
         [TestMethod()]
-        public void CanActionTest_OBlockCanNotDownAfter18Down()
+        public void CanActionTest_OBlockCanNotDown19th()
         {
             // data
             var block = new Block(BlockTypes.O);
@@ -79,17 +79,16 @@ namespace TetrisLogic.UserAction.Tests
             // target
             var act = new UA_MoveDown();
 
-            for(var i = 0;i<18;i++)
+            for (var i = 0; i < 18; i++)
             {
                 act.Action(ref field, ref block, ref holdBlock);
             }
 
-            var ret = act.CanAction(field, block);
-            Assert.AreEqual(ret, false);
+            Assert.AreEqual(false, act.CanAction(field, block));
         }
 
         [TestMethod()]
-        public void CanActionTest_TBlockCanDown17th()
+        public void CanActionTest_TBlockCanDown18th()
         {
             // data
             var block = new Block(BlockTypes.T);
@@ -100,14 +99,14 @@ namespace TetrisLogic.UserAction.Tests
             var act = new UA_MoveDown();
             for (var i = 0; i < 17; i++)
             {
-                var ret1 = act.CanAction(field, block);
                 act.Action(ref field, ref block, ref holdBlock);
-                Assert.AreEqual(ret1, true);
             }
+
+            Assert.AreEqual(true, act.CanAction(field, block));
         }
 
         [TestMethod()]
-        public void CanActionTest_TBlockCanNotDownAfter17Down()
+        public void CanActionTest_TBlockCanNotDown19th()
         {
             // data
             var block = new Block(BlockTypes.T);
@@ -117,17 +116,16 @@ namespace TetrisLogic.UserAction.Tests
             // target
             var act = new UA_MoveDown();
 
-            for (var i = 0; i < 17; i++)
+            for (var i = 0; i < 18; i++)
             {
                 act.Action(ref field, ref block, ref holdBlock);
             }
 
-            var ret = act.CanAction(field, block);
-            Assert.AreEqual(ret, false);
+            Assert.AreEqual(false, act.CanAction(field, block));
         }
 
         [TestMethod()]
-        public void CanActionTest_IBlockCanDown16th()
+        public void CanActionTest_IBlockCanDown19th()
         {
             // data
             var block = new Block(BlockTypes.I);
@@ -136,16 +134,16 @@ namespace TetrisLogic.UserAction.Tests
 
             // target
             var act = new UA_MoveDown();
-            for (var i = 0; i < 16; i++)
+            for (var i = 0; i < 18; i++)
             {
-                var ret1 = act.CanAction(field, block);
                 act.Action(ref field, ref block, ref holdBlock);
-                Assert.AreEqual(ret1, true);
             }
+
+            Assert.AreEqual(true, act.CanAction(field, block));
         }
 
         [TestMethod()]
-        public void CanActionTest_IBlockCanNotDownAfter16Down()
+        public void CanActionTest_IBlockCanNotCanDown20th()
         {
             // data
             var block = new Block(BlockTypes.I);
@@ -155,13 +153,12 @@ namespace TetrisLogic.UserAction.Tests
             // target
             var act = new UA_MoveDown();
 
-            for (var i = 0; i < 16; i++)
+            for (var i = 0; i < 19; i++)
             {
                 act.Action(ref field, ref block, ref holdBlock);
             }
 
-            var ret = act.CanAction(field, block);
-            Assert.AreEqual(ret, false);
+            Assert.AreEqual(false, act.CanAction(field, block));
         }
     }
 }

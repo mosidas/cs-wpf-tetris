@@ -36,7 +36,7 @@ namespace TetrisLogic.UserAction.Tests
         }
 
         [TestMethod()]
-        public void CanActionTest_CanDropInInitState()
+        public void CanActionTest_BlockCanDropInInitState()
         {
             // data
             var block = new Block(BlockTypes.O);
@@ -50,7 +50,7 @@ namespace TetrisLogic.UserAction.Tests
         }
 
         [TestMethod()]
-        public void CanActionTest_OBlockCanNotDropAfterDrop()
+        public void CanActionTest_BlockCanNotDropAfterDrop()
         {
             // data
             var block = new Block(BlockTypes.O);

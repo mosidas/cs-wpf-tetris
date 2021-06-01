@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TetrisLogic.UserAction
 {
     public class UA_RotateRight : IUserAction
     {
+        private int move = 0;
         public void Action(ref Field field, ref Block currentBlock, ref Block holdBlock)
         {
+            currentBlock.MoveLocation(move, 0);
             currentBlock.RotateRight();
         }
 
@@ -35,14 +35,43 @@ namespace TetrisLogic.UserAction
                     return false;
             }
         }
+        private int OutOfFieldCount(Field field, List<Point> rotatePoints)
+        {
+            var count = rotatePoints.Where(p => field.GetFieldType(p.X, p.Y) == FieldTypes.outOfField).Count();
+            return count;
+        }
+
+        private bool IsBlockbyTheWall(Field field, Block block)
+        {
+            var count = OutOfFieldCount(field, block.GetBlockRotatePoints());
+            return count > 0;
+        }
 
         private bool CanAction_T(Field field, Block block)
         {
             var tmpblock = new Block(block);
             tmpblock.RotateRight();
+
+            if (IsBlockbyTheWall(field, tmpblock))
+            {
+                if (block.GetBlockLeftPoints().Count == 3)
+                {
+                    move = 1;
+                }
+                else
+                {
+                    move = -1;
+                }
+                tmpblock.MoveLocation(move, 0);
+            }
+            else
+            {
+                move = 0;
+            }
+
             foreach (var p in tmpblock.GetBlockRotatePoints())
             {
-                if (field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock || field.GetFieldType(p.X, p.Y) == FieldTypes.outOfField)
+                if (field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock)
                 {
                     return false;
                 }
@@ -51,10 +80,13 @@ namespace TetrisLogic.UserAction
             return true;
         }
 
+
+
         private bool CanAction_Z(Field field, Block block)
         {
             var tmpblock = new Block(block);
             tmpblock.RotateRight();
+
             foreach (var p in tmpblock.GetBlockRotatePoints())
             {
                 if (field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock || field.GetFieldType(p.X, p.Y) == FieldTypes.outOfField)
@@ -85,9 +117,27 @@ namespace TetrisLogic.UserAction
         {
             var tmpblock = new Block(block);
             tmpblock.RotateRight();
+
+            if (IsBlockbyTheWall(field, tmpblock))
+            {
+                if (block.GetBlockLeftPoints().Count == 3)
+                {
+                    move = 1;
+                }
+                else
+                {
+                    move = -1;
+                }
+                tmpblock.MoveLocation(move, 0);
+            }
+            else
+            {
+                move = 0;
+            }
+
             foreach (var p in tmpblock.GetBlockRotatePoints())
             {
-                if (field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock || field.GetFieldType(p.X, p.Y) == FieldTypes.outOfField)
+                if (field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock)
                 {
                     return false;
                 }
@@ -100,9 +150,28 @@ namespace TetrisLogic.UserAction
         {
             var tmpblock = new Block(block);
             tmpblock.RotateRight();
+
+            if (IsBlockbyTheWall(field, tmpblock))
+            {
+                if (block.GetBlockLeftPoints().Count == 3)
+                {
+                    move = 1;
+
+                }
+                else if (block.GetBlockRightPoints().Count == 3)
+                {
+                    move = -1;
+                }
+                tmpblock.MoveLocation(move, 0);
+            }
+            else
+            {
+                move = 0;
+            }
+
             foreach (var p in tmpblock.GetBlockRotatePoints())
             {
-                if (field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock || field.GetFieldType(p.X, p.Y) == FieldTypes.outOfField)
+                if (field.GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock)
                 {
                     return false;
                 }

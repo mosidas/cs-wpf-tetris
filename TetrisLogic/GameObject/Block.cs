@@ -19,6 +19,8 @@ namespace TetrisLogic
     {
         public BlockTypes BlockType { get; private set; }
         public Point Location { get { return _location; } }
+        public int[,] _Block { get { return _block; } }
+
         private int[,] _block;
         private readonly int _blockWidth;
         private readonly int _blockHeight;
@@ -53,22 +55,22 @@ namespace TetrisLogic
                     _block = new int[1, 1];
                     break;
             }
-            _blockWidth = _block.GetLength(0);
-            _blockHeight = _block.GetLength(1);
+            _blockWidth =  _block.GetLength(1);
+            _blockHeight = _block.GetLength(0);
             _location = BlockType == BlockTypes.I ? new Point(3, -1) : new Point(3, 0);
         }
 
         public Block(Block b)
         {
             BlockType = b.BlockType;
-            _block = new int[b._blockWidth, b._blockHeight];
+            _block = new int[b._blockHeight, b._blockWidth];
             _blockWidth = b._blockWidth;
             _blockHeight = b._blockHeight;
-            for (var x = 0; x < _blockWidth; x++)
+            for (var row = 0; row < _blockHeight; row++)
             {
-                for (var y = 0; y < _blockHeight; y++)
+                for (var col = 0; col < _blockWidth; col++)
                 {
-                    _block[x, y] = b._block[x, y];
+                    _block[row, col] = b._block[row, col];
                 }
             }
             _location = new Point(b._location.X, b._location.Y);
@@ -86,26 +88,25 @@ namespace TetrisLogic
 
         public void RotateRight()
         {
-            var tmp = new int[_blockHeight, _blockWidth];
-            for (var x = 0; x < _blockWidth;x++)
+            var tmp = new int[_blockWidth, _blockHeight];
+            for (var row = 0; row < _blockHeight; row++)
             {
-                for (var y = 0; y < _blockHeight; y++)
+                for (var col = 0; col < _blockWidth; col++)
                 {
-                    tmp[y, _blockWidth - x - 1] = _block[x, y];
+                    tmp[col, _blockHeight - row - 1] = _block[row, col];
                 }
             }
-
             _block = tmp;
         }
 
         public void RotateLeft()
         {
-            var tmp = new int[_blockHeight, _blockWidth];
-            for (var x = 0; x < _blockWidth; x++)
+            var tmp = new int[_blockWidth, _blockHeight];
+            for (var row = 0; row < _blockHeight; row++)
             {
-                for (var y = 0; y < _blockHeight; y++)
+                for (var col = 0; col < _blockWidth; col++)
                 {
-                    tmp[_blockHeight- y - 1, x] = _block[x, y];
+                    tmp[_blockWidth - col - 1, row] = _block[row, col];
                 }
             }
 
@@ -115,13 +116,13 @@ namespace TetrisLogic
         public List<Point> GetBlockPoints()
         {
             var points = new List<Point>();
-            for (var y = 0; y < _blockHeight; y++)
+            for (var row = 0; row < _blockHeight; row++)
             {
-                for (int x = 0; x < _blockWidth; x++)
+                for (var col = 0; col < _blockWidth; col++)
                 {
-                    if (_block[x, y] == 1)
+                    if (_block[row, col] == 1)
                     {
-                        points.Add(new Point(x + _location.X, y + _location.Y));
+                        points.Add(new Point(col + _location.X, row + _location.Y));
                     }
                 }
             }
@@ -132,13 +133,13 @@ namespace TetrisLogic
         public List<Point> GetBlockBottomPoints()
         {
             var points = new List<Point>();
-            for (int x = 0; x < _blockWidth; x++) 
+            for (int col = 0; col < _blockWidth; col++)
             {
-                for (var y = _blockHeight - 1; y >= 0; y--)
+                for (int row = _blockHeight - 1; row >= 0; row--)
                 {
-                    if (_block[x, y] == 1)
+                    if (_block[row, col] == 1)
                     {
-                        points.Add(new Point(x + _location.X, y + _location.Y));
+                        points.Add(new Point(col + _location.X, row + _location.Y));
                         break;
                     }
                 }
@@ -150,13 +151,13 @@ namespace TetrisLogic
         public List<Point> GetBlockLeftPoints()
         {
             var points = new List<Point>();
-            for (var y = 0; y < _blockHeight; y++) 
+            for (var row = 0; row < _blockHeight; row++) 
             {
-                for (int x = 0; x < _blockWidth; x++)
+                for (int col = 0; col < _blockWidth; col++)
                 {
-                    if (_block[x, y] == 1)
+                    if (_block[row, col] == 1)
                     {
-                        points.Add(new Point(x + _location.X, y + _location.Y));
+                        points.Add(new Point(col + _location.X, row + _location.Y));
                         break;
                     }
                 }
@@ -168,13 +169,13 @@ namespace TetrisLogic
         public List<Point> GetBlockRightPoints()
         {
             var points = new List<Point>();
-            for (var y = 0; y < _blockHeight; y++) 
+            for (var row = 0; row < _blockHeight; row++) 
             {
-                for (int x = _blockWidth - 1; x >= 0; x--)
+                for (int col = _blockWidth - 1; col >= 0; col--)
                 {
-                    if (_block[x, y] == 1)
+                    if (_block[row, col] == 1)
                     {
-                        points.Add(new Point(x + _location.X, y + _location.Y));
+                        points.Add(new Point(col + _location.X, row + _location.Y));
                         break;
                     }
                 }
@@ -186,21 +187,21 @@ namespace TetrisLogic
         public List<Point> GetBlockRotatePoints()
         {
             var points = new List<Point>();
-            for (var x = 0; x < _blockWidth; x++)
+            for (var col = 0; col < _blockWidth; col++)
             {
-                for (var y = 0; y < _blockHeight; y++)
+                for (var row = 0; row < _blockHeight; row++)
                 {
-                    if (_block[x, y] == 1)
+                    if (_block[row, col] == 1)
                     {
                         if(BlockType == BlockTypes.O || BlockType == BlockTypes.I)
                         {
-                            points.Add(new Point(x + _location.X, y + _location.Y));
+                            points.Add(new Point(col + _location.X, row + _location.Y));
                         }
                         else
                         {
-                            if(!(x == 1 && y == 1))
+                            if(!(col == 1 && row == 1))
                             {
-                                points.Add(new Point(x + _location.X, y + _location.Y));
+                                points.Add(new Point(col + _location.X, row + _location.Y));
                             }
                         }
                     }
@@ -210,70 +211,6 @@ namespace TetrisLogic
             return points;
         }
 
-        public Point GetLocation_BlockTop()
-        {
-            for (var y = 0; y < _blockHeight; y++) 
-            {
-                for (int x = 0; x < _blockWidth; x++)
-                {
-                    if (_block[x, y] == 1)
-                    {
-                        return new Point(x + _location.X, y + _location.Y);
-                    }
-                }
-            }
-
-            return new Point(-1, -1);
-        }
-
-        public Point GetGetLocation_BlockBottom()
-        {
-            for (var y = _blockHeight - 1; y >= 0; y--) 
-            {
-                for (int x = 0; x < _blockWidth; x++)
-                {
-                    if (_block[x, y] == 1)
-                    {
-                        return new Point(x + _location.X, y + _location.Y);
-                    }
-                }
-            }
-
-            return new Point(-1, -1);
-        }
-
-        public Point GetLocation_BlockLeft()
-        {
-            for (int x = 0; x < _blockWidth; x++) 
-            {
-                for (var y = 0; y < _blockHeight; y++)
-                {
-                    if (_block[x, y] == 1)
-                    {
-                        return new Point(x + _location.X, y + _location.Y);
-                    }
-                }
-            }
-
-            return new Point(-1, -1);
-        }
-
-        public Point GetLocation_BlockRight()
-        {
-            for (int x = _blockWidth - 1; x >= 0; x--) 
-            {
-                for (var y = 0; y < _blockHeight; y++)
-                {
-                    if (_block[x, y] == 1)
-                    {
-                        return new Point(x + _location.X, y + _location.Y);
-                    }
-                }
-            }
-
-            return new Point(-1, -1);
-        }
-
         /// <summary>
         /// ■■ 
         /// ■■ 
@@ -281,11 +218,11 @@ namespace TetrisLogic
         /// <returns></returns>
         private int[,] CreateBlockO()
         {
-            var rect = new int[2, 2];
-            rect[0, 0] = 1;
-            rect[0, 1] = 1;
-            rect[1, 0] = 1;
-            rect[1, 1] = 1;
+            var rect = new int[2, 2]
+            {            
+                { 1, 1, },
+                { 1, 1, },
+            };
             return rect;
         }
 
@@ -298,11 +235,13 @@ namespace TetrisLogic
         /// <returns></returns>
         private int[,] CreateBlockI()
         {
-            var rect = new int[4, 4];
-            rect[0, 1] = 1;
-            rect[1, 1] = 1;
-            rect[2, 1] = 1;
-            rect[3, 1] = 1;
+            var rect = new int[4, 4]
+            {
+                { 0, 0, 0, 0, },
+                { 1, 1, 1, 1, },
+                { 0, 0, 0, 0, },
+                { 0, 0, 0, 0, },
+            };
             return rect;
         }
 
@@ -314,11 +253,13 @@ namespace TetrisLogic
         /// <returns></returns>
         private int[,] CreateBlockT()
         {
-            var rect = new int[3, 3];
-            rect[1, 0] = 1;
-            rect[0, 1] = 1;
-            rect[1, 1] = 1;
-            rect[2, 1] = 1;
+            var rect = new int[3, 3]
+            {           
+                { 0, 1, 0, },
+                { 1, 1, 1, },
+                { 0, 0, 0, },
+            };
+
             return rect;
         }
 
@@ -330,11 +271,12 @@ namespace TetrisLogic
         /// <returns></returns>
         private int[,] CreateBlockJ()
         {
-            var rect = new int[3, 3];
-            rect[0, 0] = 1;
-            rect[0, 1] = 1;
-            rect[1, 1] = 1;
-            rect[2, 1] = 1;
+            var rect = new int[3, 3]           
+            {
+                { 1, 0, 0, },
+                { 1, 1, 1, },
+                { 0, 0, 0, },
+            };
             return rect;
         }
 
@@ -346,11 +288,12 @@ namespace TetrisLogic
         /// <returns></returns>
         private int[,] CreateBlockL()
         {
-            var rect = new int[3, 3];
-            rect[2, 0] = 1;
-            rect[0, 1] = 1;
-            rect[1, 1] = 1;
-            rect[2, 1] = 1;
+            var rect = new int[3, 3]           
+            {
+                { 0, 0, 1, },
+                { 1, 1, 1, },
+                { 0, 0, 0, },
+            };
             return rect;
         }
 
@@ -362,11 +305,12 @@ namespace TetrisLogic
         /// <returns></returns>
         private int[,] CreateBlockZ()
         {
-            var rect = new int[3, 3];
-            rect[0, 0] = 1;
-            rect[1, 0] = 1;
-            rect[1, 1] = 1;
-            rect[2, 1] = 1;
+            var rect = new int[3, 3]
+            {
+                { 1, 1, 0, },
+                { 0, 1, 1, },
+                { 0, 0, 0, },
+            };
             return rect;
         }
 
@@ -378,11 +322,12 @@ namespace TetrisLogic
         /// <returns></returns>
         private int[,] CreateBlockS()
         {
-            var rect = new int[3, 3];
-            rect[1, 0] = 1;
-            rect[2, 0] = 1;
-            rect[0, 1] = 1;
-            rect[1, 1] = 1;
+            var rect = new int[3, 3]
+            {
+                { 0, 1, 1, },
+                { 1, 1, 0, },
+                { 0, 0, 0, },
+            };
             return rect;
         }
     }

@@ -38,7 +38,7 @@ namespace TetrisLogic
 
         public List<Block> GetNextBlocksPool(int count)
         {
-            var pool = _blocksPool.Take(Math.Min(count, _blocksPool.Count)).ToList();
+            var pool = _blocksPool.Take(count).ToList();
             return pool;
         }
 
