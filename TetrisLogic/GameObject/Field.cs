@@ -18,68 +18,50 @@ namespace TetrisLogic
 
         private static readonly int _width = 10;
         private static readonly int _height = 20;
-        private FieldTypes[,] _fieldState = new FieldTypes[_width, _height];
-        private BlockTypes[,] _fieldTypeState = new BlockTypes[_width, _height];
+        private FieldTypes[,] _fieldState = new FieldTypes[_height, _width];
+        private BlockTypes[,] _fieldTypeState = new BlockTypes[_height, _width];
 
         public void InitField()
         {
-            for (var w = 0; w < _width; w++)
+            for (var row = 0; row < _height; row++)
             {
-                for (var h = 0; h < _height; h++)
+                for (var col = 0; col < _width; col++)
                 {
-                    _fieldState[w, h] = FieldTypes.empty;
-                    _fieldTypeState[w, h] = BlockTypes.nothing;
+                    _fieldState[row, col] = FieldTypes.empty;
+                    _fieldTypeState[row, col] = BlockTypes.nothing;
                 }
             }
         }
 
         public List<(Point,BlockTypes)> GetFieldBlockPointAndTypePairs()
         {
-            var ret = new List<(Point, BlockTypes)>();
+            var pairs = new List<(Point, BlockTypes)>();
 
-            for (var w = 0; w < _width; w++)
+            for (var row = 0; row < _height; row++)
             {
-                for (var h = 0; h < _height; h++)
+                for (var col = 0; col < _width; col++)
                 {
-                    if (_fieldState[w, h] != FieldTypes.empty)
+                    if (_fieldState[row, col] != FieldTypes.empty)
                     {
-                        ret.Add((new Point(w, h), _fieldTypeState[w, h]));
+                        pairs.Add((new Point(col, row), _fieldTypeState[row, col]));
                     }
                 }
             }
 
-            return ret;
+            return pairs;
         }
 
         public List<Point> GetFieldBlockPoints()
         {
-            var ret = new List<Point>();
-
-            for (var w = 0; w < _width; w++)
-            {
-                for (var h = 0; h < _height; h++)
-                {
-                    if (_fieldState[w, h] != FieldTypes.empty)
-                    {
-                        ret.Add(new Point(w, h));
-                    }
-                }
-            }
-
-            return ret;
-        }
-
-        public List<Point> GetFixedBlockPoints()
-        {
             var points = new List<Point>();
 
-            for (var w = 0; w < _width; w++)
+            for (var row = 0; row < _height; row++)
             {
-                for (var h = 0; h < _height; h++)
+                for (var col = 0; col < _width; col++)
                 {
-                    if(_fieldState[w, h] == FieldTypes.fixedBlock)
+                    if (_fieldState[row, col] != FieldTypes.empty)
                     {
-                        points.Add(new Point(w,h));
+                        points.Add(new Point(col, row));
                     }
                 }
             }
@@ -87,32 +69,32 @@ namespace TetrisLogic
             return points;
         }
 
-        public List<BlockTypes> GetFixedBlockTypes()
+        public List<Point> GetFixedBlockPoints()
         {
-            var types = new List<BlockTypes>();
+            var points = new List<Point>();
 
-            for (var w = 0; w < _width; w++)
+            for (var row = 0; row < _height; row++)
             {
-                for (var h = 0; h < _height; h++)
+                for (var col = 0; col < _width; col++)
                 {
-                    if (_fieldState[w, h] == FieldTypes.fixedBlock)
+                    if(_fieldState[row, col] == FieldTypes.fixedBlock)
                     {
-                        types.Add(_fieldTypeState[w, h]);
+                        points.Add(new Point(col, row));
                     }
                 }
             }
 
-            return types;
+            return points;
         }
 
-        public FieldTypes GetFieldType(int w, int h)
+        public FieldTypes GetFieldType(int col, int row)
         {
-            if(_width <= w || w < 0 || _height <= h || h < 0)
+            if(_width <= col || col < 0 || _height <= row || row < 0)
             {
                 return FieldTypes.outOfField;
             }
 
-            return _fieldState[w, h];
+            return _fieldState[row, col];
         }
 
         public bool CanSpawn(Block cb)
@@ -152,13 +134,13 @@ namespace TetrisLogic
 
         private void UpdateCurerntBlock(Block cb, bool isFixedBlock)
         {
-            for (int x = 0; x < _width; x++)
+            for (var row = 0; row < _height; row++)
             {
-                for (var y = 0; y < _height; y++)
+                for (var col = 0; col < _width; col++)
                 {
-                    if (_fieldState[x, y] == FieldTypes.block)
+                    if (_fieldState[row, col] == FieldTypes.block)
                     {
-                        _fieldState[x, y] = FieldTypes.empty;
+                        _fieldState[row, col] = FieldTypes.empty;
                     }
                 }
             }
@@ -169,8 +151,8 @@ namespace TetrisLogic
                 {
                     if (GetFieldType(point.X, point.Y) != FieldTypes.outOfField)
                     {
-                        _fieldState[point.X, point.Y] = FieldTypes.fixedBlock;
-                        _fieldTypeState[point.X, point.Y] = cb.BlockType;
+                        _fieldState[point.Y, point.X] = FieldTypes.fixedBlock;
+                        _fieldTypeState[point.Y, point.X] = cb.BlockType;
                     }
                 }
             }
@@ -180,8 +162,8 @@ namespace TetrisLogic
                 {
                     if (GetFieldType(point.X, point.Y) != FieldTypes.outOfField)
                     {
-                        _fieldState[point.X, point.Y] = FieldTypes.block;
-                        _fieldTypeState[point.X, point.Y] = cb.BlockType;
+                        _fieldState[point.Y, point.X] = FieldTypes.block;
+                        _fieldTypeState[point.Y, point.X] = cb.BlockType;
                     }
                 }
             }
