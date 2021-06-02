@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
@@ -53,6 +54,7 @@ namespace TetrisWindow
                 {
                     var block = (BlockRectangle)MainField.FindName("Cell_" + y + "_" + x);
                     block.Rect.Fill = Brushes.DarkGray;
+                    block.Rect.Opacity = 1.0;
                 }
             }
         }
@@ -61,15 +63,30 @@ namespace TetrisWindow
         {
             UpdateView_Init();
 
-            var fieldPointAndTypePairs = _gameManager.FieldPointAndTypePairs;
+            SetGhostBlock(_gameManager.GhostBlockPoints, _gameManager.GhostBlocktype);
+            SetFieldBlock(_gameManager.FieldPointAndTypePairs);
+            SetHoldBlock(_gameManager.HoldBlockType);
+            SetNextBlock(_gameManager.NextBlockTypes[0]);
+        }
+
+        private void SetFieldBlock(List<(System.Drawing.Point, BlockTypes)> fieldPointAndTypePairs)
+        {
             fieldPointAndTypePairs.ForEach(pair =>
             {
                 var block = (BlockRectangle)MainField.FindName("Cell_" + pair.Item1.Y + "_" + pair.Item1.X);
                 block.Rect.Fill = GetBlockColor(pair.Item2);
+                block.Rect.Opacity = 1;
             });
-            SetHoldBlock(_gameManager.HoldBlockType);
-            SetNextBlock(_gameManager.NextBlockTypes[0]);
+        }
 
+        private void SetGhostBlock(List<System.Drawing.Point> ghostBlockPoints, BlockTypes ghostBlocktype)
+        {
+            ghostBlockPoints.ForEach(p =>
+            {
+                var block = (BlockRectangle)MainField.FindName("Cell_" + p.Y + "_" + p.X);
+                block.Rect.Fill = GetBlockColor(ghostBlocktype);
+                block.Rect.Opacity = 0.5;
+            });
         }
 
         private void SetNextBlock(BlockTypes bt)
@@ -203,6 +220,7 @@ namespace TetrisWindow
             await System.Threading.Tasks.Task.Delay(1500);
 
             var fieldBlockPoints = _gameManager.FieldBlockPoints;
+            fieldBlockPoints.AddRange(_gameManager.GhostBlockPoints);
 
             fieldBlockPoints.ForEach(p =>
             {
@@ -220,6 +238,7 @@ namespace TetrisWindow
             {
                 var block = (BlockRectangle)MainField.FindName("Cell_" + p.Y + "_" + p.X);
                 block.Rect.Fill = Brushes.Black;
+                block.Rect.Opacity = 1.0;
             });
         }
 

@@ -13,6 +13,8 @@ namespace TetrisLogic
         public double GameLevel { get; private set; }
         public double DownRate { get { return GameLevel == 0 ? 0 : FPS * (10 / Math.Floor(Math.Log2(GameLevel + 1))); } }
         public List<Point> CurrentBlockPoints { get { return _currentBlock == null ? new List<Point>() : _currentBlock.GetBlockPoints(); } }
+        public List<Point> GhostBlockPoints { get { return GetGhostBlockPoints(); } }
+        public BlockTypes GhostBlocktype { get { return _currentBlock.BlockType; } }
         public List<Point> FixedBlockPoints { get { return _field == null ? new List<Point>() : _field.GetFixedBlockPoints(); } }
         public List<(Point, BlockTypes)> FieldPointAndTypePairs { get { return _field == null ? new List<(Point, BlockTypes)>() : _field.GetFieldBlockPointAndTypePairs(); } }
         public List<Point> FieldBlockPoints { get { return _field == null ? new List<Point>() : _field.GetFieldBlockPoints(); } }
@@ -195,6 +197,15 @@ namespace TetrisLogic
             {
                 return false;
             }
+        }
+
+        private List<Point> GetGhostBlockPoints()
+        {
+            var hd = new UA_HardDrop();
+            var ghostBlock = new Block(_currentBlock);
+            var dm = new Block(BlockTypes.nothing);
+            hd.Action(ref _field, ref ghostBlock, ref dm);
+            return ghostBlock.GetBlockPoints();
         }
     }
 }
