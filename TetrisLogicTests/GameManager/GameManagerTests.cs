@@ -100,5 +100,24 @@ namespace TetrisLogic.Tests
 
             Assert.AreEqual(4, manager.FixedBlockPoints.Count);
         }
+
+        [TestMethod()]
+        public void UpdateTest_Hold()
+        {
+            var manager = new GameManager(new Field(), new BlocksPoolManagerDummy());
+            manager.Start(0);
+            var before = manager.CurrentBlockPoints;
+            manager.Update(ActionTypes.nothing);
+            manager.Update(ActionTypes.moveDown);
+            manager.Update(ActionTypes.hold);
+
+            var after = manager.CurrentBlockPoints;
+
+            for (var i = 0; i < before.Count; i++)
+            {
+                Assert.AreEqual(before[i].X, after[i].X);
+                Assert.AreEqual(before[i].Y, after[i].Y);
+            }
+        }
     }
 }

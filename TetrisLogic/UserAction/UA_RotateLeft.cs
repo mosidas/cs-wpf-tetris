@@ -225,12 +225,12 @@ namespace TetrisLogic.UserAction
 
         private void GetSRSState4(ref Block dummyblock)
         {
-            if (dummyblock.Direction == DirectionTypes.east )
+            if (dummyblock.Direction == DirectionTypes.east || dummyblock.Direction == DirectionTypes.south)
             {
                 dummyblock.MoveLocation(-1, 0);
                 MoveX += -1;
             }
-            else if (dummyblock.Direction == DirectionTypes.north || dummyblock.Direction == DirectionTypes.west || dummyblock.Direction == DirectionTypes.south)
+            else if (dummyblock.Direction == DirectionTypes.north || dummyblock.Direction == DirectionTypes.west )
             {
                 dummyblock.MoveLocation(1, 0);
                 MoveX += 1;
@@ -271,12 +271,12 @@ namespace TetrisLogic.UserAction
 
         private void GetSRSState1(ref Block dummyblock)
         {
-            if (dummyblock.Direction == DirectionTypes.east )
+            if (dummyblock.Direction == DirectionTypes.east || dummyblock.Direction == DirectionTypes.south)
             {
                 dummyblock.MoveLocation(-1, 0);
                 MoveX += -1;
             }
-            else if (dummyblock.Direction == DirectionTypes.north || dummyblock.Direction == DirectionTypes.west || dummyblock.Direction == DirectionTypes.south)
+            else if (dummyblock.Direction == DirectionTypes.north || dummyblock.Direction == DirectionTypes.west )
             {
                 dummyblock.MoveLocation(1, 0);
                 MoveX += 1;

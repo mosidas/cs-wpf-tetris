@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace TetrisLogic
 {
@@ -104,20 +105,62 @@ namespace TetrisLogic
                 .Exists(p => GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock || GetFieldType(p.X, p.Y) == FieldTypes.outOfField);
         }
 
-        public void UpdateField(Block cb, bool fixedBlock)
+        public int UpdateField(Block cb, bool fixedBlock)
         {
             UpdateCurerntBlock(cb, fixedBlock);
 
+            var line = 0;
             if(fixedBlock)
             {
-                UpdateLine();
+                line = UpdateLine();
             }
-            
+
+            return line;
         }
 
-        private void UpdateLine()
+        private int UpdateLine()
         {
-            // TODO:
+            var count = 0;
+            var targetLine = _height - 1;
+            while (targetLine >= 0)
+            {
+                var line = new List<FieldTypes>();
+
+                for (var col = 0; col < _width; col++)
+                {
+                    line.Add(_fieldState[targetLine, col]);
+                }
+
+                if (line.All(s => s == FieldTypes.fixedBlock))
+                {
+                    count++;
+                    DeleteLine(targetLine);
+                }
+                else
+                {
+                    targetLine--;
+                }
+            }
+
+            return count;
+        }
+
+        private void DeleteLine(int targetLine)
+        {
+            for (var row = targetLine; row >= 1; row--)
+            {
+                for (var col = 0; col < _width; col++)
+                {
+                    _fieldState[row, col] = _fieldState[row - 1, col];
+                    _fieldTypeState[row, col] = _fieldTypeState[row - 1, col];
+                }
+            }
+
+            for (var col = 0; col < _width; col++)
+            {
+                _fieldState[0, col] = FieldTypes.empty;
+                _fieldTypeState[0, col] = BlockTypes.nothing;
+            }
         }
 
         private void UpdateCurerntBlock(Block cb, bool isFixedBlock)
@@ -155,6 +198,26 @@ namespace TetrisLogic
                     }
                 }
             }
+        }
+
+        public string DrawFiled()
+        {
+            var ret = new List<string>();
+
+            for (int i = 0; i < _fieldState.GetLength(0); i++)
+            {
+                var tmp = new List<string>();
+                for (int j = 0; j < _fieldState.GetLength(1); j++)
+                {
+                    tmp.Add(_fieldState[i, j].ToString().PadRight(10));
+                }
+
+                ret.Add(string.Join(",", tmp));
+            }
+
+            var rret = string.Join("\r\n", ret);
+
+            return rret;
         }
     }
 }

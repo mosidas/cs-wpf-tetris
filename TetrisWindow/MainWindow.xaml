@@ -255,8 +255,8 @@
             </Grid>
         </Border>
         <Border x:Name="Score" BorderThickness="1" BorderBrush="Black" Height="50" Width="100" Margin="0,325,20,0" VerticalAlignment="Top" HorizontalAlignment="Right"  />
-        <Button x:Name="button" Content="START" HorizontalAlignment="Left" Height="34" Margin="480,390,0,0" VerticalAlignment="Top" Width="100" Click="button_Click"/>
-        <Button x:Name="button1" Content="STOP" HorizontalAlignment="Left" Margin="480,439,0,0" VerticalAlignment="Top" Height="32" Width="100" Click="button1_Click"/>
-        <Button x:Name="button_Copy" Content="RESTART" HorizontalAlignment="Left" Height="34" Margin="480,486,0,0" VerticalAlignment="Top" Width="100" Click="button_Copy_Click"/>
+        <Button x:Name="button" Content="START" HorizontalAlignment="Left" Height="34" Margin="480,390,0,0" VerticalAlignment="Top" Width="100" Focusable="False" Click="button_Click"/>
+        <Button x:Name="button1" Content="STOP" HorizontalAlignment="Left" Margin="480,439,0,0" VerticalAlignment="Top" Height="32" Width="100" Focusable="False" Click="button1_Click"/>
+        <Button x:Name="button_Copy" Content="RESTART" HorizontalAlignment="Left" Height="34" Margin="480,486,0,0" VerticalAlignment="Top" Width="100" Focusable="False" Click="button_Copy_Click"/>
     </Grid>
 </Window>

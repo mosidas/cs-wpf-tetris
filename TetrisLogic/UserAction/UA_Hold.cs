@@ -12,14 +12,14 @@ namespace TetrisLogic.UserAction
         {
             if(holdBlock.BlockType == BlockTypes.nothing)
             {
-                holdBlock = new Block(currentBlock.BlockType, true);
+                holdBlock = new Block(currentBlock.BlockType, false);
                 currentBlock = new Block(BlockTypes.nothing);
             }
             else
             {
-                var tmp = holdBlock;
+                var tmp = new Block(holdBlock.BlockType);
                 holdBlock = new Block(currentBlock.BlockType, false);
-                currentBlock = new Block(tmp.BlockType);
+                currentBlock =  new Block(tmp.BlockType);
             }
         }
 

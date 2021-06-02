@@ -78,6 +78,16 @@ namespace TetrisLogic
             }
         }
 
+        public void DegubWrite()
+        {
+            System.Diagnostics.Debug.WriteLine("--current block--");
+            System.Diagnostics.Debug.WriteLine(_currentBlock.DrawBlock());
+            System.Diagnostics.Debug.WriteLine("--current hold block--");
+            System.Diagnostics.Debug.WriteLine(_holdBlock.DrawBlock());
+            System.Diagnostics.Debug.WriteLine("--current filed--");
+            System.Diagnostics.Debug.WriteLine(_field.DrawFiled());
+        }
+
         private ActionTypes _beforeAction = ActionTypes.nothing;
         private int _actionCount;
         private bool DoContinueSameAction(ActionTypes userAction)
@@ -112,7 +122,7 @@ namespace TetrisLogic
 
         private bool CanSpawn()
         {
-            return _field.ExistsCollisionPoint(_currentBlock);
+            return !_field.ExistsCollisionPoint(_currentBlock);
         }
 
         private bool Act(ActionTypes actType)
@@ -145,7 +155,7 @@ namespace TetrisLogic
                 {
                     IsGameOver = true;
                 }
-                _field.UpdateField(_currentBlock, false);
+                _ = _field.UpdateField(_currentBlock, false);
                 _timeCounter = 0;
             }
             else
@@ -159,7 +169,7 @@ namespace TetrisLogic
                     {
                         IsGameOver = true;
                     }
-                    _field.UpdateField(_currentBlock, false);
+                    _ = _field.UpdateField(_currentBlock, false);
                     _holdBlock.CanSwap = true;
                     _timeCounter = 0;
                 }
