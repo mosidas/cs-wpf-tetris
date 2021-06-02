@@ -1,12 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TetrisLogic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TetrisLogicTests.Stub;
 using TetrisLogic.UserAction;
+using TetrisLogicTests.Stub;
 
 namespace TetrisLogic.Tests
 {

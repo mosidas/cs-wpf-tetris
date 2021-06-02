@@ -247,7 +247,7 @@
             </Grid>
         </Border>
         <Border x:Name="Hold" BorderThickness="1" BorderBrush="Black" Height="80" Width="80" Margin="54,36,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Background="LightGray" >
-            <Grid x:Name="HoldBlockGrid" Margin="10,10,10,10">
+            <Grid x:Name="HoldBlockGrid" Margin="20,10,0,10">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
@@ -256,7 +256,7 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition />
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
@@ -276,7 +276,7 @@
         </Border>
         <Label x:Name="lblHold" Content="Hold" HorizontalAlignment="Left" Margin="53,10,0,0" VerticalAlignment="Top" Height="26" Width="41"/>
         <Border x:Name="Next" BorderThickness="1" BorderBrush="Black" Height="80" Width="80" Margin="510,36,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Background="LightGray" >
-            <Grid x:Name="NextBlockGrid" Margin="10,10,10,10">
+            <Grid x:Name="NextBlockGrid" Margin="20,10,0,10">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
