@@ -2,7 +2,7 @@
 {
     public class UA_HardDrop : IUserAction
     {
-        IUserAction MoveDown;
+        private readonly IUserAction MoveDown;
         public UA_HardDrop()
         {
             MoveDown = new UA_MoveDown();

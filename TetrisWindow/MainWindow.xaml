@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TetrisWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="600" KeyDown="MainGrid_KeyDown" KeyUp="MainGrid_KeyUp">
+        Title="MainWindow" Height="660" Width="660" KeyDown="MainGrid_KeyDown" KeyUp="MainGrid_KeyUp"
+        WindowStyle="None">
     <Grid>
-        <Border x:Name="MainField" BorderBrush="Black" Height="500" Width="300" Margin="0,0,0,0" VerticalAlignment="Top"  HorizontalAlignment ="Center" Background="LightGray" >
-            <Grid x:Name="MainGrid" Margin="26,0,26,0" >
+        <Border x:Name="MainField" BorderBrush="Black" Height="500" Width="300" Margin="0,20,0,0" VerticalAlignment="Top"  HorizontalAlignment ="Center" Background="LightGray" >
+            <Grid x:Name="MainGrid" Margin="26,0,26,0" Loaded="MainGrid_Loaded" >
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
@@ -245,18 +246,64 @@
                 <local:BlockRectangle x:Name="Cell_19_9" Margin="0,0,0,0" Grid.Row="19" Grid.Column="9"/>
             </Grid>
         </Border>
-        <Border x:Name="Hold" BorderThickness="1" BorderBrush="Black" Height="80" Width="80" Margin="35,20,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Background="LightGray" >
-            <Grid x:Name="HoldBlockGrid" Margin="3,3,3,3">
-                <local:BlockRectangle x:Name="HoldBlock" Margin="0,0,0,0" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Border x:Name="Hold" BorderThickness="1" BorderBrush="Black" Height="80" Width="80" Margin="54,36,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Background="LightGray" >
+            <Grid x:Name="HoldBlockGrid" Margin="10,10,10,10">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Viewbox x:Name="HbBox1" Height="15" Width="15" Grid.Row="0" Grid.Column="0" Visibility="Hidden">
+                    <local:BlockRectangle x:Name="HoldBlock1" Margin="0,0,0,0"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Viewbox>
+                <Viewbox x:Name="HbBox2" Height="15" Width="15" Grid.Row="1" Grid.Column="0" Visibility="Hidden">
+                    <local:BlockRectangle x:Name="HoldBlock2" Margin="0,0,0,0"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Viewbox>
+                <Viewbox x:Name="HbBox3" Height="15" Width="15" Grid.Row="2" Grid.Column="0" Visibility="Hidden">
+                    <local:BlockRectangle x:Name="HoldBlock3" Margin="0,0,0,0"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Viewbox>
+                <Viewbox x:Name="HbBox4" Height="15" Width="15" Grid.Row="3" Grid.Column="0" Visibility="Hidden">
+                    <local:BlockRectangle x:Name="HoldBlock4" Margin="0,0,0,0"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Viewbox>
             </Grid>
         </Border>
-        <Border x:Name="Next" BorderThickness="1" BorderBrush="Black" Height="300" Width="100" Margin="0,20,20,0" VerticalAlignment="Top" HorizontalAlignment="Right">
-            <Grid x:Name="NextBlockGrid" Margin="10,0,10,0">
+        <Label x:Name="lblHold" Content="Hold" HorizontalAlignment="Left" Margin="53,10,0,0" VerticalAlignment="Top" Height="26" Width="41"/>
+        <Border x:Name="Next" BorderThickness="1" BorderBrush="Black" Height="80" Width="80" Margin="510,36,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Background="LightGray" >
+            <Grid x:Name="NextBlockGrid" Margin="10,10,10,10">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Viewbox x:Name="NbBox1" Height="15" Width="15" Grid.Row="0" Grid.Column="0">
+                    <local:BlockRectangle x:Name="NextBlock1" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Viewbox>
+                <Viewbox x:Name="NbBox2" Height="15" Width="15" Grid.Row="0" Grid.Column="0">
+                    <local:BlockRectangle x:Name="NextBlock2" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Viewbox>
+                <Viewbox x:Name="NbBox3" Height="15" Width="15" Grid.Row="0" Grid.Column="0">
+                    <local:BlockRectangle x:Name="NextBlock3" Margin="0,0,0,0"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Viewbox>
+                <Viewbox x:Name="NbBox4" Height="15" Width="15" Grid.Row="0" Grid.Column="0">
+                    <local:BlockRectangle x:Name="NextBlock4" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Viewbox>
             </Grid>
         </Border>
-        <Border x:Name="Score" BorderThickness="1" BorderBrush="Black" Height="50" Width="100" Margin="0,325,20,0" VerticalAlignment="Top" HorizontalAlignment="Right"  />
-        <Button x:Name="button" Content="START" HorizontalAlignment="Left" Height="34" Margin="480,390,0,0" VerticalAlignment="Top" Width="100" Focusable="False" Click="button_Click"/>
-        <Button x:Name="button1" Content="STOP" HorizontalAlignment="Left" Margin="480,439,0,0" VerticalAlignment="Top" Height="32" Width="100" Focusable="False" Click="button1_Click"/>
-        <Button x:Name="button_Copy" Content="RESTART" HorizontalAlignment="Left" Height="34" Margin="480,486,0,0" VerticalAlignment="Top" Width="100" Focusable="False" Click="button_Copy_Click"/>
+        <Label x:Name="lblNext" Content="Next" HorizontalAlignment="Left" Margin="510,10,0,0" VerticalAlignment="Top" Height="26" Width="41"/>
+        <local:MessageWindow x:Name="Msg" Margin="211,193,212,417" Visibility="Hidden"/>
     </Grid>
 </Window>

@@ -27,7 +27,6 @@ namespace TetrisLogic
     {
         public BlockTypes BlockType { get; private set; }
         public Point Location { get { return _location; } }
-
         public DirectionTypes Direction { get { return _direction; } }
 
         public bool CanSwap { get; set; }

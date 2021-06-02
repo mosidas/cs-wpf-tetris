@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Timers;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using TetrisLogic;
 using TetrisLogic.UserAction;
@@ -66,9 +67,133 @@ namespace TetrisWindow
                 var block = (BlockRectangle)MainField.FindName("Cell_" + pair.Item1.Y + "_" + pair.Item1.X);
                 block.Rect.Fill = GetBlockColor(pair.Item2);
             });
+            SetHoldBlock(_gameManager.HoldBlockType);
+            SetNextBlock(_gameManager.NextBlockTypes[0]);
 
-            var holdBlock = (BlockRectangle)Hold.FindName("HoldBlock");
-            holdBlock.Rect.Fill = GetBlockColor(_gameManager.HoldBlock.BlockType);
+        }
+
+        private void SetNextBlock(BlockTypes bt)
+        {
+            NextBlock1.Rect.Fill = GetBlockColor(bt);
+            NextBlock2.Rect.Fill = GetBlockColor(bt);
+            NextBlock3.Rect.Fill = GetBlockColor(bt);
+            NextBlock4.Rect.Fill = GetBlockColor(bt);
+
+            if (bt == BlockTypes.I)
+            {
+                Grid.SetColumn(NbBox1, 1); Grid.SetRow(NbBox1, 0);
+                Grid.SetColumn(NbBox2, 1); Grid.SetRow(NbBox2, 1);
+                Grid.SetColumn(NbBox3, 1); Grid.SetRow(NbBox3, 2);
+                Grid.SetColumn(NbBox4, 1); Grid.SetRow(NbBox4, 3);
+            }
+            else if (bt == BlockTypes.T)
+            {
+                Grid.SetColumn(NbBox1, 0); Grid.SetRow(NbBox1, 1);
+                Grid.SetColumn(NbBox2, 1); Grid.SetRow(NbBox2, 1);
+                Grid.SetColumn(NbBox3, 2); Grid.SetRow(NbBox3, 1);
+                Grid.SetColumn(NbBox4, 1); Grid.SetRow(NbBox4, 2);
+            }
+            else if (bt == BlockTypes.J)
+            {
+                Grid.SetColumn(NbBox1, 1); Grid.SetRow(NbBox1, 0);
+                Grid.SetColumn(NbBox2, 1); Grid.SetRow(NbBox2, 1);
+                Grid.SetColumn(NbBox3, 1); Grid.SetRow(NbBox3, 2);
+                Grid.SetColumn(NbBox4, 0); Grid.SetRow(NbBox4, 2);
+            }
+            else if (bt == BlockTypes.L)
+            {
+                Grid.SetColumn(NbBox1, 1); Grid.SetRow(NbBox1, 0);
+                Grid.SetColumn(NbBox2, 1); Grid.SetRow(NbBox2, 1);
+                Grid.SetColumn(NbBox3, 1); Grid.SetRow(NbBox3, 2);
+                Grid.SetColumn(NbBox4, 2); Grid.SetRow(NbBox4, 2);
+            }
+            else if (bt == BlockTypes.S)
+            {
+                Grid.SetColumn(NbBox1, 1); Grid.SetRow(NbBox1, 1);
+                Grid.SetColumn(NbBox2, 2); Grid.SetRow(NbBox2, 1);
+                Grid.SetColumn(NbBox3, 0); Grid.SetRow(NbBox3, 2);
+                Grid.SetColumn(NbBox4, 1); Grid.SetRow(NbBox4, 2);
+            }
+            else if (bt == BlockTypes.Z)
+            {
+                Grid.SetColumn(NbBox1, 0); Grid.SetRow(NbBox1, 1);
+                Grid.SetColumn(NbBox2, 1); Grid.SetRow(NbBox2, 1);
+                Grid.SetColumn(NbBox3, 1); Grid.SetRow(NbBox3, 2);
+                Grid.SetColumn(NbBox4, 2); Grid.SetRow(NbBox4, 2);
+            }
+            else if (bt == BlockTypes.O)
+            {
+                Grid.SetColumn(NbBox1, 1); Grid.SetRow(NbBox1, 1);
+                Grid.SetColumn(NbBox2, 1); Grid.SetRow(NbBox2, 2);
+                Grid.SetColumn(NbBox3, 2); Grid.SetRow(NbBox3, 1);
+                Grid.SetColumn(NbBox4, 2); Grid.SetRow(NbBox4, 2);
+            }
+        }
+
+        private void SetHoldBlock(BlockTypes bt)
+        {
+            if(bt != BlockTypes.nothing)
+            {
+                HbBox1.Visibility = Visibility.Visible;
+                HbBox2.Visibility = Visibility.Visible;
+                HbBox3.Visibility = Visibility.Visible;
+                HbBox4.Visibility = Visibility.Visible;
+            }
+
+            HoldBlock1.Rect.Fill = GetBlockColor(bt);
+            HoldBlock2.Rect.Fill = GetBlockColor(bt);
+            HoldBlock3.Rect.Fill = GetBlockColor(bt);
+            HoldBlock4.Rect.Fill = GetBlockColor(bt);
+
+            if (bt == BlockTypes.I)
+            {
+                Grid.SetColumn(HbBox1, 1); Grid.SetRow(HbBox1, 0);
+                Grid.SetColumn(HbBox2, 1); Grid.SetRow(HbBox2, 1);
+                Grid.SetColumn(HbBox3, 1); Grid.SetRow(HbBox3, 2);
+                Grid.SetColumn(HbBox4, 1); Grid.SetRow(HbBox4, 3);
+            }
+            else if (bt == BlockTypes.T)
+            {
+                Grid.SetColumn(HbBox1, 0); Grid.SetRow(HbBox1, 1);
+                Grid.SetColumn(HbBox2, 1); Grid.SetRow(HbBox2, 1);
+                Grid.SetColumn(HbBox3, 2); Grid.SetRow(HbBox3, 1);
+                Grid.SetColumn(HbBox4, 1); Grid.SetRow(HbBox4, 2);
+            }
+            else if (bt == BlockTypes.J)
+            {
+                Grid.SetColumn(HbBox1, 1); Grid.SetRow(HbBox1, 0);
+                Grid.SetColumn(HbBox2, 1); Grid.SetRow(HbBox2, 1);
+                Grid.SetColumn(HbBox3, 1); Grid.SetRow(HbBox3, 2);
+                Grid.SetColumn(HbBox4, 0); Grid.SetRow(HbBox4, 2);
+            }
+            else if (bt == BlockTypes.L)
+            {
+                Grid.SetColumn(HbBox1, 1); Grid.SetRow(HbBox1, 0);
+                Grid.SetColumn(HbBox2, 1); Grid.SetRow(HbBox2, 1);
+                Grid.SetColumn(HbBox3, 1); Grid.SetRow(HbBox3, 2);
+                Grid.SetColumn(HbBox4, 2); Grid.SetRow(HbBox4, 2);
+            }
+            else if (bt == BlockTypes.S)
+            {
+                Grid.SetColumn(HbBox1, 1); Grid.SetRow(HbBox1, 1);
+                Grid.SetColumn(HbBox2, 2); Grid.SetRow(HbBox2, 1);
+                Grid.SetColumn(HbBox3, 0); Grid.SetRow(HbBox3, 2);
+                Grid.SetColumn(HbBox4, 1); Grid.SetRow(HbBox4, 2);
+            }
+            else if (bt == BlockTypes.Z)
+            {
+                Grid.SetColumn(HbBox1, 0); Grid.SetRow(HbBox1, 1);
+                Grid.SetColumn(HbBox2, 1); Grid.SetRow(HbBox2, 1);
+                Grid.SetColumn(HbBox3, 1); Grid.SetRow(HbBox3, 2);
+                Grid.SetColumn(HbBox4, 2); Grid.SetRow(HbBox4, 2);
+            }
+            else if (bt == BlockTypes.O)
+            {
+                Grid.SetColumn(HbBox1, 1); Grid.SetRow(HbBox1, 1);
+                Grid.SetColumn(HbBox2, 1); Grid.SetRow(HbBox2, 2);
+                Grid.SetColumn(HbBox3, 2); Grid.SetRow(HbBox3, 1);
+                Grid.SetColumn(HbBox4, 2); Grid.SetRow(HbBox4, 2);
+            }
         }
 
         private async void UpdateView_GameOver()
@@ -83,6 +208,8 @@ namespace TetrisWindow
             {
                 System.Threading.Tasks.Task.Run(() => UpdateView_GameOver_FillBlack(p) );
             });
+
+            StartMessage();
         }
 
         private async void UpdateView_GameOver_FillBlack(System.Drawing.Point p)
@@ -132,40 +259,96 @@ namespace TetrisWindow
             }
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            _gameManager.Start(1);
-            _timer.Start();
-        }
-
-        private void button1_Click(object sender, RoutedEventArgs e)
-        {
-            _timer.Stop();
-        }
-
-        private void button_Copy_Click(object sender, RoutedEventArgs e)
-        {
-            _timer.Start();
-        }
-
         private void MainGrid_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            _userAction = e.Key switch
+            if(_gameManager.IsGameOver)
             {
-                System.Windows.Input.Key.Down => ActionTypes.moveDown,
-                System.Windows.Input.Key.Left => ActionTypes.moveLeft,
-                System.Windows.Input.Key.Right => ActionTypes.moveRight,
-                System.Windows.Input.Key.Up => ActionTypes.hardDrop,
-                System.Windows.Input.Key.Z => ActionTypes.rotateLeft,
-                System.Windows.Input.Key.X => ActionTypes.rotateRight,
-                System.Windows.Input.Key.Space => ActionTypes.hold,
-                _ => ActionTypes.nothing,
-            };
+                switch(e.Key)
+                {
+                    case System.Windows.Input.Key.Space:
+                        Msg.Visibility = Visibility.Hidden;
+                        Pause = false;
+                        _gameManager.Start(1);
+                        _timer.Start();
+                        break;
+                    case System.Windows.Input.Key.Escape:
+                        Close();
+                        break;
+                }
+            }
+            else
+            {
+                switch (e.Key)
+                {
+                    case System.Windows.Input.Key.Space:
+                        Msg.Visibility = Visibility.Hidden;
+                        Pause = false;
+                        _timer.Start();
+                        break;
+                    case System.Windows.Input.Key.P:
+                        _timer.Stop();
+                        Pause = true;
+                        PauseMessage();
+                        return;
+                    case System.Windows.Input.Key.R:
+                        if(Pause)
+                        {
+                            Msg.Visibility = Visibility.Hidden;
+                            _gameManager.Start(1);
+                            _timer.Start();
+                        }
+                        return;
+                    case System.Windows.Input.Key.Escape:
+                        if (Pause)
+                        {
+                            Close();
+                        }
+                        else
+                        {
+                            _timer.Stop();
+                            Pause = true;
+                            PauseMessage();
+                        }
+                        return;
+                }
+
+                _userAction = e.Key switch
+                {
+                    System.Windows.Input.Key.Down => ActionTypes.moveDown,
+                    System.Windows.Input.Key.Left => ActionTypes.moveLeft,
+                    System.Windows.Input.Key.Right => ActionTypes.moveRight,
+                    System.Windows.Input.Key.Up => ActionTypes.hardDrop,
+                    System.Windows.Input.Key.Z => ActionTypes.rotateLeft,
+                    System.Windows.Input.Key.X => ActionTypes.rotateRight,
+                    System.Windows.Input.Key.Space => ActionTypes.hold,
+                    _ => ActionTypes.nothing,
+                };
+            }
         }
 
         private void MainGrid_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
             _userAction = ActionTypes.nothing;
+        }
+
+        private void MainGrid_Loaded(object sender, RoutedEventArgs e)
+        {
+            StartMessage();
+        }
+        private bool Pause;
+
+        private void StartMessage()
+        {
+            Msg.Visibility = Visibility.Visible;
+            Msg.Background = Brushes.White;
+            Msg.Content = "ゲーム開始：Space P:一時停止 終了：Esc";
+        }
+
+        private void PauseMessage()
+        {
+            Msg.Visibility = Visibility.Visible;
+            Msg.Background = Brushes.White;
+            Msg.Content = "ゲーム再開：Spase リセット：R 終了：Esc";
         }
     }
 }

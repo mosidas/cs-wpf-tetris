@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using TetrisLogic.UserAction;
 
 namespace TetrisLogic
@@ -15,7 +16,8 @@ namespace TetrisLogic
         public List<Point> FixedBlockPoints { get { return _field == null ? new List<Point>() : _field.GetFixedBlockPoints(); } }
         public List<(Point, BlockTypes)> FieldPointAndTypePairs { get { return _field == null ? new List<(Point, BlockTypes)>() : _field.GetFieldBlockPointAndTypePairs(); } }
         public List<Point> FieldBlockPoints { get { return _field == null ? new List<Point>() : _field.GetFieldBlockPoints(); } }
-        public Block HoldBlock { get { return _holdBlock; } }
+        public BlockTypes HoldBlockType { get { return _holdBlock.BlockType; } }
+        public List<BlockTypes> NextBlockTypes { get { return _blocksPoolManager.GetNextBlocksPool(1).Select(b => b.BlockType).ToList(); } }
         public int FieldWidth { get { return _field == null ? 0 : _field.Width; } }
         public int FieldHeight { get { return _field == null ? 0 : _field.Height; } }
 
