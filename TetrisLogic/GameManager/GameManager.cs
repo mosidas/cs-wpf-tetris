@@ -12,9 +12,7 @@ namespace TetrisLogic
         public double GameLevel { get; private set; }
         public double DownRate { get { return GameLevel == 0 ? 0 : FPS * (10 / Math.Floor(Math.Log2(GameLevel + 1))); } }
         public List<Point> CurrentBlockPoints { get { return _currentBlock == null ? new List<Point>() : _currentBlock.GetBlockPoints(); } }
-        public BlockTypes CurrentBlockType { get { return _currentBlock == null ? BlockTypes.nothing : _currentBlock.BlockType; } }
         public List<Point> FixedBlockPoints { get { return _field == null ? new List<Point>() : _field.GetFixedBlockPoints(); } }
-        public List<BlockTypes> FixedBlockTypes { get { return _field == null ? new List<BlockTypes>() : _field.GetFixedBlockTypes(); } }
         public List<(Point, BlockTypes)> FieldPointAndTypePairs { get { return _field == null ? new List<(Point, BlockTypes)>() : _field.GetFieldBlockPointAndTypePairs(); } }
         public List<Point> FieldBlockPoints { get { return _field == null ? new List<Point>() : _field.GetFieldBlockPoints(); } }
         public Block HoldBlock { get { return _holdBlock; } }
