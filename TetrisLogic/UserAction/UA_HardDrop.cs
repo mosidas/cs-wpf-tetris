@@ -15,9 +15,9 @@
             }
         }
 
-        public bool CanAction(Field field, Block block)
+        public bool CanAction(Field field, Block block, Block holdBlock = null)
         {
-            return MoveDown.CanAction(field, block);
+            return MoveDown.CanAction(field, block, holdBlock);
         }
     }
 }

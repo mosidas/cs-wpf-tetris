@@ -7,15 +7,15 @@ namespace TetrisLogic.UserAction
 {
     public class UA_RotateRight : IUserAction
     {
-        private int MoveX = 0;
-        private int MoveY = 0;
+        private int MoveX;
+        private int MoveY;
         public void Action(ref Field field, ref Block currentBlock, ref Block holdBlock)
         {
             currentBlock.MoveLocation(MoveX, MoveY);
             currentBlock.RotateRight();
         }
 
-        public bool CanAction(Field field, Block block)
+        public bool CanAction(Field field, Block block, Block holdBlock = null)
         {
             if(block.BlockType == BlockTypes.O)
             {

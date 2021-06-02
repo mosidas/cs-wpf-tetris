@@ -245,60 +245,13 @@
                 <local:BlockRectangle x:Name="Cell_19_9" Margin="0,0,0,0" Grid.Row="19" Grid.Column="9"/>
             </Grid>
         </Border>
-        <Border x:Name="Hold" BorderThickness="1" BorderBrush="Black" Height="108" Width="108" Margin="20,20,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Background="LightGray" >
+        <Border x:Name="Hold" BorderThickness="1" BorderBrush="Black" Height="80" Width="80" Margin="35,20,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Background="LightGray" >
             <Grid x:Name="HoldBlockGrid" Margin="3,3,3,3">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <local:BlockRectangle x:Name="HoldCell_0_0" Margin="0,0,0,0" Grid.Row="0" Grid.Column="0"/>
-                <local:BlockRectangle x:Name="HoldCell_1_0" Margin="0,0,0,0" Grid.Row="1" Grid.Column="0"/>
-                <local:BlockRectangle x:Name="HoldCell_2_0" Margin="0,0,0,0" Grid.Row="2" Grid.Column="0"/>
-                <local:BlockRectangle x:Name="HoldCell_3_0" Margin="0,0,0,0" Grid.Row="3" Grid.Column="0"/>
-                <local:BlockRectangle x:Name="HoldCell_0_1" Margin="0,0,0,0" Grid.Row="0" Grid.Column="1"/>
-                <local:BlockRectangle x:Name="HoldCell_1_1" Margin="0,0,0,0" Grid.Row="1" Grid.Column="1"/>
-                <local:BlockRectangle x:Name="HoldCell_2_1" Margin="0,0,0,0" Grid.Row="2" Grid.Column="1"/>
-                <local:BlockRectangle x:Name="HoldCell_3_1" Margin="0,0,0,0" Grid.Row="3" Grid.Column="1"/>
-                <local:BlockRectangle x:Name="HoldCell_0_2" Margin="0,0,0,0" Grid.Row="0" Grid.Column="2"/>
-                <local:BlockRectangle x:Name="HoldCell_1_2" Margin="0,0,0,0" Grid.Row="1" Grid.Column="2"/>
-                <local:BlockRectangle x:Name="HoldCell_2_2" Margin="0,0,0,0" Grid.Row="2" Grid.Column="2"/>
-                <local:BlockRectangle x:Name="HoldCell_3_2" Margin="0,0,0,0" Grid.Row="3" Grid.Column="2"/>
-                <local:BlockRectangle x:Name="HoldCell_0_3" Margin="0,0,0,0" Grid.Row="0" Grid.Column="3"/>
-                <local:BlockRectangle x:Name="HoldCell_1_3" Margin="0,0,0,0" Grid.Row="1" Grid.Column="3"/>
-                <local:BlockRectangle x:Name="HoldCell_2_3" Margin="0,0,0,0" Grid.Row="2" Grid.Column="3"/>
-                <local:BlockRectangle x:Name="HoldCell_3_3" Margin="0,0,0,0" Grid.Row="3" Grid.Column="3"/>
+                <local:BlockRectangle x:Name="HoldBlock" Margin="0,0,0,0" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Grid>
         </Border>
         <Border x:Name="Next" BorderThickness="1" BorderBrush="Black" Height="300" Width="100" Margin="0,20,20,0" VerticalAlignment="Top" HorizontalAlignment="Right">
             <Grid x:Name="NextBlockGrid" Margin="10,0,10,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
             </Grid>
         </Border>
         <Border x:Name="Score" BorderThickness="1" BorderBrush="Black" Height="50" Width="100" Margin="0,325,20,0" VerticalAlignment="Top" HorizontalAlignment="Right"  />

@@ -97,18 +97,6 @@ namespace TetrisLogic
             return _fieldState[row, col];
         }
 
-        public bool CanSpawn(Block cb)
-        {
-            foreach(var p in cb.GetBlockPoints())
-            {
-                if(GetFieldType(p.X, p.Y) != FieldTypes.empty)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
         public bool ExistsCollisionPoint(Block block)
         {
             return block

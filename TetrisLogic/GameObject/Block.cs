@@ -30,12 +30,14 @@ namespace TetrisLogic
 
         public DirectionTypes Direction { get { return _direction; } }
 
+        public bool CanSwap { get; set; }
+
         private int[,] _block;
         private readonly int _blockWidth;
         private readonly int _blockHeight;
         private Point _location;
         private DirectionTypes _direction;
-        public Block(BlockTypes bt)
+        public Block(BlockTypes bt, bool canSwap = true)
         {
             BlockType = bt;
             switch(bt)
@@ -69,6 +71,7 @@ namespace TetrisLogic
             _blockHeight = _block.GetLength(0);
             _location = BlockType == BlockTypes.I ? new Point(3, -1) : new Point(3, 0);
             _direction = DirectionTypes.north;
+            CanSwap = canSwap;
         }
 
         public Block(Block b)
