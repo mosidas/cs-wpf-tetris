@@ -27,20 +27,20 @@ namespace TetrisLogic.Tests
             int gl = 5;
             var manager = new GameManager(new Field(), new BlocksPoolManagerDummy());
             manager.Start(gl);
-            Assert.AreEqual(manager.IsGameOver, true);
-            Assert.AreEqual(manager.GameLevel, gl);
-            Assert.AreEqual(manager.FixedBlockPoints.Count, 0);
-            Assert.AreEqual(manager.CurrentBlockPoints.Count, 4);
-            Assert.AreEqual(manager.CurrentBlockPoints.Count, 4);
+            Assert.AreEqual(false, manager.IsGameOver);
+            Assert.AreEqual(gl, manager.GameLevel);
+            Assert.AreEqual(0, manager.FixedBlockPoints.Count);
+            Assert.AreEqual(4, manager.CurrentBlockPoints.Count);
+            Assert.AreEqual(4, manager.CurrentBlockPoints.Count);
         }
 
         [TestMethod()]
         public void UpdateTest_CurrentBlocklocation()
         {
             var manager = new GameManager(new Field(), new BlocksPoolManagerDummy());
-            manager.Start();
+            manager.Start(0);
             var before = manager.CurrentBlockPoints;
-            manager.Update(ActionTypes.nothing, true);
+            manager.Update(ActionTypes.moveDown);
             var after = manager.CurrentBlockPoints;
 
             for(var i = 0;i < before.Count;i++)
@@ -54,11 +54,11 @@ namespace TetrisLogic.Tests
         public void UpdateTest_CurrentBlocklocation_10th()
         {
             var manager = new GameManager(new Field(), new BlocksPoolManagerDummy());
-            manager.Start();
+            manager.Start(0);
             var before = manager.CurrentBlockPoints;
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < 20; i++)
             {
-                manager.Update(ActionTypes.nothing, true);
+                manager.Update(i % 2 == 0 ? ActionTypes.moveDown : ActionTypes.nothing);
             }
             var after = manager.CurrentBlockPoints;
 
@@ -73,11 +73,11 @@ namespace TetrisLogic.Tests
         public void UpdateTest_CurrentBlocklocation_CurrentBlockWhenSpawnNextBlock()
         {
             var manager = new GameManager(new Field(), new BlocksPoolManagerDummy());
-            manager.Start();
+            manager.Start(0);
             var before = manager.CurrentBlockPoints;
-            for (var i = 0; i < 19; i++)
+            for (var i = 0; i < 38; i++)
             {
-                manager.Update(ActionTypes.nothing, true);
+                manager.Update(i % 2 == 0 ? ActionTypes.moveDown : ActionTypes.nothing);
             }
             var after = manager.CurrentBlockPoints;
 
@@ -92,19 +92,13 @@ namespace TetrisLogic.Tests
         public void UpdateTest_CurrentBlocklocation_FixedBlockWhenSpawnNextBlock()
         {
             var manager = new GameManager(new Field(), new BlocksPoolManagerDummy());
-            manager.Start();
-            for (var i = 0; i < 19; i++)
+            manager.Start(0);
+            for (var i = 0; i < 38; i++)
             {
-                manager.Update(ActionTypes.nothing, true);
+                manager.Update(i % 2 == 0 ? ActionTypes.moveDown : ActionTypes.nothing);
             }
-            var ret = manager.FixedBlockPoints;
 
-            Assert.AreEqual(ret.Count,4);
-            //for (var i = 0; i < ret.Count; i++)
-            //{
-            //    Assert.AreEqual(ret[i].X, 18);
-            //    Assert.AreEqual(ret[i].X, 18);
-            //}
+            Assert.AreEqual(4, manager.FixedBlockPoints.Count);
         }
     }
 }

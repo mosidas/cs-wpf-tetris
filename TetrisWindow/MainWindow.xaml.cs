@@ -14,7 +14,6 @@ namespace TetrisWindow
     {
         private readonly GameManager _gameManager;
         private readonly Timer _timer;
-        private double _time;
         private ActionTypes _userAction;
 
         public MainWindow()
@@ -28,17 +27,7 @@ namespace TetrisWindow
 
         private void OnElapsed_Timer(object sender, ElapsedEventArgs e)
         {
-            var doTimerAction = _time >= _gameManager.DownRate;
-            _gameManager.Update(_userAction, doTimerAction);
-
-            if (doTimerAction)
-            {
-                _time = 0.0;
-            }
-            else
-            {
-                _time += _gameManager.FrameRate;
-            }
+            _gameManager.Update(_userAction);
 
             Dispatcher.Invoke(() =>
             {
@@ -77,6 +66,9 @@ namespace TetrisWindow
                 var block = (BlockRectangle)MainField.FindName("Cell_" + pair.Item1.Y + "_" + pair.Item1.X);
                 block.Rect.Fill = GetBlockColor(pair.Item2);
             });
+
+            var holdBlock = (BlockRectangle)Hold.FindName("HoldBlock");
+            holdBlock.Rect.Fill = GetBlockColor(_gameManager.HoldBlock.BlockType);
         }
 
         private async void UpdateView_GameOver()
@@ -95,7 +87,7 @@ namespace TetrisWindow
 
         private async void UpdateView_GameOver_FillBlack(System.Drawing.Point p)
         {
-            await System.Threading.Tasks.Task.Delay(new Random().Next(100, 500));
+            await System.Threading.Tasks.Task.Delay(new Random().Next(100, 1000));
 
             Dispatcher.Invoke(() =>
             {
@@ -142,7 +134,6 @@ namespace TetrisWindow
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            _time = 0.0;
             _gameManager.Start(1);
             _timer.Start();
         }

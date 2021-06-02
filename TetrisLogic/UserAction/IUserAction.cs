@@ -20,7 +20,7 @@ namespace TetrisLogic.UserAction
 
     public interface IUserAction
     {
-        public bool CanAction(Field field, Block block);
+        public bool CanAction(Field field, Block block, Block holdBlock);
         public void Action(ref Field field, ref Block currentBlock, ref Block holdBlock);
     }
 }

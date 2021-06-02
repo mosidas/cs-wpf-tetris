@@ -7,7 +7,7 @@
             currentBlock.MoveLocation(0, 1);
         }
 
-        public bool CanAction(Field field, Block block)
+        public bool CanAction(Field field, Block block, Block holdBlock = null)
         {
             foreach(var p in block.GetBlockBottomPoints())
             {
