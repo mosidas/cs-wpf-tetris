@@ -63,7 +63,7 @@ namespace TetrisWindow
         {
             UpdateView_Init();
 
-            SetGhostBlock(_gameManager.GhostBlockPoints, _gameManager.GhostBlocktype);
+            SetGhostBlock(_gameManager.GhostBlockPoints, _gameManager.CurrentBlocktype);
             SetFieldBlock(_gameManager.FieldPointAndTypePairs);
             SetHoldBlock(_gameManager.HoldBlockType);
             SetNextBlock(_gameManager.NextBlockTypes[0]);

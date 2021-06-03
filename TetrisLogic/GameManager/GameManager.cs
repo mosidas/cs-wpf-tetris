@@ -6,30 +6,81 @@ using TetrisLogic.UserAction;
 
 namespace TetrisLogic
 {
+    /// <summary>
+    /// ゲームの動きを表す。
+    /// </summary>
     public class GameManager
     {
+        /// <summary>
+        /// true:ゲーム終了、false:ゲーム中
+        /// </summary>
         public bool IsGameOver { get; set; }
+        /// <summary>
+        /// 1フレームの長さ(単位:ms)
+        /// </summary>
         public double FrameRate { get { return 1000 / FPS; } }
+        /// <summary>
+        /// ゲームレベル
+        /// </summary>
         public double GameLevel { get; private set; }
+        /// <summary>
+        /// 自然に落下するスピード(単位:ms) ゲームレベルによって決まる
+        /// </summary>
         public double DownRate { get { return GameLevel == 0 ? 0 : FPS * (10 / Math.Floor(Math.Log2(GameLevel + 1))); } }
+        /// <summary>
+        /// 操作中のブロックの座標
+        /// </summary>
         public List<Point> CurrentBlockPoints { get { return _currentBlock == null ? new List<Point>() : _currentBlock.GetBlockPoints(); } }
+        /// <summary>
+        /// 操作中のブロックのブロックタイプ
+        /// </summary>
+        public BlockTypes CurrentBlocktype { get { return _currentBlock.BlockType; } }
+        /// <summary>
+        /// ゴーストブロックの座標
+        /// </summary>
         public List<Point> GhostBlockPoints { get { return GetGhostBlockPoints(); } }
-        public BlockTypes GhostBlocktype { get { return _currentBlock.BlockType; } }
+        /// <summary>
+        /// すべての固定ブロックの座標
+        /// </summary>
         public List<Point> FixedBlockPoints { get { return _field == null ? new List<Point>() : _field.GetFixedBlockPoints(); } }
+        /// <summary>
+        /// すべてのフィールド上にあるブロック(操作中のブロック + 固定ブロック)の座標とそのブロックタイプ
+        /// </summary>
         public List<(Point, BlockTypes)> FieldPointAndTypePairs { get { return _field == null ? new List<(Point, BlockTypes)>() : _field.GetFieldBlockPointAndTypePairs(); } }
+        /// <summary>
+        /// すべてのフィールド上にあるブロック(操作中のブロック + 固定ブロック)の座標
+        /// </summary>
         public List<Point> FieldBlockPoints { get { return _field == null ? new List<Point>() : _field.GetFieldBlockPoints(); } }
+        /// <summary>
+        /// ホールドブロックのブロックタイプ ホールドブロックがなければBlockType.nothig
+        /// </summary>
         public BlockTypes HoldBlockType { get { return _holdBlock.BlockType; } }
-        public List<BlockTypes> NextBlockTypes { get { return _blocksPoolManager.GetNextBlocksPool(1).Select(b => b.BlockType).ToList(); } }
+        /// <summary>
+        /// 次のブロック プールにあるブロックの落ちてくる順
+        /// </summary>
+        public List<BlockTypes> NextBlockTypes { get { return _blocksPoolManager.GetNextBlocksPool().Select(b => b.BlockType).ToList(); } }
+        /// <summary>
+        /// フィールドの幅
+        /// </summary>
         public int FieldWidth { get { return _field == null ? 0 : _field.Width; } }
+        /// <summary>
+        /// フィールドの高さ
+        /// </summary>
         public int FieldHeight { get { return _field == null ? 0 : _field.Height; } }
-
+        /// <summary>
+        /// FPS
+        /// </summary>
         public static readonly int FPS = 60;
+
         private Field _field;
         private Block _currentBlock;
         private Block _holdBlock;
         private readonly IBlocksPoolManager _blocksPoolManager;
         private int _timeCounter;
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public GameManager(Field field, IBlocksPoolManager bpm)
         {
             _field = field;
@@ -37,6 +88,9 @@ namespace TetrisLogic
             IsGameOver = true;
         }
 
+        /// <summary>
+        /// ゲームを開始する ゲームレベルは0 - 1024 ゲームレベル0だと自然落下しない
+        /// </summary>
         public void Start(int gamelevel = 5)
         {
             GameLevel = Math.Min(gamelevel,1024);
@@ -49,6 +103,9 @@ namespace TetrisLogic
             _timeCounter = 0;
         }
 
+        /// <summary>
+        /// ユーザーの操作に応じてゲーム状態(各プロパティ)を更新する
+        /// </summary>
         public void Update(ActionTypes userAction)
         {
             if (IsGameOver)
@@ -82,6 +139,9 @@ namespace TetrisLogic
             }
         }
 
+        /// <summary>
+        /// デバッグ用
+        /// </summary>
         public void DegubWrite()
         {
             System.Diagnostics.Debug.WriteLine("--current block--");

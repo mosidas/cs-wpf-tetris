@@ -4,12 +4,15 @@ using System.Linq;
 
 namespace TetrisLogic
 {
+    /// <summary>
+    /// 落下ブロックの順番を制御するクラス 落下ブロックの順番はワールドルール準拠
+    /// </summary>
     public class BlocksPoolManager : IBlocksPoolManager
     {
         private List<Block> _blocksPool = new List<Block>();
 
         /// <summary>
-        /// 初期化
+        /// コンストラクタ
         /// </summary>
         public BlocksPoolManager()
         {
@@ -17,17 +20,17 @@ namespace TetrisLogic
         }
 
         /// <summary>
-        /// プールの初期化
+        /// 落下ブロックの順番を初期化する
         /// </summary>
         public void Reset()
         {
+            _blocksPool = new List<Block>();
             CreateBlocksPool();
         }
 
         /// <summary>
-        /// プールから次のブロックを取り出す。さらにプールを補充する。
+        /// 次のブロックを取得する
         /// </summary>
-        /// <returns></returns>
         public Block TakeNextBlock()
         {
             CreateBlocksPool();
@@ -36,9 +39,12 @@ namespace TetrisLogic
             return nextBlock;
         }
 
-        public List<Block> GetNextBlocksPool(int count)
+        /// <summary>
+        /// プールにあるブロックを落ちてくる順に取得する
+        /// </summary>
+        public List<Block> GetNextBlocksPool()
         {
-            var pool = _blocksPool.Take(count).ToList();
+            var pool = _blocksPool.ToList();
             return pool;
         }
 

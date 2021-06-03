@@ -3,6 +3,9 @@ using System.Drawing;
 
 namespace TetrisLogic
 {
+    /// <summary>
+    /// ブロックのタイプ
+    /// </summary>
     public enum BlockTypes
     {
         nothing,
@@ -15,6 +18,9 @@ namespace TetrisLogic
         O,
     }
 
+    /// <summary>
+    /// ブロックの向き
+    /// </summary>
     public enum DirectionTypes
     {
         north = 0,
@@ -23,12 +29,26 @@ namespace TetrisLogic
         west,
     }
 
+    /// <summary>
+    /// ブロックのクラス
+    /// </summary>
     public class Block
     {
+        /// <summary>
+        /// ブロックのタイプ
+        /// </summary>
         public BlockTypes BlockType { get; private set; }
+        /// <summary>
+        /// ブロックの位置
+        /// </summary>
         public Point Location { get { return _location; } }
+        /// <summary>
+        /// ブロックの向き
+        /// </summary>
         public DirectionTypes Direction { get { return _direction; } }
-
+        /// <summary>
+        /// ホールドブロックが交換可能か
+        /// </summary>
         public bool CanSwap { get; set; }
 
         private int[,] _block;
@@ -36,6 +56,9 @@ namespace TetrisLogic
         private readonly int _blockHeight;
         private Point _location;
         private DirectionTypes _direction;
+        /// <summary>
+        /// コンストラクタ ブロックタイプと交換可能か(ホールドブロックの時)を指定する
+        /// </summary>
         public Block(BlockTypes bt, bool canSwap = true)
         {
             BlockType = bt;
@@ -73,6 +96,9 @@ namespace TetrisLogic
             CanSwap = canSwap;
         }
 
+        /// <summary>
+        /// コピーコンストラクタ
+        /// </summary>
         public Block(Block b)
         {
             BlockType = b.BlockType;
@@ -90,16 +116,25 @@ namespace TetrisLogic
             _direction = b._direction;
         }
 
+        /// <summary>
+        /// 位置を初期位置に戻す
+        /// </summary>
         public void ResetLocation()
         {
             _location = BlockType == BlockTypes.I ? new Point(3, -1) : new Point(3, 0);
         }
 
+        /// <summary>
+        /// 位置を移動する
+        /// </summary>
         public void MoveLocation(int x,int y)
         {
             _location = new Point(_location.X + x, _location.Y + y);
         }
 
+        /// <summary>
+        /// 右回転する north -> east -> south -> west -> north
+        /// </summary>
         public void RotateRight()
         {
             var tmp = new int[_blockWidth, _blockHeight];
@@ -114,6 +149,9 @@ namespace TetrisLogic
             _direction = (DirectionTypes)(((int)_direction + 1) % 4);
         }
 
+        /// <summary>
+        /// 左回転する north -> west -> south -> east -> north
+        /// </summary>
         public void RotateLeft()
         {
             var tmp = new int[_blockWidth, _blockHeight];
@@ -129,6 +167,9 @@ namespace TetrisLogic
             _direction = (DirectionTypes)(((int)_direction + 3) % 4);
         }
 
+        /// <summary>
+        /// ブロックのフィールド上の座標を取得する
+        /// </summary>
         public List<Point> GetBlockPoints()
         {
             var points = new List<Point>();
@@ -146,6 +187,9 @@ namespace TetrisLogic
             return points;
         }
 
+        /// <summary>
+        /// ブロック下面のフィールド上の座標を取得する
+        /// </summary>
         public List<Point> GetBlockBottomPoints()
         {
             var points = new List<Point>();
@@ -164,6 +208,9 @@ namespace TetrisLogic
             return points;
         }
 
+        /// <summary>
+        /// ブロック左面のフィールド上の座標を取得する
+        /// </summary>
         public List<Point> GetBlockLeftPoints()
         {
             var points = new List<Point>();
@@ -182,6 +229,9 @@ namespace TetrisLogic
             return points;
         }
 
+        /// <summary>
+        /// ブロック右面のフィールド上の座標を取得する
+        /// </summary>
         public List<Point> GetBlockRightPoints()
         {
             var points = new List<Point>();
@@ -200,6 +250,9 @@ namespace TetrisLogic
             return points;
         }
 
+        /// <summary>
+        /// ブロックの回転軸のブロック以外のフィールド上の座標を取得する
+        /// </summary>
         public List<Point> GetBlockRotatePoints()
         {
             var points = new List<Point>();
@@ -227,6 +280,9 @@ namespace TetrisLogic
             return points;
         }
 
+        /// <summary>
+        /// ブロックの内部構造を文字列に変化して取得する(デバッグ用)
+        /// </summary>
         public string DrawBlock()
         {
             var ret = new List<string>();

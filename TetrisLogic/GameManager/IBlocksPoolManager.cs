@@ -6,6 +6,6 @@ namespace TetrisLogic
     {
         public void Reset();
         public Block TakeNextBlock();
-        public List<Block> GetNextBlocksPool(int count);
+        public List<Block> GetNextBlocksPool();
     }
 }

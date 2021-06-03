@@ -19,7 +19,7 @@ namespace TetrisLogicTests.Stub
 
         }
 
-        public List<Block> GetNextBlocksPool(int count)
+        public List<Block> GetNextBlocksPool()
         {
             return null;
         }
