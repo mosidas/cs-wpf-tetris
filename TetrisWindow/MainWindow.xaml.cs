@@ -206,10 +206,10 @@ namespace TetrisWindow
             }
             else if (bt == BlockTypes.O)
             {
-                Grid.SetColumn(NbBox1, 1); Grid.SetRow(NbBox1, 1);
-                Grid.SetColumn(NbBox2, 1); Grid.SetRow(NbBox2, 2);
-                Grid.SetColumn(NbBox3, 2); Grid.SetRow(NbBox3, 1);
-                Grid.SetColumn(NbBox4, 2); Grid.SetRow(NbBox4, 2);
+                Grid.SetColumn(NbBox1, 0); Grid.SetRow(NbBox1, 1);
+                Grid.SetColumn(NbBox2, 0); Grid.SetRow(NbBox2, 2);
+                Grid.SetColumn(NbBox3, 1); Grid.SetRow(NbBox3, 1);
+                Grid.SetColumn(NbBox4, 1); Grid.SetRow(NbBox4, 2);
             }
         }
 
@@ -272,10 +272,10 @@ namespace TetrisWindow
             }
             else if (bt == BlockTypes.O)
             {
-                Grid.SetColumn(HbBox1, 1); Grid.SetRow(HbBox1, 1);
-                Grid.SetColumn(HbBox2, 1); Grid.SetRow(HbBox2, 2);
-                Grid.SetColumn(HbBox3, 2); Grid.SetRow(HbBox3, 1);
-                Grid.SetColumn(HbBox4, 2); Grid.SetRow(HbBox4, 2);
+                Grid.SetColumn(HbBox1, 0); Grid.SetRow(HbBox1, 1);
+                Grid.SetColumn(HbBox2, 0); Grid.SetRow(HbBox2, 2);
+                Grid.SetColumn(HbBox3, 1); Grid.SetRow(HbBox3, 1);
+                Grid.SetColumn(HbBox4, 1); Grid.SetRow(HbBox4, 2);
             }
         }
 
@@ -368,6 +368,7 @@ namespace TetrisWindow
                     case System.Windows.Input.Key.Space:
                         Msg.Visibility = Visibility.Hidden;
                         Pause = false;
+                        UpdateView_StartInit();
                         _timer.Start();
                         break;
                     case System.Windows.Input.Key.P:
@@ -379,6 +380,7 @@ namespace TetrisWindow
                         if(Pause)
                         {
                             Msg.Visibility = Visibility.Hidden;
+                            UpdateView_StartInit();
                             _gameManager.Start(1);
                             _timer.Start();
                         }
