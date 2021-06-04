@@ -8,6 +8,7 @@
         {
             currentBlock.MoveLocation(MoveX, MoveY);
             currentBlock.RotateRight();
+            currentBlock.TSpinType = getTSpinType(field, currentBlock);
         }
 
         public bool CanAction(Field field, Block block, Block holdBlock = null)
@@ -25,6 +26,32 @@
                 return CanAction_SRS(field, block);
             }
 
+        }
+
+        private TSpinTypes getTSpinType(Field field, Block block)
+        {
+            if(block.BlockType != BlockTypes.T)
+            {
+                return TSpinTypes.notTSpin;
+            }
+
+            var points = block.GetTSpinPoints();
+            var count = field.CountCollisionPoint(points);
+            if(count >= 3)
+            {
+                if(count == 3 && MoveY == 0)
+                {
+                    return TSpinTypes.tMini;
+                }
+                else
+                {
+                    return TSpinTypes.tSpin;
+                }
+            }
+            else
+            {
+                return TSpinTypes.notTSpin;
+            }
         }
 
         private bool CanAction_SRS_I(Field field, Block block)

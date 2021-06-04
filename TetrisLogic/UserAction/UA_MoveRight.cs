@@ -5,6 +5,7 @@
         public void Action(ref Field field, ref Block currentBlock, ref Block holdBlock)
         {
             currentBlock.MoveLocation(1, 0);
+            currentBlock.TSpinType = TSpinTypes.notTSpin;
         }
 
         public bool CanAction(Field field, Block block, Block holdBlock = null)

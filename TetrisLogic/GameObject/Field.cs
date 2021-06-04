@@ -105,6 +105,11 @@ namespace TetrisLogic
                 .Exists(p => GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock || GetFieldType(p.X, p.Y) == FieldTypes.outOfField);
         }
 
+        public int CountCollisionPoint(List<Point> points)
+        {
+            return points.Count(p => GetFieldType(p.X, p.Y) == FieldTypes.fixedBlock || GetFieldType(p.X, p.Y) == FieldTypes.outOfField);
+        }
+
         public int UpdateField(Block cb, bool fixedBlock)
         {
             UpdateCurerntBlock(cb, fixedBlock);

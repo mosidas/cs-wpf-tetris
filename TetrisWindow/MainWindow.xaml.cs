@@ -67,6 +67,12 @@ namespace TetrisWindow
             SetFieldBlock(_gameManager.FieldPointAndTypePairs);
             SetHoldBlock(_gameManager.HoldBlockType);
             SetNextBlock(_gameManager.NextBlockTypes[0]);
+            SetScore(_gameManager.Score);
+        }
+
+        private void SetScore(int score)
+        {
+            txtScore.Text = score.ToString();
         }
 
         private void SetFieldBlock(List<(System.Drawing.Point, BlockTypes)> fieldPointAndTypePairs)

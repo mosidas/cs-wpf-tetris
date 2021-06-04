@@ -15,6 +15,8 @@ namespace TetrisLogic
         /// true:ゲーム終了、false:ゲーム中
         /// </summary>
         public bool IsGameOver { get; set; }
+
+        public int Score { get { return _scoreManager.Score; } }
         /// <summary>
         /// 1フレームの長さ(単位:ms)
         /// </summary>
@@ -76,6 +78,7 @@ namespace TetrisLogic
         private Block _currentBlock;
         private Block _holdBlock;
         private readonly IBlocksPoolManager _blocksPoolManager;
+        private ScoreManager _scoreManager;
         private int _timeCounter;
 
         /// <summary>
@@ -85,6 +88,7 @@ namespace TetrisLogic
         {
             _field = field;
             _blocksPoolManager = bpm;
+            _scoreManager = new ScoreManager();
             IsGameOver = true;
         }
 
@@ -100,6 +104,7 @@ namespace TetrisLogic
             _currentBlock = _blocksPoolManager.TakeNextBlock();
             _holdBlock = new Block(BlockTypes.nothing);
             _field.UpdateField(_currentBlock, false);
+            _scoreManager.Reset();
             _timeCounter = 0;
         }
 
@@ -207,6 +212,10 @@ namespace TetrisLogic
             return canAction;
         }
 
+        private int _ren;
+        private int _beforeLine;
+        private TSpinTypes _beforeT;
+        private bool tSpin;
         private void UpdateGameState(ActionTypes actType, bool canAction)
         {
             if(actType == ActionTypes.hold)
@@ -225,9 +234,22 @@ namespace TetrisLogic
             else
             {
                 var isFixedBlock = NeedBlockFixed(actType, canAction);
-                _field.UpdateField(_currentBlock, isFixedBlock);
+                var line = _field.UpdateField(_currentBlock, isFixedBlock);
                 if (isFixedBlock)
                 {
+                    if(_beforeLine > 0)
+                    {
+                        _ren++;
+                    }
+                    else
+                    {
+                        _ren = 1;
+                    }
+
+                    var btb = _ren > 1 && _beforeT != TSpinTypes.notTSpin && _currentBlock.TSpinType != TSpinTypes.notTSpin;
+                    _scoreManager.Add(line, _currentBlock.TSpinType, _ren, btb, !FixedBlockPoints.Any());
+                    _beforeLine = line;
+                    _beforeT = _currentBlock.TSpinType;
                     _currentBlock = _blocksPoolManager.TakeNextBlock();
                     if (!CanSpawn())
                     {
@@ -236,6 +258,10 @@ namespace TetrisLogic
                     _ = _field.UpdateField(_currentBlock, false);
                     _holdBlock.CanSwap = true;
                     _timeCounter = 0;
+                }
+                else
+                {
+                    _ren = 0;
                 }
             }
         }

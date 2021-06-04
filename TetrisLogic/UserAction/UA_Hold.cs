@@ -21,6 +21,7 @@ namespace TetrisLogic.UserAction
                 holdBlock = new Block(currentBlock.BlockType, false);
                 currentBlock =  new Block(tmp.BlockType);
             }
+            currentBlock.TSpinType = TSpinTypes.notTSpin;
         }
 
         public bool CanAction(Field field, Block block, Block holdBlock)

@@ -305,5 +305,9 @@
         </Border>
         <Label x:Name="lblNext" Content="Next" HorizontalAlignment="Left" Margin="510,10,0,0" VerticalAlignment="Top" Height="26" Width="41"/>
         <local:MessageWindow x:Name="Msg" Margin="211,193,212,417" Visibility="Hidden"/>
+        <Border BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Left" Height="38" Margin="510,218,0,0" VerticalAlignment="Top" Width="126">
+            <TextBlock x:Name="txtScore" Text="0" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" Height="20"/>
+        </Border>
+        <Label x:Name="lblScore" Content="Score" HorizontalAlignment="Left" Margin="510,187,0,0" VerticalAlignment="Top" Height="26" Width="41"/>
     </Grid>
 </Window>

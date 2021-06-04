@@ -29,6 +29,13 @@ namespace TetrisLogic
         west,
     }
 
+    public enum TSpinTypes
+    {
+        notTSpin,
+        tMini,
+        tSpin,
+    }
+
     /// <summary>
     /// ブロックのクラス
     /// </summary>
@@ -50,6 +57,8 @@ namespace TetrisLogic
         /// ホールドブロックが交換可能か
         /// </summary>
         public bool CanSwap { get; set; }
+
+        public TSpinTypes TSpinType { get; set; }
 
         private int[,] _block;
         private readonly int _blockWidth;
@@ -94,6 +103,7 @@ namespace TetrisLogic
             _location = BlockType == BlockTypes.I ? new Point(3, -1) : new Point(3, 0);
             _direction = DirectionTypes.north;
             CanSwap = canSwap;
+            TSpinType = TSpinTypes.notTSpin;
         }
 
         /// <summary>
@@ -114,6 +124,7 @@ namespace TetrisLogic
             }
             _location = new Point(b._location.X, b._location.Y);
             _direction = b._direction;
+            TSpinType = b.TSpinType;
         }
 
         /// <summary>
@@ -165,6 +176,30 @@ namespace TetrisLogic
 
             _block = tmp;
             _direction = (DirectionTypes)(((int)_direction + 3) % 4);
+        }
+
+        /// <summary>
+        ///■□■
+        ///□□□
+        ///■□■
+        /// </summary>
+        /// <returns></returns>
+        public List<Point> GetTSpinPoints()
+        {
+            if(BlockType != BlockTypes.T)
+            {
+                return new List<Point>();
+            }
+
+            var points = new List<Point>
+            {
+                new Point(0 + _location.X, 0 + _location.Y),
+                new Point(2 + _location.X, 0 + _location.Y),
+                new Point(0 + _location.X, 2 + _location.Y),
+                new Point(2 + _location.X, 2 + _location.Y)
+            };
+
+            return points;
         }
 
         /// <summary>
