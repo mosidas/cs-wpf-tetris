@@ -46,7 +46,7 @@ namespace TetrisWindow
             });
         }
 
-        private void UpdateView_Init()
+        private void UpdateView_StartInit()
         {
             for (var x = 0; x < _gameManager.FieldWidth; x++)
             {
@@ -59,6 +59,24 @@ namespace TetrisWindow
             }
         }
 
+        private void UpdateView_Init()
+        {
+            for (var x = 0; x < _gameManager.FieldWidth; x++)
+            {
+                for (var y = 0; y < _gameManager.FieldHeight; y++)
+                {
+                    var block = (BlockRectangle)MainField.FindName("Cell_" + y + "_" + x);
+                    block.Rect.Fill = Brushes.DarkGray;
+                    block.Rect.Opacity = 1.0;
+                }
+            }
+
+            HbBox1.Visibility = Visibility.Hidden;
+            HbBox2.Visibility = Visibility.Hidden;
+            HbBox3.Visibility = Visibility.Hidden;
+            HbBox4.Visibility = Visibility.Hidden;
+        }
+
         private void UpdateView_Update()
         {
             UpdateView_Init();
@@ -67,12 +85,54 @@ namespace TetrisWindow
             SetFieldBlock(_gameManager.FieldPointAndTypePairs);
             SetHoldBlock(_gameManager.HoldBlockType);
             SetNextBlock(_gameManager.NextBlockTypes[0]);
-            SetScore(_gameManager.Score);
+            SetScore(_gameManager.Score, _gameManager.TSpinType, _gameManager.Line);
         }
 
-        private void SetScore(int score)
+        private void SetScore(int score, TSpinTypes tType, int line)
         {
+            if(txtScore.Text == score.ToString())
+            {
+                return;
+            }
+
             txtScore.Text = score.ToString();
+            System.Threading.Tasks.Task.Run(() => SetTSpin(tType, line));
+        }
+
+        private async void SetTSpin(TSpinTypes tType, int line)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                if(tType == TSpinTypes.tMini)
+                {
+                    txtA.Text = "T-Spin Mini!";
+                }
+                else if (tType == TSpinTypes.tSpin && line == 1)
+                {
+                    txtA.Text = "T-Spin Single!";
+                }
+                else if (tType == TSpinTypes.tSpin && line == 2)
+                {
+                    txtA.Text = "T-Spin Double!!";
+                }
+                else if (tType == TSpinTypes.tSpin && line == 3)
+                {
+                    txtA.Text = "T-Spin Triple!!!";
+                }
+                else if (line == 4)
+                {
+                    txtA.Text = "Tetris!!!";
+                }
+                else
+                {
+                    txtA.Text = "";
+                }
+            });
+                
+            await System.Threading.Tasks.Task.Delay(1000);
+
+            Dispatcher.Invoke(() => { txtA.Text = ""; });
+            
         }
 
         private void SetFieldBlock(List<(System.Drawing.Point, BlockTypes)> fieldPointAndTypePairs)
@@ -366,7 +426,7 @@ namespace TetrisWindow
         {
             Msg.Visibility = Visibility.Visible;
             Msg.Background = Brushes.White;
-            Msg.Content = "ゲーム開始：Space P:一時停止 終了：Esc";
+            Msg.Content = "ゲーム開始：Space 一時停止：P 終了：Esc";
         }
 
         private void PauseMessage()

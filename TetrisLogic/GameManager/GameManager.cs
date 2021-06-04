@@ -17,6 +17,10 @@ namespace TetrisLogic
         public bool IsGameOver { get; set; }
 
         public int Score { get { return _scoreManager.Score; } }
+
+        public TSpinTypes TSpinType { get { return _beforeT; } }
+
+        public int Line { get { return _beforeLine; } }
         /// <summary>
         /// 1フレームの長さ(単位:ms)
         /// </summary>

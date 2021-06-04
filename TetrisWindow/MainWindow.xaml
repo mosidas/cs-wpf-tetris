@@ -309,5 +309,8 @@
             <TextBlock x:Name="txtScore" Text="0" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" Height="20"/>
         </Border>
         <Label x:Name="lblScore" Content="Score" HorizontalAlignment="Left" Margin="510,187,0,0" VerticalAlignment="Top" Height="26" Width="41"/>
+        <Border BorderThickness="0" BorderBrush="Black" HorizontalAlignment="Left" Height="28" Margin="556,186,0,0" VerticalAlignment="Top" Width="80">
+            <TextBlock x:Name="txtA" Text="" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Width="60" Height="20" Foreground="Red"/>
+        </Border>
     </Grid>
 </Window>
