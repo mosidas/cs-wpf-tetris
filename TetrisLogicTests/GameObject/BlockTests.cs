@@ -1,5 +1,4 @@
-﻿using TetrisLogic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace TetrisLogic.Tests
 {
@@ -7,75 +6,156 @@ namespace TetrisLogic.Tests
     public class BlockTests
     {
         [TestMethod()]
-        public void BlockTest()
+        public void BlockTest_IBlock()
         {
-            Assert.Fail();
+            var block = new Block(BlockTypes.I);
+            Assert.AreEqual(BlockTypes.I, block.BlockType);
+            Assert.AreEqual(3, block.Location.X);
+            Assert.AreEqual(-1, block.Location.Y);
+            var expect =
+@"0,0,0,0
+1,1,1,1
+0,0,0,0
+0,0,0,0";
+            Assert.AreEqual(expect, block.DrawBlock());
         }
 
         [TestMethod()]
-        public void BlockTest1()
+        public void BlockTest_TBlock()
         {
-            Assert.Fail();
+            var block = new Block(BlockTypes.T);
+            Assert.AreEqual(BlockTypes.T, block.BlockType);
+            Assert.AreEqual(3, block.Location.X);
+            Assert.AreEqual(0, block.Location.Y);
+            var expect =
+@"0,1,0
+1,1,1
+0,0,0";
+            Assert.AreEqual(expect, block.DrawBlock());
         }
 
         [TestMethod()]
-        public void ResetLocationTest()
+        public void BlockTest_LBlock()
         {
-            Assert.Fail();
+            var block = new Block(BlockTypes.L);
+            Assert.AreEqual(BlockTypes.L, block.BlockType);
+            Assert.AreEqual(3, block.Location.X);
+            Assert.AreEqual(0, block.Location.Y);
+            var expect =
+@"0,0,1
+1,1,1
+0,0,0";
+            Assert.AreEqual(expect, block.DrawBlock());
         }
 
         [TestMethod()]
-        public void MoveLocationTest()
+        public void BlockTest_JBlock()
         {
-            Assert.Fail();
+            var block = new Block(BlockTypes.J);
+            Assert.AreEqual(BlockTypes.J, block.BlockType);
+            Assert.AreEqual(3, block.Location.X);
+            Assert.AreEqual(0, block.Location.Y);
+            var expect =
+@"1,0,0
+1,1,1
+0,0,0";
+            Assert.AreEqual(expect, block.DrawBlock());
         }
 
         [TestMethod()]
-        public void RotateRightTest()
+        public void BlockTest_SBlock()
         {
-            Assert.Fail();
+            var block = new Block(BlockTypes.S);
+            Assert.AreEqual(BlockTypes.S, block.BlockType);
+            Assert.AreEqual(3, block.Location.X);
+            Assert.AreEqual(0, block.Location.Y);
+            var expect =
+@"0,1,1
+1,1,0
+0,0,0";
+            Assert.AreEqual(expect, block.DrawBlock());
         }
 
         [TestMethod()]
-        public void RotateLeftTest()
+        public void BlockTest_ZBlock()
         {
-            Assert.Fail();
+            var block = new Block(BlockTypes.Z);
+            Assert.AreEqual(BlockTypes.Z, block.BlockType);
+            Assert.AreEqual(3, block.Location.X);
+            Assert.AreEqual(0, block.Location.Y);
+            var expect =
+@"1,1,0
+0,1,1
+0,0,0";
+            Assert.AreEqual(expect, block.DrawBlock());
         }
 
         [TestMethod()]
-        public void GetBlockPointsTest()
+        public void BlockTest_OBlock()
         {
-            Assert.Fail();
+            var block = new Block(BlockTypes.O);
+            Assert.AreEqual(BlockTypes.O, block.BlockType);
+            Assert.AreEqual(3, block.Location.X);
+            Assert.AreEqual(0, block.Location.Y);
+            var expect =
+@"1,1
+1,1";
+            Assert.AreEqual(expect, block.DrawBlock());
         }
 
         [TestMethod()]
-        public void GetBlockBottomPointsTest()
+        public void BlockTest_MoveLoation()
         {
-            Assert.Fail();
+            var block = new Block(BlockTypes.O);
+            var before = block.Location;
+            var x = 1;
+            var y = 2;
+            block.MoveLocation(x,y);
+            var after = block.Location;
+
+            Assert.AreEqual(before.X + x, after.X);
+            Assert.AreEqual(before.Y + y, after.Y);
         }
 
         [TestMethod()]
-        public void GetBlockLeftPointsTest()
+        public void BlockTest_ResetLoation()
         {
-            Assert.Fail();
+            var block = new Block(BlockTypes.O);
+            var before = block.Location;
+            block.MoveLocation(2, 1);
+            block.ResetLocation();
+            var after = block.Location;
+
+            Assert.AreEqual(before.X, after.X);
+            Assert.AreEqual(before.Y, after.Y);
         }
 
         [TestMethod()]
-        public void GetBlockRightPointsTest()
+        public void BlockTest_RotateRight()
         {
-            Assert.Fail();
+            var block = new Block(BlockTypes.T);
+            block.RotateRight();
+
+            var expect =
+@"0,1,0
+0,1,1
+0,1,0";
+
+            Assert.AreEqual(expect, block.DrawBlock());
         }
 
         [TestMethod()]
-        public void GetBlockRotatePointsTest()
+        public void BlockTest_RotateLeft()
         {
-            Assert.Fail();
-        }
+            var block = new Block(BlockTypes.T);
+            block.RotateLeft();
 
-        [TestMethod()]
-        public void DrawBlockTest()
-        {
-            Assert.Fail();
+            var expect =
+@"0,1,0
+1,1,0
+0,1,0";
+
+            Assert.AreEqual(expect, block.DrawBlock());
         }
     }
 }

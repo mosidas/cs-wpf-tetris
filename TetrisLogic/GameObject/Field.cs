@@ -34,6 +34,25 @@ namespace TetrisLogic
             }
         }
 
+        public void InitField(FieldTypes[,] field)
+        {
+            for (var row = 0; row < _height; row++)
+            {
+                for (var col = 0; col < _width; col++)
+                {
+                    _fieldState[row, col] = field[row,col];
+                    if(field[row, col] == FieldTypes.fixedBlock)
+                    {
+                        _fieldTypeState[row, col] = BlockTypes.I;
+                    }
+                    else
+                    {
+                        _fieldTypeState[row, col] = BlockTypes.nothing;
+                    }
+                }
+            }
+        }
+
         public List<(Point,BlockTypes)> GetFieldBlockPointAndTypePairs()
         {
             var pairs = new List<(Point, BlockTypes)>();
@@ -205,7 +224,7 @@ namespace TetrisLogic
             }
         }
 
-        public string DrawFiled()
+        public string DrawField()
         {
             var ret = new List<string>();
 
@@ -214,7 +233,7 @@ namespace TetrisLogic
                 var tmp = new List<string>();
                 for (int j = 0; j < _fieldState.GetLength(1); j++)
                 {
-                    tmp.Add(_fieldState[i, j].ToString().PadRight(10));
+                    tmp.Add(_fieldState[i, j].ToString());
                 }
 
                 ret.Add(string.Join(",", tmp));

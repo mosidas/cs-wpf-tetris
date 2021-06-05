@@ -158,7 +158,7 @@ namespace TetrisLogic
             System.Diagnostics.Debug.WriteLine("--current hold block--");
             System.Diagnostics.Debug.WriteLine(_holdBlock.DrawBlock());
             System.Diagnostics.Debug.WriteLine("--current filed--");
-            System.Diagnostics.Debug.WriteLine(_field.DrawFiled());
+            System.Diagnostics.Debug.WriteLine(_field.DrawField());
         }
 
         private ActionTypes _beforeAction = ActionTypes.nothing;
