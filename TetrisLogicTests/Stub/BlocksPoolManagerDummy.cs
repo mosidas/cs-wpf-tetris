@@ -21,7 +21,7 @@ namespace TetrisLogicTests.Stub
 
         public List<Block> GetNextBlocksPool()
         {
-            return null;
+            return new List<Block>() { new Block(BlockTypes.O) };
         }
     }
 }

@@ -91,6 +91,8 @@ namespace TetrisLogic
         public GameManager(Field field, IBlocksPoolManager bpm)
         {
             _field = field;
+            _currentBlock = new Block(BlockTypes.nothing);
+            _holdBlock = new Block(BlockTypes.nothing);
             _blocksPoolManager = bpm;
             _scoreManager = new ScoreManager();
             IsGameOver = true;
@@ -219,7 +221,7 @@ namespace TetrisLogic
         private int _ren;
         private int _beforeLine;
         private TSpinTypes _beforeT;
-        private bool tSpin;
+
         private void UpdateGameState(ActionTypes actType, bool canAction)
         {
             if(actType == ActionTypes.hold)

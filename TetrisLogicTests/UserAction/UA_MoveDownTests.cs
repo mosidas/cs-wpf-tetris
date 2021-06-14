@@ -34,12 +34,11 @@ namespace TetrisLogic.UserAction.Tests
         {
             // data
             var block = new Block(BlockTypes.O);
-            var holdBlock = new Block(BlockTypes.nothing);
             var field = new Field();
 
             // target
             var act = new UA_MoveDown();
-            var ret = act.CanAction(field, block);
+            var ret = act.CanAction(field, block, new Block(BlockTypes.nothing));
 
             Assert.AreEqual(true, ret);
         }
@@ -59,7 +58,7 @@ namespace TetrisLogic.UserAction.Tests
                 act.Action(ref field, ref block, ref holdBlock);
             }
 
-            Assert.AreEqual(true, act.CanAction(field, block));
+            Assert.AreEqual(true, act.CanAction(field, block, new Block(BlockTypes.nothing)));
         }
 
         [TestMethod()]
@@ -78,7 +77,7 @@ namespace TetrisLogic.UserAction.Tests
                 act.Action(ref field, ref block, ref holdBlock);
             }
 
-            Assert.AreEqual(false, act.CanAction(field, block));
+            Assert.AreEqual(false, act.CanAction(field, block, new Block(BlockTypes.nothing)));
         }
 
         [TestMethod()]
@@ -96,7 +95,7 @@ namespace TetrisLogic.UserAction.Tests
                 act.Action(ref field, ref block, ref holdBlock);
             }
 
-            Assert.AreEqual(true, act.CanAction(field, block));
+            Assert.AreEqual(true, act.CanAction(field, block, new Block(BlockTypes.nothing)));
         }
 
         [TestMethod()]
@@ -115,7 +114,7 @@ namespace TetrisLogic.UserAction.Tests
                 act.Action(ref field, ref block, ref holdBlock);
             }
 
-            Assert.AreEqual(false, act.CanAction(field, block));
+            Assert.AreEqual(false, act.CanAction(field, block, new Block(BlockTypes.nothing)));
         }
 
         [TestMethod()]
@@ -133,7 +132,7 @@ namespace TetrisLogic.UserAction.Tests
                 act.Action(ref field, ref block, ref holdBlock);
             }
 
-            Assert.AreEqual(true, act.CanAction(field, block));
+            Assert.AreEqual(true, act.CanAction(field, block, new Block(BlockTypes.nothing)));
         }
 
         [TestMethod()]
@@ -152,7 +151,7 @@ namespace TetrisLogic.UserAction.Tests
                 act.Action(ref field, ref block, ref holdBlock);
             }
 
-            Assert.AreEqual(false, act.CanAction(field, block));
+            Assert.AreEqual(false, act.CanAction(field, block, new Block(BlockTypes.nothing)));
         }
     }
 }

@@ -169,7 +169,7 @@ namespace TetrisLogic.UserAction.Tests
 
             // target
             var act = new UA_RotateLeft();
-            Assert.AreEqual(true, act.CanAction(field, block));
+            Assert.AreEqual(true, act.CanAction(field, block, new Block(BlockTypes.nothing)));
         }
 
         [TestMethod()]
@@ -184,7 +184,7 @@ namespace TetrisLogic.UserAction.Tests
 
             // target
             var act = new UA_RotateLeft();
-            Assert.AreEqual(true, act.CanAction(field, block));
+            Assert.AreEqual(true, act.CanAction(field, block, new Block(BlockTypes.nothing)));
         }
 
         [TestMethod()]
@@ -199,7 +199,7 @@ namespace TetrisLogic.UserAction.Tests
 
             // target
             var act = new UA_RotateLeft();
-            Assert.AreEqual(true, act.CanAction(field, block));
+            Assert.AreEqual(true, act.CanAction(field, block, new Block(BlockTypes.nothing)));
         }
 
         [TestMethod()]
@@ -214,7 +214,7 @@ namespace TetrisLogic.UserAction.Tests
 
             // target
             var act = new UA_RotateLeft();
-            Assert.AreEqual(true, act.CanAction(field, block));
+            Assert.AreEqual(true, act.CanAction(field, block, new Block(BlockTypes.nothing)));
         }
 
         [TestMethod()]
@@ -229,7 +229,7 @@ namespace TetrisLogic.UserAction.Tests
 
             // target
             var act = new UA_RotateLeft();
-            Assert.AreEqual(true, act.CanAction(field, block));
+            Assert.AreEqual(true, act.CanAction(field, block, new Block(BlockTypes.nothing)));
         }
 
         [TestMethod()]
@@ -244,7 +244,7 @@ namespace TetrisLogic.UserAction.Tests
 
             // target
             var act = new UA_RotateLeft();
-            Assert.AreEqual(true, act.CanAction(field, block));
+            Assert.AreEqual(true, act.CanAction(field, block, new Block(BlockTypes.nothing)));
         }
 
         [TestMethod()]
@@ -259,7 +259,7 @@ namespace TetrisLogic.UserAction.Tests
 
             // target
             var act = new UA_RotateLeft();
-            Assert.AreEqual(true, act.CanAction(field, block));
+            Assert.AreEqual(true, act.CanAction(field, block, new Block(BlockTypes.nothing)));
         }
 
         [TestMethod()]
@@ -274,7 +274,7 @@ namespace TetrisLogic.UserAction.Tests
 
             // target
             var act = new UA_RotateLeft();
-            Assert.AreEqual(true, act.CanAction(field, block));
+            Assert.AreEqual(true, act.CanAction(field, block, new Block(BlockTypes.nothing)));
         }
 
         [TestMethod()]
@@ -289,7 +289,7 @@ namespace TetrisLogic.UserAction.Tests
 
             // target
             var act = new UA_RotateLeft();
-            Assert.AreEqual(true, act.CanAction(field, block));
+            Assert.AreEqual(true, act.CanAction(field, block, new Block(BlockTypes.nothing)));
         }
     }
 }

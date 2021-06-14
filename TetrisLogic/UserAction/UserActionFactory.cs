@@ -21,7 +21,7 @@
                 case ActionTypes.hardDrop:
                     return new UA_HardDrop();
                 default:
-                    return null;
+                    return new UA_Nothing();
             }
         }
     }

@@ -38,7 +38,7 @@ namespace TetrisLogic.UserAction.Tests
 
             // target
             var act = new UA_HardDrop();
-            var ret = act.CanAction(field, block);
+            var ret = act.CanAction(field, block, new Block(BlockTypes.nothing));
 
             Assert.AreEqual(ret, true);
         }
@@ -56,7 +56,7 @@ namespace TetrisLogic.UserAction.Tests
 
             act.Action(ref field, ref block, ref holdBlock);
 
-            var ret = act.CanAction(field, block);
+            var ret = act.CanAction(field, block, new Block(BlockTypes.nothing));
             Assert.AreEqual(ret, false);
         }
     }

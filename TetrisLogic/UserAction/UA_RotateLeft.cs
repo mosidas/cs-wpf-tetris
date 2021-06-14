@@ -11,7 +11,7 @@
             currentBlock.TSpinType = getTSpinType(field, currentBlock);
         }
 
-        public bool CanAction(Field field, Block block, Block holdBlock = null)
+        public bool CanAction(Field field, Block block, Block holdBlock)
         {
             if (block.BlockType == BlockTypes.O)
             {
