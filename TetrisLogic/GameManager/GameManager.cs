@@ -204,11 +204,6 @@ namespace TetrisLogic
         {
             var factory = new UserActionFactory();
             var userAction = factory.CreateUserAction(actType);
-            if(userAction == null)
-            {
-                return true;
-            }
-
             var canAction = userAction.CanAction(_field, _currentBlock, _holdBlock);
             if(canAction)
             {
