@@ -10,7 +10,7 @@ namespace TetrisLogic.UserAction.Tests
         {
             UserActionFactory uaf = new UserActionFactory();
             var ret = uaf.CreateUserAction(ActionTypes.nothing);
-            Assert.IsNull(ret);
+            Assert.AreEqual(typeof(UA_Nothing).Name, ret.GetType().Name);
         }
 
         [TestMethod()]
