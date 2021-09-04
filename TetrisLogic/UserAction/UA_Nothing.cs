@@ -1,6 +1,6 @@
 ﻿namespace TetrisLogic.UserAction
 {
-    class UA_Nothing : IUserAction
+    public class UA_Nothing : IUserAction
     {
         public void Action(ref Field field, ref Block currentBlock, ref Block holdBlock)
         {
