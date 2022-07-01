@@ -32,7 +32,7 @@ namespace TetrisLogic
         /// <summary>
         /// 自然に落下するスピード(単位:ms) ゲームレベルによって決まる
         /// </summary>
-        public double DownRate { get { return GameLevel == 0 ? 0 : FPS * (10 / Math.Floor(Math.Log2(GameLevel + 1))); } }
+        public double DownRate { get { return GameLevel == 0 ? 0 : FPS - GameLevel*5; } }
         /// <summary>
         /// 操作中のブロックの座標
         /// </summary>
@@ -259,12 +259,29 @@ namespace TetrisLogic
                     _ = _field.UpdateField(_currentBlock, false);
                     _holdBlock.CanSwap = true;
                     _timeCounter = 0;
+                    UpdateGamelevel();
                 }
                 else
                 {
                     _ren = 0;
                 }
             }
+        }
+
+        private int beforeScore = 0;
+        private int scoreDelta = 0;
+
+        private void UpdateGamelevel()
+        {
+            scoreDelta += _scoreManager.Score - beforeScore;
+
+            if(scoreDelta >= 500)
+            {
+                GameLevel++;
+                scoreDelta = 0;
+            }
+
+            beforeScore = _scoreManager.Score;
         }
 
         /// <summary>
