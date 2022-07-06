@@ -99,11 +99,11 @@ namespace TetrisLogic
         }
 
         /// <summary>
-        /// ゲームを開始する ゲームレベルは0 - 1024 ゲームレベル0だと自然落下しない
+        /// ゲームを開始する ゲームレベルは0 - 99 ゲームレベル0だと自然落下しない
         /// </summary>
         public void Start(int gamelevel = 1)
         {
-            GameLevel = Math.Min(gamelevel,1024);
+            GameLevel = Math.Min(gamelevel,99);
             IsGameOver = false;
             _field.InitField();
             _blocksPoolManager.Reset();
