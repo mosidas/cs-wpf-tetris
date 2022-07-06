@@ -366,15 +366,21 @@ namespace TetrisWindow
                 switch (e.Key)
                 {
                     case System.Windows.Input.Key.Space:
-                        Msg.Visibility = Visibility.Hidden;
-                        Pause = false;
-                        UpdateView_StartInit();
-                        _timer.Start();
-                        break;
+                        if (Pause)
+                        {
+                            Msg.Visibility = Visibility.Hidden;
+                            Pause = false;
+                            UpdateView_StartInit();
+                            _timer.Start();
+                        }
+                        return;
                     case System.Windows.Input.Key.P:
-                        _timer.Stop();
-                        Pause = true;
-                        PauseMessage();
+                        if (!Pause)
+                        {
+                            _timer.Stop();
+                            Pause = true;
+                            PauseMessage();
+                        }   
                         return;
                     case System.Windows.Input.Key.R:
                         if(Pause)
