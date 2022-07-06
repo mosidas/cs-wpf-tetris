@@ -268,20 +268,20 @@ namespace TetrisLogic
             }
         }
 
-        private int beforeScore = 0;
-        private int scoreDelta = 0;
+        private int __beforeScore = 0;
+        private int __scoreDelta = 0;
 
         private void UpdateGamelevel()
         {
-            scoreDelta += _scoreManager.Score - beforeScore;
+            __scoreDelta += _scoreManager.Score - __beforeScore;
 
-            if(scoreDelta >= 500)
+            if(__scoreDelta >= 500)
             {
                 GameLevel++;
-                scoreDelta = 0;
+                __scoreDelta = 0;
             }
 
-            beforeScore = _scoreManager.Score;
+            __beforeScore = _scoreManager.Score;
         }
 
         /// <summary>
