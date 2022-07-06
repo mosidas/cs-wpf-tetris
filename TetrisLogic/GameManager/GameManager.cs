@@ -101,7 +101,7 @@ namespace TetrisLogic
         /// <summary>
         /// ゲームを開始する ゲームレベルは0 - 1024 ゲームレベル0だと自然落下しない
         /// </summary>
-        public void Start(int gamelevel = 5)
+        public void Start(int gamelevel = 1)
         {
             GameLevel = Math.Min(gamelevel,1024);
             IsGameOver = false;
