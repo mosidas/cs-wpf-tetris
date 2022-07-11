@@ -4,25 +4,17 @@
     {
         public IUserAction CreateUserAction(ActionTypes actType)
         {
-            switch (actType)
+            return actType switch
             {
-                case ActionTypes.moveLeft:
-                    return new UA_MoveLeft();
-                case ActionTypes.moveRight:
-                    return new UA_MoveRight();
-                case ActionTypes.moveDown:
-                    return new UA_MoveDown();
-                case ActionTypes.rotateLeft:
-                    return new UA_RotateLeft();
-                case ActionTypes.rotateRight:
-                    return new UA_RotateRight();
-                case ActionTypes.hold:
-                    return new UA_Hold();
-                case ActionTypes.hardDrop:
-                    return new UA_HardDrop();
-                default:
-                    return new UA_Nothing();
-            }
+                ActionTypes.moveLeft => new UA_MoveLeft(),
+                ActionTypes.moveRight => new UA_MoveRight(),
+                ActionTypes.moveDown => new UA_MoveDown(),
+                ActionTypes.rotateLeft => new UA_RotateLeft(),
+                ActionTypes.rotateRight => new UA_RotateRight(),
+                ActionTypes.hold => new UA_Hold(),
+                ActionTypes.hardDrop => new UA_HardDrop(),
+                _ => new UA_Nothing(),
+            };
         }
     }
 }
