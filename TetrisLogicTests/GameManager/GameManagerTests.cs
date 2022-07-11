@@ -11,8 +11,8 @@ namespace TetrisLogic.Tests
         public void GameManagerTest()
         {
             var manager = new GameManager(new Field(), new BlocksPoolManagerDummy());
-            Assert.AreEqual(manager.IsGameOver, true);
-            Assert.AreEqual(manager.FixedBlockPoints.Count, 0);
+            Assert.AreEqual(true, manager.IsGameOver);
+            Assert.AreEqual(0, manager.FixedBlockPoints.Count);
         }
 
         [TestMethod()]
