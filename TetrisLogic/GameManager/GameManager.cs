@@ -126,6 +126,7 @@ namespace TetrisLogic
 
             if(GameLevel == 0)
             {
+                // aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
                 _timeCounter = 0;
             }
             else
