@@ -373,7 +373,7 @@ namespace TetrisWindow
                             UpdateView_StartInit();
                             _timer.Start();
                         }
-                        return;
+                        break;
                     case System.Windows.Input.Key.P:
                         if (!Pause)
                         {
