@@ -239,7 +239,7 @@ namespace TetrisLogic
                 ret.Add(string.Join(",", tmp));
             }
 
-            var rret = string.Join("\r\n", ret);
+            var rret = string.Join("\n", ret);
 
             return rret;
         }

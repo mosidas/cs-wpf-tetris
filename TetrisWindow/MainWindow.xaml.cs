@@ -27,7 +27,7 @@ namespace TetrisWindow
             _timer.Interval = _gameManager.FrameRate;
         }
 
-        private void OnElapsed_Timer(object sender, ElapsedEventArgs e)
+        private void OnElapsed_Timer(object? sender, ElapsedEventArgs e)
         {
             _gameManager.Update(_userAction);
 

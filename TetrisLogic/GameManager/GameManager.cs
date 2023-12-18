@@ -250,7 +250,7 @@ namespace TetrisLogic
                     }
 
                     var btb = _ren > 1 && _beforeT != TSpinTypes.notTSpin && _currentBlock.TSpinType != TSpinTypes.notTSpin;
-                    _scoreManager.Add(line, _currentBlock.TSpinType, _ren, btb, !FixedBlockPoints.Any());
+                    _scoreManager.Add(line, _currentBlock.TSpinType, _ren, btb, FixedBlockPoints.Count == 0);
                     _beforeLine = line;
                     _beforeT = _currentBlock.TSpinType;
                     _currentBlock = _blocksPoolManager.TakeNextBlock();
