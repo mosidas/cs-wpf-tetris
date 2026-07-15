@@ -104,8 +104,8 @@
     - 仕様参照: spec.md §5.2 Field・§7 Req3(3.3, 3.4)
     - 検証コマンド: `dotnet test Tetris.Domain.Tests/Tetris.Domain.Tests.csproj`
 
-- [ ] 3. スコア規則(Domain)と累積(Application)
-  - [ ] 3.1 ScoreRule を Domain の純粋関数として移植する
+- [x] 3. スコア規則(Domain)と累積(Application)
+  - [x] 3.1 ScoreRule を Domain の純粋関数として移植する
         _Requirements: 4.1, 4.4_
         _Boundary: Domain_
         _Depends: 2.1_
@@ -113,7 +113,7 @@
     - 内容: 旧 `ScoreManager` の係数表(base/additional 分岐)を式・数値変更なしで `ScoreRule.Calculate(line, tSpin, ren, btb, allClear)` へ。時間・可変状態・フレームワーク非依存。
     - 仕様参照: spec.md §5.3 ScoreRule・§7 Req4(4.1, 4.4)
     - 検証コマンド: `dotnet build Tetris.Domain/Tetris.Domain.csproj`
-  - [ ] 3.2 ScoreManager を Application に置き累積・Reset をテストで検証する
+  - [x] 3.2 ScoreManager を Application に置き累積・Reset をテストで検証する
         _Requirements: 4.2, 4.3_
         _Boundary: Application_
         _Depends: 3.1_
