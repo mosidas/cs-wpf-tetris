@@ -1,7 +1,7 @@
 {
   "workflow": "sdd",
   "unit": "avalonia-migration",
-  "state": "tasks-approved",
+  "state": "implementing",
   "approvals": {
     "spec": true,
     "tasks": true
