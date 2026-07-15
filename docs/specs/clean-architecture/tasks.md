@@ -122,8 +122,8 @@
     - 仕様参照: spec.md §5.3 ScoreManager・§7 Req4(4.2, 4.3)
     - 検証コマンド: `dotnet test Tetris.Application.Tests/Tetris.Application.Tests.csproj`
 
-- [ ] 4. コマンド化(ref 廃止)と SRS・T-Spin・Hold の移植
-  - [ ] 4.1 GameSession 可変状態コンテナとコマンド契約を定義する
+- [x] 4. コマンド化(ref 廃止)と SRS・T-Spin・Hold の移植
+  - [x] 4.1 GameSession 可変状態コンテナとコマンド契約を定義する
         _Requirements: 5.1, 6.6_
         _Boundary: Application_
         _Depends: 2.2, 2.3_
@@ -131,7 +131,7 @@
     - 内容: `ref` 渡しを用いない `IGameCommand(CanExecute/Execute(GameSession))`。コマンド・テストが直接駆動できる可視性で可変状態を公開。
     - 仕様参照: spec.md §5.4・§5.6(可変状態)・§7 Req5(5.1)
     - 検証コマンド: `dotnet build Tetris.Application/Tetris.Application.csproj`
-  - [ ] 4.2 移動系・HardDrop・Nothing コマンドを移植しテスト移行する
+  - [x] 4.2 移動系・HardDrop・Nothing コマンドを移植しテスト移行する
         _Requirements: 5.6_
         _Boundary: Application_
         _Depends: 4.1_
@@ -139,7 +139,7 @@
     - 内容: 旧 `UA_*` の規則を式変更なし移植。Factory は internal(公開 API に露出しない)。旧 `UserActionFactoryTests`(8 件)の意図は Factory 内部化に伴い `InternalsVisibleTo` かファサード写像テスト(Task 7)へ振り替える。
     - 仕様参照: spec.md §5.4・§7 Req5(5.6)
     - 検証コマンド: `dotnet test Tetris.Application.Tests/Tetris.Application.Tests.csproj`
-  - [ ] 4.3 回転コマンドの SRS 壁蹴りと T-Spin 判定を移植し壁蹴り回帰を移行する
+  - [x] 4.3 回転コマンドの SRS 壁蹴りと T-Spin 判定を移植し壁蹴り回帰を移行する
         _Requirements: 5.2, 5.3_
         _Boundary: Application_
         _Depends: 4.1_
@@ -147,7 +147,7 @@
     - 内容: SRS 壁蹴り補正(通常 4 状態・I 専用 4 状態)を式・オフセット値変更なしで移植。T-Spin 判定(`GetTSpinPoints` 衝突数 ≥3、`count==3 && MoveY==0`→tMini、他→tSpin、<3→notTSpin)を旧式と同値で。壁蹴り後座標・`DrawBlock` を原文期待値で検証。
     - 仕様参照: spec.md §5.4・§7 Req5(5.2, 5.3)・Req10(10.3)
     - 検証コマンド: `dotnet test Tetris.Application.Tests/Tetris.Application.Tests.csproj`
-  - [ ] 4.4 Hold コマンドの差し替え規則を移植しテスト移行する
+  - [x] 4.4 Hold コマンドの差し替え規則を移植しテスト移行する
         _Requirements: 5.4, 5.5_
         _Boundary: Application_
         _Depends: 4.1_
@@ -230,4 +230,6 @@
 
 ## Implementation Notes
 
-(このセクションは dev-implement が実装中の学習・選択した知識 port・横断的な気付きを追記する領域。初期は空)
+- **UserActionFactoryTests の扱い(決定)**: `GameCommandFactory` は Req 5.6 に従い `internal` を維持。旧 `UserActionFactoryTests`(8 件)の「列挙値→コマンド型の写像」カバレッジを最も忠実に保つため、`Tetris.Application.csproj` に `InternalsVisibleTo(Tetris.Application.Tests)` を付与し、`Commands/GameCommandFactoryTests.cs` で `GameCommandFactory.Create` を直接検証する方式を採用(ファサード写像テストへの間接化より精度が高い)。公開 API には factory を露出しない。
+- **検証境界**: 全タスクで非 WPF プロジェクトを個別に `dotnet build`/`dotnet test`。`dotnet build Tetris.sln` は不使用。
+- **オーケストレーション**: 移植の忠実性のため実装はメイン文脈で直接行い(dev-implement 手動モード)、高リスク移植(Task 4 の SRS/T-Spin/Hold)には独立文脈の dev-reviewer を起動して敵対的検証。全タスク完了後に観点別レビューパネルで最終検証する。
