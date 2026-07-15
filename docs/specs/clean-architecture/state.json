@@ -1,11 +1,15 @@
 {
   "workflow": "sdd",
   "unit": "clean-architecture",
-  "state": "implementing",
+  "state": "completed",
   "approvals": {
     "spec": true,
     "tasks": true
   },
   "created": "2026-07-15",
-  "updated": "2026-07-15"
+  "updated": "2026-07-15",
+  "frozen": {
+    "spec.md": "70557eb203796d07333d97ce33e70f932c6a95f954c7c180b7b71c37e71be0c2",
+    "tasks.md": "7f96725b4f7ff2aa9bd458fc037969e6374845ef3a4eba8b9130458ec1a8f9ff"
+  }
 }
