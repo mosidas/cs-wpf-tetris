@@ -32,7 +32,7 @@ namespace TetrisLogic
         /// <summary>
         /// 自然に落下するスピード(単位:ms) ゲームレベルによって決まる
         /// </summary>
-        public double DownRate { get { return GameLevel == 0 ? 0 : FPS - GameLevel*5; } }
+        public double DownRate { get { return GameLevel == 0 ? 0 : Math.Max(1, FPS - GameLevel*5); } }
         /// <summary>
         /// 操作中のブロックの座標
         /// </summary>
@@ -126,8 +126,6 @@ namespace TetrisLogic
 
             if(GameLevel == 0)
             {
-                // foobar
-                // aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
                 _timeCounter = 0;
             }
             else

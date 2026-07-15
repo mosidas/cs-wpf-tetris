@@ -122,7 +122,7 @@
             {
                 dummyblock.MoveLocation(-2, -1);
                 MoveX = -2;
-                MoveY = 1;
+                MoveY = -1;
             }
         }
 

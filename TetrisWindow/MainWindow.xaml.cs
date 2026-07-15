@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Threading;
 using TetrisLogic;
 using TetrisLogic.UserAction;
 
@@ -15,35 +15,33 @@ namespace TetrisWindow
     public partial class MainWindow : Window
     {
         private readonly GameManager _gameManager;
-        private readonly Timer _timer;
+        private readonly DispatcherTimer _timer;
+        private readonly Random _random = new Random();
         private ActionTypes _userAction;
 
         public MainWindow()
         {
             InitializeComponent();
             _gameManager = new GameManager(new Field(), new BlocksPoolManager());
-            _timer = new Timer();
-            _timer.Elapsed += new ElapsedEventHandler(OnElapsed_Timer);
-            _timer.Interval = _gameManager.FrameRate;
+            _timer = new DispatcherTimer();
+            _timer.Tick += OnTick_Timer;
+            _timer.Interval = TimeSpan.FromMilliseconds(_gameManager.FrameRate);
         }
 
-        private void OnElapsed_Timer(object? sender, ElapsedEventArgs e)
+        private void OnTick_Timer(object? sender, EventArgs e)
         {
             _gameManager.Update(_userAction);
 
-            Dispatcher.Invoke(() =>
+            if (_gameManager.IsGameOver)
             {
-                if (_gameManager.IsGameOver)
-                {
-                    _userAction = ActionTypes.nothing;
-                    UpdateView_GameOver();
-                    _timer.Stop();
-                }
-                else
-                {
-                    UpdateView_Update();
-                }    
-            });
+                _userAction = ActionTypes.nothing;
+                UpdateView_GameOver();
+                _timer.Stop();
+            }
+            else
+            {
+                UpdateView_Update();
+            }
         }
 
         private void UpdateView_StartInit()
@@ -298,7 +296,7 @@ namespace TetrisWindow
 
         private async void UpdateView_GameOver_FillBlack(System.Drawing.Point p)
         {
-            await System.Threading.Tasks.Task.Delay(new Random().Next(100, 1000));
+            await System.Threading.Tasks.Task.Delay(_random.Next(100, 1000));
 
             Dispatcher.Invoke(() =>
             {
@@ -372,6 +370,7 @@ namespace TetrisWindow
                             Pause = false;
                             UpdateView_StartInit();
                             _timer.Start();
+                            return;
                         }
                         break;
                     case System.Windows.Input.Key.P:
@@ -441,7 +440,7 @@ namespace TetrisWindow
         {
             Msg.Visibility = Visibility.Visible;
             Msg.Background = Brushes.White;
-            Msg.Content = "ゲーム再開：Spase リセット：R 終了：Esc";
+            Msg.Content = "ゲーム再開：Space リセット：R 終了：Esc";
         }
     }
 }
