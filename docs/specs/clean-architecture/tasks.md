@@ -174,8 +174,8 @@
     - 仕様参照: spec.md §5.6 Advance・§7 Req6(6.6)・Req7(7.1–7.4)
     - 検証コマンド: `dotnet test Tetris.Application.Tests/Tetris.Application.Tests.csproj`
 
-- [ ] 6. Infrastructure(7-bag)
-  - [ ] 6.1 BlocksPoolManager(7-bag)を Infrastructure に移植しテスト移行する
+- [x] 6. Infrastructure(7-bag)
+  - [x] 6.1 BlocksPoolManager(7-bag)を Infrastructure に移植しテスト移行する
         _Requirements: 9.1, 9.2, 9.3_
         _Boundary: Infrastructure_
         _Depends: 2.2, 5.1_
