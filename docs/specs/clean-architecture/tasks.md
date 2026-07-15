@@ -156,8 +156,8 @@
     - 仕様参照: spec.md §5.4・§7 Req5(5.4, 5.5)
     - 検証コマンド: `dotnet test Tetris.Application.Tests/Tetris.Application.Tests.csproj`
 
-- [ ] 5. GameSession 進行とタイミング分離
-  - [ ] 5.1 プール抽象と Start・Apply(進行ルール)を実装する
+- [x] 5. GameSession 進行とタイミング分離
+  - [x] 5.1 プール抽象と Start・Apply(進行ルール)を実装する
         _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5_
         _Boundary: Application_
         _Depends: 3.2, 4.2, 4.3, 4.4_
@@ -165,7 +165,7 @@
     - 内容: `Start(level)` は 0–99 クランプ・初期化・プールリセット・初手取得・スコアリセット。`Apply` は旧 `UpdateGameState` と同一(固定判定・ライン消去・REN/B2B・スコア加算・次ブロック生成・レベルアップ・Hold 差し替え)。スポーン不可で `IsGameOver=true`、`IsGameOver` 真なら `Apply`/`Advance` は状態不変。内部に FPS/フレームカウンタを持たない。
     - 仕様参照: spec.md §5.6・§7 Req6(6.1–6.5)
     - 検証コマンド: `dotnet test Tetris.Application.Tests/Tetris.Application.Tests.csproj`
-  - [ ] 5.2 Advance(重力アキュムレータ)と等価換算を実装する
+  - [x] 5.2 Advance(重力アキュムレータ)と等価換算を実装する
         _Requirements: 6.6, 7.1, 7.2, 7.3, 7.4_
         _Boundary: Application_
         _Depends: 5.1_
