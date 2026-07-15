@@ -129,29 +129,29 @@
     - 仕様参照: spec.md §7 R7
     - 検証コマンド: `dotnet build Tetris.Avalonia`
 
-- [ ] 5. WPF 撤去・GameManager ファサード撤去・sln/README 更新・全体回帰
-  - [ ] 5.1 WPF(TetrisWindow)一式を削除し sln を更新
+- [x] 5. WPF 撤去・GameManager ファサード撤去・sln/README 更新・全体回帰
+  - [x] 5.1 WPF(TetrisWindow)一式を削除し sln を更新
         _Requirements: 8.1, 8.2_
         _Boundary: Solution_
         _Depends: 1.1_
     - 対象ファイル: `TetrisWindow/`(削除・一式), `Tetris.sln`(変更: `TetrisWindow` 除去、`Tetris.Avalonia`・`Tetris.Avalonia.Tests` 追加)。
     - 仕様参照: spec.md §7 R8.1, R8.2
     - 検証コマンド: `dotnet sln Tetris.sln list`(TetrisWindow が無く Tetris.Avalonia が有る)。`grep -R "TetrisWindow" Tetris.sln` が 0 件。
-  - [ ] 5.2 互換ファサード GameManager の使用ゼロ確認と撤去(ユーザーのタスク分解指示による認可済みデッドコード整理)
+  - [x] 5.2 互換ファサード GameManager の使用ゼロ確認と撤去(ユーザーのタスク分解指示による認可済みデッドコード整理)
         _Requirements: 9.3_
         _Boundary: Tetris.Application_
         _Depends: 5.1_
     - 対象ファイル: `Tetris.Application/GameManager.cs`(削除), `Tetris.Application/ActionTypes.cs`(削除), `Tetris.Application.Tests/GameManagerTests.cs`(削除)。方針: WPF 撤去後、非テスト消費者がゼロであることを grep で確認してから削除する。本撤去は spec.md §3 の「GameManager ではなく GameSession を採用する判断」の帰結であり、ゲームロジック(GameSession/コマンド/スコア/7-bag)は不変・挙動不変(R1.4 の趣旨=ゲームロジックを変えないに抵触しない)。失う 7 件は互換ファサード配線のテストのみで、ロジック本体は GameSessionTests・Command テストが直接カバーする(→ R9.3 のロジックテスト緑を維持)。
     - 仕様参照: spec.md §3(GameManager ではなく GameSession を採用する判断), §7 R9.3、参考 §7 R1.4
     - 検証コマンド: `grep -Rn "GameManager\|ActionTypes" --include='*.cs' . | grep -v '/bin/\|/obj/'` が(コメント参照を除き)コード消費ゼロであることを削除前に確認。削除後 `dotnet test Tetris.Application.Tests` 緑。
-  - [ ] 5.3 README にクロスプラットフォーム手順を追記
+  - [x] 5.3 README にクロスプラットフォーム手順を追記
         _Requirements: 8.4_
         _Boundary: Docs_
         _Depends: 5.1_
     - 対象ファイル: `README.md`(変更)。`dotnet run --project Tetris.Avalonia`、Windows/macOS/Linux でのビルド手順、採用パッケージ版を追記(spec.md §9 と整合)。
     - 仕様参照: spec.md §7 R8.4
     - 検証コマンド: `grep -q "dotnet run --project Tetris.Avalonia" README.md`
-  - [ ] 5.4 全体回帰(クロスプラットフォーム・ビルド + 全テスト緑)
+  - [x] 5.4 全体回帰(クロスプラットフォーム・ビルド + 全テスト緑)
         _Requirements: 1.3, 8.3, 9.1, 9.2, 9.3, 9.4_
         _Boundary: Solution_
         _Depends: 2.2, 3.3, 4.1, 4.2, 4.3, 5.1, 5.2, 5.3_
@@ -166,3 +166,7 @@
 - **[1.1] TFM/Nullable は `Directory.Build.props`(net10.0)から継承**。各 csproj で再定義しない(WPF のみ net10.0-windows を自プロジェクトで上書き)。
 - **[1.1] 名前空間衝突に注意**: プロジェクト名前空間 `Tetris.Avalonia` の外側 `Tetris` に `Tetris.Application` があるため、素の `Application` は型でなく名前空間に解決される(CS0118)。Avalonia の `Application` は `global::Avalonia.Application` で完全修飾する。同様に `Tetris.Application` 型を使う場面では `using Tetris.Application;` の可視化で足りるが、`Application` 単独名は避ける。
 - **[1.1] OutputType**: spec §5.1 の「Exe」は Avalonia デスクトップ慣例に合わせ `WinExe` で実現(Windows でコンソール窓を出さない。3 OS で実行可能アプリという R1.1 の意図は充足)。挙動不変。
+- **[2.2/4.1] コンパイル済みバインディング**: `AvaloniaUseCompiledBindingsByDefault=true`。XAML の Window に `x:DataType="vm:MainViewModel"` を付け、バインド対象を静的に検証。
+- **[3.3] 離散キーの1押下1適用**: Avalonia の `KeyEventArgs` に IsRepeat が無いため、押下中キーの `HashSet` で OS リピートを抑止(Up/Z/X/Space)。移動系(Down/Left/Right)は抑止せず OS リピートで連続移動(DAS 相当、spec §3)。
+- **[5.2] GameManager 撤去**: WPF 撤去後、非テスト消費者ゼロを grep で確認し `GameManager.cs`/`ActionTypes.cs`/`GameManagerTests.cs`(7 件)を撤去。Application.Tests は 108→101 件。ゲームロジックは GameSessionTests/Command テストが直接カバーし挙動不変。spec §2/§9 を撤去認可の記述へ更新済み。
+- **[5.4] 最終回帰**: `dotnet build Tetris.sln`(Linux 成功・windows TFM 不含)、`dotnet test Tetris.sln` 全緑(Domain 14 / Application 101 / Infrastructure 5 / Tetris.Avalonia 29 = 149)。GUI 実プレイは人間が `dotnet run --project Tetris.Avalonia` で目視確認する前提(機械検証外)。
