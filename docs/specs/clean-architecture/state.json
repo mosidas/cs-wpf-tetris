@@ -1,0 +1,11 @@
+{
+  "workflow": "sdd",
+  "unit": "clean-architecture",
+  "state": "initialized",
+  "approvals": {
+    "spec": false,
+    "tasks": false
+  },
+  "created": "2026-07-15",
+  "updated": "2026-07-15"
+}
