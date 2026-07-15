@@ -1,0 +1,24 @@
+using System.Collections.Generic;
+using Tetris.Application;
+using Tetris.Domain;
+
+namespace Tetris.Application.Tests.Stub
+{
+    public class BlocksPoolManagerDummy : IBlocksPoolManager
+    {
+        public Block TakeNextBlock()
+        {
+            return new Block(BlockTypes.O);
+        }
+
+        public void Reset()
+        {
+
+        }
+
+        public List<Block> GetNextBlocksPool()
+        {
+            return new List<Block>() { new Block(BlockTypes.O) };
+        }
+    }
+}

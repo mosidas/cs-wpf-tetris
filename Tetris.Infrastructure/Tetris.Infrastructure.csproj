@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Infrastructure 層: 外部依存を持つ実装(7-bag)。Application / Domain を参照する。 -->
+  <ItemGroup>
+    <ProjectReference Include="..\Tetris.Application\Tetris.Application.csproj" />
+    <ProjectReference Include="..\Tetris.Domain\Tetris.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

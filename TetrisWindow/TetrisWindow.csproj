@@ -8,7 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TetrisLogic\TetrisLogic.csproj" />
+    <ProjectReference Include="..\Tetris.Application\Tetris.Application.csproj" />
+    <ProjectReference Include="..\Tetris.Infrastructure\Tetris.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
