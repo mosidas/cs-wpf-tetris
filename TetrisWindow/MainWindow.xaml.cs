@@ -4,8 +4,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
-using TetrisLogic;
-using TetrisLogic.UserAction;
+using Tetris.Application;
+using Tetris.Domain;
+using Tetris.Infrastructure;
 
 namespace TetrisWindow
 {
@@ -133,7 +134,7 @@ namespace TetrisWindow
             
         }
 
-        private void SetFieldBlock(List<(System.Drawing.Point, BlockTypes)> fieldPointAndTypePairs)
+        private void SetFieldBlock(List<(Position, BlockTypes)> fieldPointAndTypePairs)
         {
             fieldPointAndTypePairs.ForEach(pair =>
             {
@@ -143,7 +144,7 @@ namespace TetrisWindow
             });
         }
 
-        private void SetGhostBlock(List<System.Drawing.Point> ghostBlockPoints, BlockTypes ghostBlocktype)
+        private void SetGhostBlock(List<Position> ghostBlockPoints, BlockTypes ghostBlocktype)
         {
             ghostBlockPoints.ForEach(p =>
             {
@@ -294,7 +295,7 @@ namespace TetrisWindow
             StartMessage();
         }
 
-        private async void UpdateView_GameOver_FillBlack(System.Drawing.Point p)
+        private async void UpdateView_GameOver_FillBlack(Position p)
         {
             await System.Threading.Tasks.Task.Delay(_random.Next(100, 1000));
 

@@ -184,8 +184,8 @@
     - 仕様参照: spec.md §5.5・§7 Req9(9.1–9.3)
     - 検証コマンド: `dotnet test Tetris.Infrastructure.Tests/Tetris.Infrastructure.Tests.csproj`
 
-- [ ] 7. 読み取りモデル・互換ファサード・WPF 再接続
-  - [ ] 7.1 GameStateSnapshot と互換ファサード GameManager を実装する
+- [x] 7. 読み取りモデル・互換ファサード・WPF 再接続
+  - [x] 7.1 GameStateSnapshot と互換ファサード GameManager を実装する
         _Requirements: 8.1, 8.2, 8.3, 8.4_
         _Boundary: Application_
         _Depends: 5.2_
@@ -193,7 +193,7 @@
     - 内容: `GameStateSnapshot`(read model, 可変状態を露出しない)。互換ファサードは旧公開契約(`Update(ActionTypes)`/`Start`/`FrameRate`/`GameLevel`/`DownRate`/各表示プロパティ/`IsGameOver`/`Score`/`TSpinType`/`Line`)を同名・同挙動で提供し、`Tick(TimeSpan)`/`Snapshot()` を新規追加。`Update` は 1 フレーム重力 + 入力連射制御(同一操作 25 回以降 3 回に 1 回受理)+ コマンド適用を旧 `Update` と同値に。旧 `UserActionFactoryTests` の写像意図はここ(`ActionTypes→GameCommand`)で担保する。
     - 仕様参照: spec.md §5.7・§5.8・§7 Req8(8.1–8.4)
     - 検証コマンド: `dotnet test Tetris.Application.Tests/Tetris.Application.Tests.csproj`
-  - [ ] 7.2 WPF(TetrisWindow)を互換ファサード API へ再接続する(コード追従のみ)
+  - [x] 7.2 WPF(TetrisWindow)を互換ファサード API へ再接続する(コード追従のみ)
         _Requirements: 8.5_
         _Boundary: Presentation_
         _Depends: 7.1_

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Tetris.Domain;
 
 namespace Tetris.Application
@@ -140,6 +142,41 @@ namespace Tetris.Application
                     break;
                 }
             }
+        }
+
+        /// <summary>
+        /// 現在の状態の読み取り専用スナップショットを生成する。
+        /// </summary>
+        public GameStateSnapshot Snapshot()
+        {
+            return new GameStateSnapshot(
+                Field.Width,
+                Field.Height,
+                IsGameOver,
+                Score,
+                Level,
+                LastTSpin,
+                LastClearedLines,
+                CurrentBlock.BlockType,
+                CurrentBlock.GetBlockPoints(),
+                ComputeGhostBlockPoints(),
+                Field.GetFieldBlockPointAndTypePairs(),
+                Field.GetFieldBlockPoints(),
+                Field.GetFixedBlockPoints(),
+                HoldBlock.BlockType,
+                _blocksPoolManager.GetNextBlocksPool().Select(b => b.BlockType).ToList());
+        }
+
+        /// <summary>
+        /// ゴーストブロック(現在ブロックをハードドロップした位置)の座標を算出する。
+        /// フィールドは変更しない(旧 GameManager.GetGhostBlockPoints 相当)。
+        /// </summary>
+        public List<Position> ComputeGhostBlockPoints()
+        {
+            var ghost = new GameSession(Field, _blocksPoolManager);
+            ghost.CurrentBlock = new Block(CurrentBlock);
+            new HardDropCommand().Execute(ghost);
+            return ghost.CurrentBlock.GetBlockPoints();
         }
 
         private bool CanSpawn()
