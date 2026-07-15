@@ -13,6 +13,8 @@
 
         public bool CanAction(Field field, Block block, Block holdBlock)
         {
+            MoveX = 0;
+            MoveY = 0;
             if (block.BlockType == BlockTypes.O)
             {
                 return true;

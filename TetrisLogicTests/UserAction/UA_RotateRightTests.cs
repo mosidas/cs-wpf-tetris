@@ -291,5 +291,51 @@ namespace TetrisLogic.UserAction.Tests
             var act = new UA_RotateRight();
             Assert.AreEqual(true, act.CanAction(field, block, new Block(BlockTypes.nothing)));
         }
+
+        [TestMethod()]
+        public void ActionTest_IBlock_SRSKickFromWest_DoesNotCollide()
+        {
+            // data: west 向きの I ミノが west->north 回転で 5 番目の壁蹴り(state4)を要する盤面。
+            // (5,12) と (5,13) の固定ブロックが基本回転と state1-3 を塞ぎ、state4 のみ成立する。
+            var fieldState = new FieldTypes[20, 10];
+            for (var row = 0; row < 20; row++)
+            {
+                for (var col = 0; col < 10; col++)
+                {
+                    fieldState[row, col] = FieldTypes.empty;
+                }
+            }
+            fieldState[12, 5] = FieldTypes.fixedBlock;
+            fieldState[13, 5] = FieldTypes.fixedBlock;
+
+            var field = new Field();
+            field.InitField(fieldState);
+
+            var block = new Block(BlockTypes.I);
+            block.RotateRight();
+            block.RotateRight();
+            block.RotateRight();
+            block.MoveLocation(4, 12);
+
+            var holdBlock = new Block(BlockTypes.nothing);
+            var act = new UA_RotateRight();
+
+            // 壁蹴りで回転可能と判定される。
+            Assert.AreEqual(true, act.CanAction(field, block, holdBlock));
+
+            act.Action(ref field, ref block, ref holdBlock);
+
+            // 判定した壁蹴り位置と実際の配置が一致し、固定ブロックにめり込まない。
+            Assert.AreEqual(false, field.ExistsCollisionPoint(block));
+            var actual = block.GetBlockPoints();
+            var expect = new System.Collections.Generic.List<System.Drawing.Point>
+            {
+                new System.Drawing.Point(5, 11),
+                new System.Drawing.Point(6, 11),
+                new System.Drawing.Point(7, 11),
+                new System.Drawing.Point(8, 11),
+            };
+            CollectionAssert.AreEquivalent(expect, actual);
+        }
     }
 }
