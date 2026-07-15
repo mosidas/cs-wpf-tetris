@@ -1,6 +1,8 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Microsoft.Extensions.DependencyInjection;
+using Tetris.Avalonia.Composition;
 using Tetris.Avalonia.Views;
 
 namespace Tetris.Avalonia
@@ -18,7 +20,8 @@ namespace Tetris.Avalonia
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.MainWindow = new MainWindow();
+                var services = ServiceRegistration.Build();
+                desktop.MainWindow = services.GetRequiredService<MainWindow>();
             }
 
             base.OnFrameworkInitializationCompleted();

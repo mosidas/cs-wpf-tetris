@@ -38,28 +38,28 @@
 
 ## タスク一覧
 
-- [ ] 1. Tetris.Avalonia プロジェクト追加と合成ルート(DI/MVVM)・起動骨格
+- [x] 1. Tetris.Avalonia プロジェクト追加と合成ルート(DI/MVVM)・起動骨格
   - [x] 1.1 プロジェクト骨格を作成しビルドを通す(リスク先行: net10.0 対応 Avalonia の入手可否をここで確認)
         _Requirements: 1.1, 1.2, 1.4_
         _Boundary: Tetris.Avalonia_
     - 対象ファイル: `Tetris.Avalonia/Tetris.Avalonia.csproj`, `Tetris.Avalonia/Program.cs`, `Tetris.Avalonia/App.axaml`(+`.cs`), `Tetris.Avalonia/Views/MainWindow.axaml`(+`.cs`)(いずれも新規・最小シェル)。最小の `MainWindow` で起動可能な状態にする(3.3/4.x が中身を追加)。
     - 仕様参照: spec.md §5.1, §8
     - 検証コマンド: `dotnet build Tetris.Avalonia`(成功)。`grep -L TetrisWindow Tetris.Avalonia/Tetris.Avalonia.csproj` で WPF 不参照を確認。net10.0 対応版が無い場合は TFM 調整を検討し停止・報告。
-  - [ ] 1.4 Tetris.Avalonia.Tests(純粋マッパー用テストプロジェクト)骨格を作成
+  - [x] 1.4 Tetris.Avalonia.Tests(純粋マッパー用テストプロジェクト)骨格を作成
         _Requirements: 9.1_
         _Boundary: Tetris.Avalonia.Tests_
         _Depends: 1.1_
     - 対象ファイル: `Tetris.Avalonia.Tests/Tetris.Avalonia.Tests.csproj`(新規)。MSTest、`Tetris.Avalonia` を参照。テストクラスは 2.1/3.1 が各自の `*.cs` を追加する(SDK 暗黙 include のため csproj 共有による競合なし)。
     - 仕様参照: spec.md §7 R9.1
     - 検証コマンド: `dotnet test Tetris.Avalonia.Tests`(0 件でも成功)
-  - [ ] 1.2 合成ルート(DI)を実装する
+  - [x] 1.2 合成ルート(DI)を実装する
         _Requirements: 2.1, 2.2, 2.4_
         _Boundary: Tetris.Avalonia_
         _Depends: 1.1_
     - 対象ファイル: `Tetris.Avalonia/Composition/ServiceRegistration.cs`, `Tetris.Avalonia/App.axaml.cs`(新規)。`IBlocksPoolManager→BlocksPoolManager`・`Field`・`GameSession`・`MainViewModel`・`MainWindow` を登録し、Window と VM が単一 `GameSession` を共有。未登録依存は起動時例外。
     - 仕様参照: spec.md §5.3, §7 R2
     - 検証コマンド: `dotnet build Tetris.Avalonia`。DI 解決の疎通(可能なら軽い起動確認)。
-  - [ ] 1.3 MainViewModel の骨格(CommunityToolkit.Mvvm)
+  - [x] 1.3 MainViewModel の骨格(CommunityToolkit.Mvvm)
         _Requirements: 2.3_
         _Boundary: Tetris.Avalonia_
         _Depends: 1.1_
@@ -67,15 +67,15 @@
     - 仕様参照: spec.md §6.3, §7 R2.3
     - 検証コマンド: `dotnet build Tetris.Avalonia`
 
-- [ ] 2. 盤面カスタム描画コントロール(Snapshot 駆動)と色マッピング
-  - [ ] 2.1 BlockColors 純粋マッピング + 単体テスト (P)
+- [x] 2. 盤面カスタム描画コントロール(Snapshot 駆動)と色マッピング
+  - [x] 2.1 BlockColors 純粋マッピング + 単体テスト (P)
         _Requirements: 3.3, 6.2_
         _Boundary: Tetris.Avalonia.Rendering_
         _Depends: 1.4_
     - 対象ファイル: `Tetris.Avalonia/Rendering/BlockColors.cs`(新規), `Tetris.Avalonia.Tests/BlockColorsTests.cs`(新規)。全 `BlockTypes` に WPF 踏襲色を割当、未定義は既定色(DarkGray)にフォールバック。
     - 仕様参照: spec.md §6.2
     - 検証コマンド: `dotnet test Tetris.Avalonia.Tests`(全 BlockTypes の色・全域性が緑)
-  - [ ] 2.2 BoardControl(Render(DrawingContext) で 10×20 直接描画)
+  - [x] 2.2 BoardControl(Render(DrawingContext) で 10×20 直接描画)
         _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5_
         _Boundary: Tetris.Avalonia.Controls_
         _Depends: 2.1, 1.3_
@@ -83,22 +83,22 @@
     - 仕様参照: spec.md §5.4, §7 R3
     - 検証コマンド: `dotnet build Tetris.Avalonia`。`grep -R "FindName" Tetris.Avalonia` が 0 件であること(R3.1)。
 
-- [ ] 3. ゲームループ(DispatcherTimer+Stopwatch→Advance)と入力マッピング
-  - [ ] 3.1 KeyMapper 純粋変換 + 単体テスト (P)
+- [x] 3. ゲームループ(DispatcherTimer+Stopwatch→Advance)と入力マッピング
+  - [x] 3.1 KeyMapper 純粋変換 + 単体テスト (P)
         _Requirements: 5.1, 5.3_
         _Boundary: Tetris.Avalonia.Input_
         _Depends: 1.4_
     - 対象ファイル: `Tetris.Avalonia/Input/KeyMapper.cs`(新規), `Tetris.Avalonia.Tests/KeyMapperTests.cs`(新規)。`Up→hardDrop, Down→moveDown, Left→moveLeft, Right→moveRight, Z→rotateLeft, X→rotateRight, Space→hold`、未定義キー→何もしない(nothing)。制御キー(P/Esc/R/Space の文脈別)の分類も公開。
     - 仕様参照: spec.md §5.5, §7 R5.1, R5.3
     - 検証コマンド: `dotnet test Tetris.Avalonia.Tests`(キー対応表が緑)
-  - [ ] 3.2 ゲームループ(GameLoop: DispatcherTimer + Stopwatch → GameSession.Advance)
+  - [x] 3.2 ゲームループ(GameLoop: DispatcherTimer + Stopwatch → GameSession.Advance)
         _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5_
         _Boundary: Tetris.Avalonia.Game_
         _Depends: 1.2, 1.3_
     - 対象ファイル: `Tetris.Avalonia/Game/GameLoop.cs`(新規)。間隔≈16ms、各 tick で Stopwatch 実経過 `delta` を測り進行中のみ `Advance(delta)`(固定フレーム量で進めない)、ポーズ/GameOver 中は Advance せず、再開時に再基準化。`Snapshot()` を VM/BoardControl へ反映。
     - 仕様参照: spec.md §5.6, §7 R4
     - 検証コマンド: `dotnet build Tetris.Avalonia`(ループ実挙動は人間の `dotnet run` 目視・機械検証外)
-  - [ ] 3.3 入力ハンドラ配線(KeyDown/KeyUp → Apply / ポーズ・リセット・終了)
+  - [x] 3.3 入力ハンドラ配線(KeyDown/KeyUp → Apply / ポーズ・リセット・終了)
         _Requirements: 5.2, 5.4, 5.5, 5.6_
         _Boundary: Tetris.Avalonia_
         _Depends: 3.1, 3.2_
@@ -106,22 +106,22 @@
     - 仕様参照: spec.md §5.5, §7 R5.2, R5.4, R5.5, R5.6
     - 検証コマンド: `dotnet build Tetris.Avalonia`(操作実挙動は人間目視・機械検証外)
 
-- [ ] 4. ホールド/ネクスト/スコア/T-Spin/ゲームオーバー表示
-  - [ ] 4.1 ホールド/ネクスト小パネル(色・WPF 踏襲レイアウト)
+- [x] 4. ホールド/ネクスト/スコア/T-Spin/ゲームオーバー表示
+  - [x] 4.1 ホールド/ネクスト小パネル(色・WPF 踏襲レイアウト)
         _Requirements: 6.2, 6.4_
         _Boundary: Tetris.Avalonia.Controls_
         _Depends: 2.1, 1.3_
     - 対象ファイル: `Tetris.Avalonia/Controls/BlockPreviewControl.cs`(新規), `Tetris.Avalonia/Views/MainWindow.axaml`(変更)。ブロック種別を BlockColors で描画、ホールド未使用(nothing)は空/非表示。
     - 仕様参照: spec.md §7 R6.2, R6.4
     - 検証コマンド: `dotnet build Tetris.Avalonia`
-  - [ ] 4.2 スコアと T-Spin/ライン演出テキスト
+  - [x] 4.2 スコアと T-Spin/ライン演出テキスト
         _Requirements: 6.1, 6.3_
         _Boundary: Tetris.Avalonia_
         _Depends: 1.3_
     - 対象ファイル: `Tetris.Avalonia/ViewModels/MainViewModel.cs`(変更), `Tetris.Avalonia/Views/MainWindow.axaml`(変更)。スコア反映、演出文言(`T-Spin Mini!`/`T-Spin Single!`/`T-Spin Double!!`/`T-Spin Triple!!!`/4 ライン `Tetris!!!`)を表示し一定時間後に消去。
     - 仕様参照: spec.md §6.3, §7 R6.1, R6.3
     - 検証コマンド: `dotnet build Tetris.Avalonia`
-  - [ ] 4.3 ゲームオーバー処理・表示
+  - [x] 4.3 ゲームオーバー処理・表示
         _Requirements: 7.1, 7.2, 7.3_
         _Boundary: Tetris.Avalonia_
         _Depends: 3.2, 1.3_
