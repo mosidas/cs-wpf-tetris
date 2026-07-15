@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    # WPF (net*-windows) はソリューションに含まれ、Windows でしかビルドできない。
+    # このジョブがソリューション全体のビルドと WPF の健全性を担保する唯一の手段になる。
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore Tetris.sln
+
+      - name: Build
+        run: dotnet build Tetris.sln --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test Tetris.sln --configuration Release --no-build
