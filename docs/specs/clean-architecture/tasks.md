@@ -202,8 +202,8 @@
     - 仕様参照: spec.md §5.8・§7 Req8(8.5)
     - 検証コマンド: (ローカル不可)Windows CI に委譲。ローカルでは `Tetris.Application` 個別ビルドのみ確認。
 
-- [ ] 8. テスト 3 分割の完了・全体回帰・旧 2 プロジェクトの対称撤去
-  - [ ] 8.1 114 テスト移行の網羅を確認し残テストを配置する
+- [x] 8. テスト 3 分割の完了・全体回帰・旧 2 プロジェクトの対称撤去
+  - [x] 8.1 114 テスト移行の網羅を確認し残テストを配置する
         _Requirements: 10.1, 10.2, 10.3_
         _Boundary: TestMigration_
         _Depends: 2.2, 2.3, 3.2, 4.2, 4.3, 4.4, 5.2, 6.1, 7.1_
@@ -211,7 +211,7 @@
     - 内容: 旧 `TetrisLogicTests` の全テストが 3 層いずれかへ移行済みか監査(アサーション値・期待文字列を原文どおり維持)。Factory 内部化で行き場を失った旧 `UserActionFactoryTests` の扱いを確定(ファサード写像テスト or 破棄の判断を明記)。全 3 テストプロジェクトを Linux で個別 `dotnet test`。
     - 仕様参照: spec.md §7 Req10(10.1, 10.2, 10.3)
     - 検証コマンド: `dotnet test Tetris.Domain.Tests/Tetris.Domain.Tests.csproj && dotnet test Tetris.Application.Tests/Tetris.Application.Tests.csproj && dotnet test Tetris.Infrastructure.Tests/Tetris.Infrastructure.Tests.csproj`
-  - [ ] 8.2 Point 全廃と旧プロジェクト無参照を確認し旧 2 プロジェクトを撤去する
+  - [x] 8.2 Point 全廃と旧プロジェクト無参照を確認し旧 2 プロジェクトを撤去する
         _Requirements: 2.2, 10.1_
         _Boundary: TestMigration_
         _Depends: 7.2, 8.1_
@@ -219,7 +219,7 @@
     - 内容: `System.Drawing.Point` 参照ゼロを grep 確認(新コード・WPF・テスト全域)。`TetrisLogic`/`TetrisLogicTests` への `ProjectReference` がゼロであることを確認してから、**製品(旧 TetrisLogic)とテスト(旧 TetrisLogicTests)の両方を対称に削除**(片方だけ残さない)。sln から除去。
     - 仕様参照: spec.md §2・§7 Req2(2.2)・Req10(10.1)
     - 検証コマンド: `grep -rn "System.Drawing.Point" --include=*.cs .`(0 件)、非 WPF 3 製品 + 3 テストの個別 `dotnet build`/`dotnet test`
-  - [ ] 8.3 撤去後の全体回帰とドキュメント反映
+  - [x] 8.3 撤去後の全体回帰とドキュメント反映
         _Requirements: 10.1, 10.4_
         _Boundary: TestMigration_
         _Depends: 8.2_
