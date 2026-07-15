@@ -1,11 +1,15 @@
 {
   "workflow": "sdd",
   "unit": "avalonia-migration",
-  "state": "implementing",
+  "state": "completed",
   "approvals": {
     "spec": true,
     "tasks": true
   },
   "created": "2026-07-15",
-  "updated": "2026-07-15"
+  "updated": "2026-07-15",
+  "frozen": {
+    "spec.md": "1301eeba72ef617b51c1f16dea48baba03f636861966c5777b126148aed000c7",
+    "tasks.md": "ec6eb623ac202fecf88fead0e6d1cfa944ce187ca07b502bcc68f80fffc7a367"
+  }
 }
