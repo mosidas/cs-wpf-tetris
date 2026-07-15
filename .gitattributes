@@ -1,0 +1,4 @@
+# すべてのテキストファイルの改行を全プラットフォームで LF に固定する。
+# ロジックテストは DrawBlock/DrawField の出力("\n" 連結)を verbatim 文字列
+# リテラルと比較するため、Windows で CRLF チェックアウトされると不一致になる。
+* text=auto eol=lf
