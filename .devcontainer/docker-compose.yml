@@ -1,0 +1,14 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ../:/workspace:cached
+      - claude-config:/home/vscode/.claude
+      - gh-config:/home/vscode/.config/gh
+    command: sleep infinity
+
+volumes:
+  claude-config:
+  gh-config:

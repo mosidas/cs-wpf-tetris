@@ -1,0 +1,18 @@
+{
+  "skills": [
+    "dev-check",
+    "dev-core",
+    "dev-decompose",
+    "dev-implement",
+    "dev-release",
+    "dev-spec",
+    "flow-sdd"
+  ],
+  "agents": [
+    ".claude/agents/dev-author.md",
+    ".claude/agents/dev-debugger.md",
+    ".claude/agents/dev-explorer.md",
+    ".claude/agents/dev-implementer.md",
+    ".claude/agents/dev-reviewer.md"
+  ]
+}
