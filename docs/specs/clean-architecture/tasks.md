@@ -79,15 +79,15 @@
     - 仕様参照: spec.md §7 Req1(1.6)・Req10(10.4)
     - 検証コマンド: (ローカル不可)`.github/workflows/ci.yml` の対象が sln 全体であることを目視確認。実ビルド/テストは push/PR 後の Windows CI に委譲。
 
-- [ ] 2. Domain 移設と Position 全廃(新コード)
-  - [ ] 2.1 Position 値型と enum 群を Domain に定義する
+- [x] 2. Domain 移設と Position 全廃(新コード)
+  - [x] 2.1 Position 値型と enum 群を Domain に定義する
         _Requirements: 2.1, 2.3, 3.1_
         _Boundary: Domain_
         _Depends: 1.1_
     - 対象ファイル: `Tetris.Domain/Position.cs`, `Tetris.Domain/Enums/*.cs`(新規)
     - 仕様参照: spec.md §5.1・§5.2(enum 群)
     - 検証コマンド: `dotnet build Tetris.Domain/Tetris.Domain.csproj`
-  - [ ] 2.2 Block を Domain へ移設し座標を Position へ置換する(挙動不変)
+  - [x] 2.2 Block を Domain へ移設し座標を Position へ置換する(挙動不変)
         _Requirements: 2.2, 3.1, 3.2, 3.4_
         _Boundary: Domain_
         _Depends: 2.1_
@@ -95,7 +95,7 @@
     - 内容: 公開メンバは現行同一。座標返却は `List<Position>`。回転結果(`DrawBlock`)・座標集合・`GetTSpinPoints` を式変更なしで維持。`System.Drawing.Point` を残さない。
     - 仕様参照: spec.md §5.2 Block・§7 Req3(3.2, 3.4)
     - 検証コマンド: `dotnet test Tetris.Domain.Tests/Tetris.Domain.Tests.csproj`
-  - [ ] 2.3 Field を Domain へ移設し座標を Position へ置換する(挙動不変)
+  - [x] 2.3 Field を Domain へ移設し座標を Position へ置換する(挙動不変)
         _Requirements: 2.2, 3.1, 3.3, 3.4_
         _Boundary: Domain_
         _Depends: 2.1_
