@@ -1,0 +1,50 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:Tetris.Avalonia.Controls"
+        xmlns:vm="clr-namespace:Tetris.Avalonia.ViewModels"
+        x:Class="Tetris.Avalonia.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Title="Tetris"
+        Width="480" Height="640"
+        CanResize="False"
+        Background="#202020">
+
+  <Panel Margin="8">
+    <Grid ColumnDefinitions="*,150" RowDefinitions="*">
+
+      <!-- 盤面(Snapshot 駆動のカスタム描画) -->
+      <Border Grid.Column="0" Background="#101010" Padding="2">
+        <controls:BoardControl Snapshot="{Binding Snapshot}" />
+      </Border>
+
+      <!-- 右カラム: ホールド / ネクスト / スコア / 演出 -->
+      <StackPanel Grid.Column="1" Margin="8,0,0,0" Spacing="6">
+        <TextBlock Text="HOLD" Foreground="#CCCCCC" FontSize="12" />
+        <Border Height="110" Background="#101010">
+          <controls:BlockPreviewControl BlockType="{Binding HoldBlockType}" />
+        </Border>
+
+        <TextBlock Text="NEXT" Foreground="#CCCCCC" FontSize="12" Margin="0,6,0,0" />
+        <Border Height="110" Background="#101010">
+          <controls:BlockPreviewControl BlockType="{Binding NextBlockType}" />
+        </Border>
+
+        <TextBlock Text="SCORE" Foreground="#CCCCCC" FontSize="12" Margin="0,6,0,0" />
+        <TextBlock Text="{Binding ScoreText}" Foreground="White" FontSize="22" FontWeight="Bold" />
+
+        <TextBlock Text="{Binding EffectText}" Foreground="Gold" FontSize="15" FontWeight="Bold"
+                   TextWrapping="Wrap" Margin="0,6,0,0" />
+      </StackPanel>
+    </Grid>
+
+    <!-- 案内 / 一時停止 / ゲームオーバー メッセージのオーバーレイ -->
+    <Border IsVisible="{Binding IsMessageVisible}"
+            Background="#E6FFFFFF" Padding="16"
+            HorizontalAlignment="Center" VerticalAlignment="Center"
+            CornerRadius="6">
+      <TextBlock Text="{Binding StatusMessage}" Foreground="Black" FontSize="15"
+                 TextAlignment="Center" TextWrapping="Wrap" MaxWidth="360" />
+    </Border>
+  </Panel>
+
+</Window>
