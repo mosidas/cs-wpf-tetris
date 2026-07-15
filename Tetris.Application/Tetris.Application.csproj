@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Application 層: 進行ルール・コマンド・互換ファサード。Domain のみ参照する。 -->
+  <ItemGroup>
+    <ProjectReference Include="..\Tetris.Domain\Tetris.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

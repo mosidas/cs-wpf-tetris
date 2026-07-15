@@ -54,15 +54,15 @@
 
 ## タスク一覧
 
-- [ ] 1. 層スキャフォールドと中央パッケージ管理
-  - [ ] 1.1 3 製品プロジェクト + 3 テストプロジェクトの雛形を作成し sln に登録する
+- [x] 1. 層スキャフォールドと中央パッケージ管理
+  - [x] 1.1 3 製品プロジェクト + 3 テストプロジェクトの雛形を作成し sln に登録する
         _Requirements: 1.1, 1.2, 1.5, 10.2_
         _Boundary: BuildConfig_
     - 対象ファイル: `Tetris.Domain/Tetris.Domain.csproj`, `Tetris.Application/Tetris.Application.csproj`, `Tetris.Infrastructure/Tetris.Infrastructure.csproj`, `Tetris.Domain.Tests/*.csproj`, `Tetris.Application.Tests/*.csproj`, `Tetris.Infrastructure.Tests/*.csproj`(いずれも新規), `Tetris.sln`(変更)
     - 内容: 参照方向を `Application→Domain` / `Infrastructure→Application,Domain` / 各 `*.Tests→対応層` に設定(逆参照なし)。旧 `TetrisLogic`/`TetrisLogicTests` は残す。
     - 仕様参照: spec.md §5・§6(依存方向)・§8(層とパッケージ)
     - 検証コマンド: `dotnet build Tetris.Domain/Tetris.Domain.csproj && dotnet build Tetris.Application/Tetris.Application.csproj && dotnet build Tetris.Infrastructure/Tetris.Infrastructure.csproj`(各テスト空ビルドも同様に個別実行)
-  - [ ] 1.2 中央パッケージ管理と共通ビルド設定を導入する
+  - [x] 1.2 中央パッケージ管理と共通ビルド設定を導入する
         _Requirements: 1.3, 1.4_
         _Boundary: BuildConfig_
         _Depends: 1.1_
@@ -70,7 +70,7 @@
     - 内容: テスト系パッケージのバージョンを `Directory.Packages.props` に集約。共通 `TargetFramework=net10.0`・`Nullable=enable` を `Directory.Build.props` に。WPF は自 csproj で `net10.0-windows`/`UseWPF` を上書きし、Domain は `System.Drawing`/WPF/時間 API を参照しない構成にする。
     - 仕様参照: spec.md §7 Req1(1.3, 1.4)・§8
     - 検証コマンド: `dotnet build Tetris.Domain/Tetris.Domain.csproj`(Domain が `System.Drawing` 非依存でビルドできること)
-  - [ ] 1.3 CI が新構成の sln 全体をビルド/テストできることを確認・調整する
+  - [x] 1.3 CI が新構成の sln 全体をビルド/テストできることを確認・調整する
         _Requirements: 1.6, 10.4_
         _Boundary: BuildConfig_
         _Depends: 1.1_

@@ -1,0 +1,9 @@
+<Project>
+
+  <!-- 全プロジェクト共通のビルド設定。WPF は自プロジェクトで net10.0-windows / UseWPF を上書きする。 -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>

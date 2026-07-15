@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Domain 層: フレームワーク非依存・時間概念なし。System.Drawing / WPF / 時間 API に依存しない。 -->
+
+</Project>
