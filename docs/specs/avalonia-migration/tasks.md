@@ -39,7 +39,7 @@
 ## タスク一覧
 
 - [ ] 1. Tetris.Avalonia プロジェクト追加と合成ルート(DI/MVVM)・起動骨格
-  - [ ] 1.1 プロジェクト骨格を作成しビルドを通す(リスク先行: net10.0 対応 Avalonia の入手可否をここで確認)
+  - [x] 1.1 プロジェクト骨格を作成しビルドを通す(リスク先行: net10.0 対応 Avalonia の入手可否をここで確認)
         _Requirements: 1.1, 1.2, 1.4_
         _Boundary: Tetris.Avalonia_
     - 対象ファイル: `Tetris.Avalonia/Tetris.Avalonia.csproj`, `Tetris.Avalonia/Program.cs`, `Tetris.Avalonia/App.axaml`(+`.cs`), `Tetris.Avalonia/Views/MainWindow.axaml`(+`.cs`)(いずれも新規・最小シェル)。最小の `MainWindow` で起動可能な状態にする(3.3/4.x が中身を追加)。
@@ -161,4 +161,8 @@
 
 ## Implementation Notes
 
-(このセクションは dev-implement が実装中の学習・選択した知識 port・横断的な気付きを追記する領域。初期は空)
+- **[1.1] リスク先行ゲート = 通過**: net10.0 + Avalonia **12.1.0**(最新安定版)で `dotnet build Tetris.Avalonia` 成功。ライブラリ側/sln 全体の TFM 降格は不要。CommunityToolkit.Mvvm 8.4.0 / Microsoft.Extensions.DependencyInjection 10.0.0 も net10.0 で解決可。
+- **[1.1] CPM(Central Package Management)**: 本リポジトリは `Directory.Packages.props` で版を一元管理。`PackageReference` に `Version` を書くと NU1008。新規パッケージ版は `Directory.Packages.props` の `PackageVersion` に追加する。
+- **[1.1] TFM/Nullable は `Directory.Build.props`(net10.0)から継承**。各 csproj で再定義しない(WPF のみ net10.0-windows を自プロジェクトで上書き)。
+- **[1.1] 名前空間衝突に注意**: プロジェクト名前空間 `Tetris.Avalonia` の外側 `Tetris` に `Tetris.Application` があるため、素の `Application` は型でなく名前空間に解決される(CS0118)。Avalonia の `Application` は `global::Avalonia.Application` で完全修飾する。同様に `Tetris.Application` 型を使う場面では `using Tetris.Application;` の可視化で足りるが、`Application` 単独名は避ける。
+- **[1.1] OutputType**: spec §5.1 の「Exe」は Avalonia デスクトップ慣例に合わせ `WinExe` で実現(Windows でコンソール窓を出さない。3 OS で実行可能アプリという R1.1 の意図は充足)。挙動不変。
